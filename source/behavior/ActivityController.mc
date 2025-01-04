@@ -44,7 +44,8 @@ class ActivityController {
             throw new ActivityNotStarted();
         }
 
-        self.session.start();
+        self.session.start();;
+        self.speedAggregator.start();
         self.startUpdateValuesTimer();
     }
 
@@ -63,7 +64,6 @@ class ActivityController {
         if (self.session == null) {
             throw new ActivityNotStarted();
         }
-
 
         self.stopUpdateValuesTimer();
         self.speedAggregator.reset();
