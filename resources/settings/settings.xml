@@ -1,0 +1,12 @@
+<settings>
+    
+    <setting propertyKey="@Properties.activityType" title="@Strings.settingsActivityType">
+        <settingConfig type="list">
+            <listEntry value="1">@Strings.settingsActivityTypeWindsurfing</listEntry>
+            <listEntry value="2">@Strings.settingsActivityTypeKitesurfing</listEntry>
+            <listEntry value="3">@Strings.settingsActivityTypeSurfing</listEntry>
+            <listEntry value="4">@Strings.settingsActivityTypeOpenwaterSwimming</listEntry>
+            <listEntry value="0">@Strings.settingsActivityTypeOther</listEntry>
+        </settingConfig>
+    </setting>
+</settings>

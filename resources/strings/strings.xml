@@ -1,0 +1,19 @@
+<strings>
+    <string id="AppName">Wayfinder</string>
+    <string id="AppVesion">0.1.0</string>
+    <string id="AppVersionTitle">Version</string>
+
+    <string id="prompt">Click the menu button</string>
+
+    <string id="menu_set_waypoint">Set waypoint</string>
+    <string id="menu_set_waypoint_no_location">(No Location)</string>
+    <string id="menu_open_settings">Settings</string>
+
+    <string id="settingsActivityType">Activity Type</string>
+    <string id="settingsActivityTypeWindsurfing">Wind surfing</string>
+    <string id="settingsActivityTypeKitesurfing">Kite surfing</string>
+    <string id="settingsActivityTypeSurfing">Surfing</string>
+    <string id="settingsActivityTypeOpenwaterSwimming">Openwater swimming</string>
+    <string id="settingsActivityTypeOther">Other</string>
+
+</strings>
