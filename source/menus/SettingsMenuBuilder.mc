@@ -29,6 +29,15 @@ class SettingsMenuBuilder {
             )
         );
 
+        menu.addItem(
+            new MenuItem(
+                Rez.Strings.settingsUnitsDistance,
+                self.settings.unitsDistanceRes(),
+                SettingsMenuDelegate.UNITS_DISTANCE_UPDATE,
+                {}
+            )
+        );
+
         return menu;
     }
 

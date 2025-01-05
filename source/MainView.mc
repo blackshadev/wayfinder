@@ -21,7 +21,8 @@ class MainView extends WatchUi.View {
 
     function initialize(
         waypoint as WaypointController,
-        activityInfo as ActivityInfoProvider
+        activityInfo as ActivityInfoProvider,
+        unitConverter as UnitConverter
     ) {
         View.initialize();
 
@@ -32,8 +33,8 @@ class MainView extends WatchUi.View {
 
         self.time = new Time(new TimeProvider(), [0, 0]);
         self.duration = new Duration([0, 0]);
-        self.speed = new Speed([0, 0]);
-        self.distance = new Distance([0, 0]);
+        self.speed = new Speed(unitConverter, [0, 0]);
+        self.distance = new Distance(unitConverter, [0, 0]);
 
         self.quarterLayout = new QuarterLayout(
             self.duration,

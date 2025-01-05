@@ -27,5 +27,20 @@ class UnitConverter {
         throw new NotImplemented();
     }
 
+    function distanceFromMeters(meters as Float?) as Float? {
+        if (meters == null) {
+            return null;
+        }
+
+        switch (self._settings.distance()) {
+            case SettingsController.UNITS_DISTANCE_METERS:
+                return meters / 1000;
+            case SettingsController.UNITS_DISTANCE_MILES:
+                return meters * 0.000621371192;
+        }
+
+        throw new NotImplemented();
+    }
+
 }
 

@@ -19,14 +19,14 @@ class WayfinderApp extends Application.AppBase {
         self.unitConverter = new UnitConverter(self.settings);
 
         self.sensor = new SensorProvider();
-        self.speedAggregator = new SpeedAggregationProvider(self.sensor, self.unitConverter);
+        self.speedAggregator = new SpeedAggregationProvider(self.sensor);
         self.waypoint = new WaypointController(self.sensor);
         self.activity = new ActivityController(self.settings, self.speedAggregator);
-        self.activityInfo = new ActivityInfoProvider(self.activity, self.unitConverter);
+        self.activityInfo = new ActivityInfoProvider(self.activity);
         
         self.viewController = new ViewController([
-            new MainView(self.waypoint, self.activityInfo),
-            new SpeedView(self.waypoint, self.activityInfo, self.speedAggregator)
+            new MainView(self.waypoint, self.activityInfo, self.unitConverter),
+            new SpeedView(self.waypoint, self.activityInfo, self.speedAggregator, self.unitConverter)
         ]);
         var delegate = new WayfinderDelegate(
             self.viewController,

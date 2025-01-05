@@ -6,6 +6,9 @@ import Toybox.Lang;
 import Toybox.Timer;
 
 class ActivityController {
+    private const FIELD_ID_MAX_SPEED_2S = 1;
+    private const FIELD_ID_MAX_SPEED_10S = 2;
+
     private const UPDATE_TIME = 1000;
 
     private var settings as SettingsController;
@@ -31,16 +34,31 @@ class ActivityController {
         var opts = getActivitySettings();
         self.session = ActivityRecording.createSession(opts);
 
-        var speedFieldConfig = { 
-            :mesgType => FitContributor.MESG_TYPE_RECORD, 
-            :units => WatchUi.loadResource(self.settings.unitsSpeedRes())
-        };
-        self.field2s = self.session.createField("max speed 2s", 1, FitContributor.DATA_TYPE_FLOAT, speedFieldConfig);
-        self.field10s = self.session.createField("max speed 10s", 2, FitContributor.DATA_TYPE_FLOAT, speedFieldConfig);
 
         self.session.start();
         self.speedAggregator.start();
         self.startUpdateValuesTimer();
+    }
+
+    private function createField() as Void {
+        var speedFieldConfig = { 
+            :mesgType => FitContributor.MESG_TYPE_RECORD, 
+            :units => WatchUi.loadResource(self.settings.unitsSpeedRes())
+        };
+
+        self.field2s = self.session.createField(
+            WatchUi.loadResource(Rez.Strings.labelMaxSpeed2s),
+            FIELD_ID_MAX_SPEED_2S,
+            FitContributor.DATA_TYPE_FLOAT,
+            speedFieldConfig
+        );
+
+        self.field10s = self.session.createField(
+            WatchUi.loadResource(Rez.Strings.labelMaxSpeed10s),
+            FIELD_ID_MAX_SPEED_10S,
+            FitContributor.DATA_TYPE_FLOAT,
+            speedFieldConfig
+        );
     }
 
     public function resume() as Void {
@@ -111,15 +129,14 @@ class ActivityController {
         self.updateTimer.start(method(:updateValues), UPDATE_TIME, true);
     }
 
-    public function updateValues() as Void 
-    {
+    public function updateValues() as Void {
         if (self.field2s == null || self.field10s == null) {
             return;
         }
 
         var value = self.speedAggregator.value();
-        self.field2s.setData(value.speed2s());
-        self.field10s.setData(value.speed10s());
+        self.field2s.setData(value.speed2s);
+        self.field10s.setData(value.speed10s);
     }
 
     private function getActivitySettings() {

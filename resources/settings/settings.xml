@@ -18,4 +18,11 @@
             <listEntry value="2">@Strings.settingsUnitsSpeedmph</listEntry>
         </settingConfig>
     </setting>
+
+    <setting propertyKey="@Properties.unitsDistance" title="@Strings.settingsUnitsDistance">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.settingsUnitsDistanceMeters</listEntry>
+            <listEntry value="1">@Strings.settingsUnitsDistanceMiles</listEntry>
+        </settingConfig>
+    </setting>
 </settings>

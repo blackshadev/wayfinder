@@ -23,7 +23,8 @@ class SpeedView extends WatchUi.View {
     function initialize(
         waypoint as WaypointController,
         activityInfo as ActivityInfoProvider,
-        speedAggregator as SpeedAggregationProvider
+        speedAggregator as SpeedAggregationProvider,
+        unitConverter as UnitConverter
     ) {
         View.initialize();
 
@@ -34,9 +35,9 @@ class SpeedView extends WatchUi.View {
         self.arrow = new Arrow(Utils.Sizing.arrow);
         
         self.time = new Time(new TimeProvider(), [0, 0]);
-        self.averageSpeed = new AverageSpeed([0, 0]);
-        self.speed = new Speed([0, 0]);
-        self.maxSpeeds = new MaxSpeeds([0, 0]);
+        self.averageSpeed = new AverageSpeed(unitConverter, [0, 0]);
+        self.speed = new Speed(unitConverter, [0, 0]);
+        self.maxSpeeds = new MaxSpeeds(unitConverter, [0, 0]);
 
         self.quarterLayout = new QuarterLayout(
             self.averageSpeed,

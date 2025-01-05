@@ -1,0 +1,23 @@
+<fitContributions>
+    <fitField 
+        id="1" 
+        displayInChart="true"
+        sortOrder = "0"
+        precision="1"
+        chartTitle="@Strings.fieldTitleMaxSpeed2s"
+        dataLabel="@Strings.fieldLabelMaxSpeed"
+        unitLabel="@Strings.fieldUnitMaxSpeed"
+        fillColor="#4394E5"
+    />
+    
+    <fitField 
+        id="2"
+        displayInChart="true"
+        sortOrder = "1"
+        precision="1"
+        chartTitle="@Strings.fieldTitleMaxSpeed10s"
+        dataLabel="@Strings.fieldLabelMaxSpeed"
+        unitLabel="@Strings.fieldUnitMaxSpeed"
+        fillColor="#004D99"
+    />     
+</fitContributions>

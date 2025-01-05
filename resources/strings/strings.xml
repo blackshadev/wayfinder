@@ -3,6 +3,12 @@
     <string id="AppVesion">0.1.0</string>
     <string id="AppVersionTitle">Version</string>
 
+    <string id="fieldTitleMaxSpeed2s">Max speed (2s)</string>
+    <string id="fieldTitleMaxSpeed10s">Max speed (10s)</string>
+    <string id="fieldLabelMaxSpeed">Max speed</string>
+    <string id="fieldUnitMaxSpeed">m/s</string>
+
+
     <string id="labelMaxSpeed">Max</string>
     <string id="labelMaxSpeed2s">2s</string>
     <string id="labelMaxSpeed10s">10s</string>
@@ -31,5 +37,9 @@
     <string id="settingsUnitsSpeedms">m/s</string>
     <string id="settingsUnitsSpeedkms">km/s</string>
     <string id="settingsUnitsSpeedmph">mph</string>
+
+    <string id="settingsUnitsDistance">Distance Units</string>
+    <string id="settingsUnitsDistanceMeters">meters</string>
+    <string id="settingsUnitsDistanceMiles">miles</string>
 
 </strings>

@@ -2,13 +2,10 @@ import Toybox.Activity;
 import Toybox.Lang;
 
 class ActivityInfoProvider {
-
     private var activity as ActivityController;
-    private var unitConverter as UnitConverter;
 
-    function initialize(activity as ActivityController, unitConverter as UnitConverter) {
+    function initialize(activity as ActivityController) {
         self.activity = activity;
-        self.unitConverter = unitConverter;
     }
 
     public function duration() as Number? {
@@ -29,9 +26,9 @@ class ActivityInfoProvider {
         }
 
         return new SpeedValue(
-            self.unitConverter.speedFromMS(cur.currentSpeed),
-            self.unitConverter.speedFromMS(cur.averageSpeed),
-            self.unitConverter.speedFromMS(cur.maxSpeed)
+            cur.currentSpeed,
+            cur.averageSpeed,
+            cur.maxSpeed
         );
     }
 

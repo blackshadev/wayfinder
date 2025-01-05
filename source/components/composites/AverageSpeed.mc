@@ -2,11 +2,15 @@ import Toybox.Graphics;
 import Toybox.Lang;
 
 class AverageSpeed extends RelativeComponent {
+    private var unitConverter as UnitConverter;
+
     private var label as $.Text;
     private var value as $.Text;
 
-    function initialize(offset as Graphics.Point2D) {
+    function initialize(unitConverter as UnitConverter, offset as Graphics.Point2D) {
         RelativeComponent.initialize();
+
+        self.unitConverter = unitConverter;
 
         self.label = new $.Text({
             :offset => [offset[0], offset[1]], 
@@ -32,7 +36,8 @@ class AverageSpeed extends RelativeComponent {
             return;
         }
 
-        self.value.setText(value.average.format("%0.1f"));
+        var averageValue = self.unitConverter.speedFromMS(value.average);
+        self.value.setText(averageValue.format("%0.1f"));
     }
 
     function setOffset(offset) as Void {

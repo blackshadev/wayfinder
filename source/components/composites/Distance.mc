@@ -2,12 +2,15 @@ import Toybox.Graphics;
 import Toybox.Lang;
 
 class Distance extends RelativeComponent {
+    private var unitConverter as UnitConverter;
 
     private var title as $.Text;
     private var value as $.Text;
 
-    function initialize(offset as Graphics.Point2D) {
+    function initialize(unitConverter as UnitConverter, offset as Graphics.Point2D) {
         RelativeComponent.initialize();
+
+        self.unitConverter = unitConverter;
         
         self.title = new $.Text({
             :offset => [offset[0], offset[1]],
@@ -33,15 +36,17 @@ class Distance extends RelativeComponent {
             return;
         }
 
+        distance = self.unitConverter.distanceFromMeters(distance);
+
         var format = "%.01f";
-        if (distance < 1000.0) {
+        if (distance < 10.0) {
             format = "%0.2f";
         }
         if (distance < 0.0) {
             distance = 0.0;
         }
 
-        self.value.setText((distance / 1000).format(format));
+        self.value.setText(distance.format(format));
     }
 
     function setOffset(offset) as Void {

@@ -2,16 +2,18 @@ import Toybox.Graphics;
 import Toybox.Lang;
 
 class MaxSpeeds extends RelativeComponent {
-    private var title as $.Text;
+    private var unitConverter as UnitConverter;
 
+    private var title as $.Text;
     private var max2s as $.Text;
     private var max10s as $.Text;
-
     private var max2sLabel as $.Text;
     private var max10sLabel as $.Text;
 
-    function initialize(offset as Graphics.Point2D) {
+    function initialize(unitConverter as UnitConverter, offset as Graphics.Point2D) {
         RelativeComponent.initialize();
+
+        self.unitConverter = unitConverter;
 
         self.title = new $.Text({
             :offset => [offset[0], offset[1]], 
@@ -87,8 +89,11 @@ class MaxSpeeds extends RelativeComponent {
             return;
         }
 
-        self.max2s.setText(value.speed2s().format("%.01f"));
-        self.max10s.setText(value.speed10s().format("%.01f"));
+        var max2s = self.unitConverter.speedFromMS(value.speed2s);
+        var max10s = self.unitConverter.speedFromMS(value.speed10s);
+
+        self.max2s.setText(max2s.format("%.01f"));
+        self.max10s.setText(max10s.format("%.01f"));
     }
 
     function layout(dc as Dc) as Void {

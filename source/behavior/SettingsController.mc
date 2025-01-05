@@ -16,13 +16,19 @@ class SettingsController {
     public static const UNITS_SPEED_MPH = 2;
     public static const UNITS_SPEED_DONOTUSE_UPPER_LIMIT = 4;
 
+    public static const UNITS_DISTANCE_UNSET = 9;
+    public static const UNITS_DISTANCE_METERS = 0;
+    public static const UNITS_DISTANCE_MILES = 1;
+    public static const UNITS_DISTANCE_DONOTUSE_UPPER_LIMIT = 2;
+
     function initialize() {
         self.setDefaultUnitsSpeed();
+        self.setDefaultUnitsDistance();
     }
 
     private function setDefaultUnitsSpeed() as Void {
-        
-        if (Application.Properties.getValue("unitsSpeed") != UNITS_SPEED_UNSET) {
+        var current = Application.Properties.getValue("unitsSpeed");
+        if (current != UNITS_SPEED_UNSET && current != null) {
             return;
         }
         
@@ -32,6 +38,20 @@ class SettingsController {
         }
 
         Application.Properties.setValue("unitsSpeed", value);
+    }
+
+    private function setDefaultUnitsDistance() as Void {
+        var current = Application.Properties.getValue("unitsDistance");
+        if (current != UNITS_DISTANCE_UNSET && current != null) {
+            return;
+        }
+        
+        var value = UNITS_DISTANCE_METERS;
+        if (System.getDeviceSettings().distanceUnits == System.UNIT_STATUTE) {
+            value = UNITS_DISTANCE_MILES;
+        }
+
+        Application.Properties.setValue("unitsDistance", value);
     }
 
     public function activityType() as Number {
@@ -62,6 +82,11 @@ class SettingsController {
         }
     }
 
+    public function toggleActivityType() as Void {
+        var curValue = Application.Properties.getValue("activityType");
+        var nextValue = (curValue + 1) % SettingsController.ACTIVITY_DONOTUSE_UPPER_LIMIT;
+        Application.Properties.setValue("activityType", nextValue);
+    }
 
     public function unitsSpeed() as Number {
         var value = Application.Properties.getValue("unitsSpeed");
@@ -88,15 +113,38 @@ class SettingsController {
         }
     }
 
-    public function toggleActivityType() as Void {
-        var curValue = Application.Properties.getValue("activityType");
-        var nextValue = (curValue + 1) % SettingsController.ACTIVITY_DONOTUSE_UPPER_LIMIT;
-        Application.Properties.setValue("activityType", nextValue);
-    }
-
     public function toggleUnitsSpeed() as Void {
         var curValue = Application.Properties.getValue("unitsSpeed");
         var nextValue = (curValue + 1) % SettingsController.UNITS_SPEED_DONOTUSE_UPPER_LIMIT;
         Application.Properties.setValue("unitsSpeed", nextValue);
     }
+
+    public function distance() as Number {
+        var value = Application.Properties.getValue("unitsDistance");
+
+        switch (value) {
+            case 0: return UNITS_DISTANCE_METERS;
+            case 1: return UNITS_DISTANCE_MILES;
+            default: return UNITS_DISTANCE_METERS;
+        }
+    }
+
+    public function toggleUnitsDistance() as Void {
+        var curValue = Application.Properties.getValue("unitsDistance");
+        var nextValue = (curValue + 1) % SettingsController.UNITS_DISTANCE_DONOTUSE_UPPER_LIMIT;
+        Application.Properties.setValue("unitsDistance", nextValue);
+    }
+
+    public function unitsDistanceRes() as ResourceId {
+
+        switch (self.distance()) {
+            case SettingsController.UNITS_DISTANCE_METERS: 
+                return Rez.Strings.settingsUnitsDistanceMeters;
+            case SettingsController.UNITS_DISTANCE_MILES: 
+                return Rez.Strings.settingsUnitsDistanceMiles;
+            default: 
+                return Rez.Strings.settingsUnitsDistanceMeters;
+        }
+    }
+
 }
