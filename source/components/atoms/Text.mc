@@ -6,7 +6,7 @@ typedef TextOptions as {
     :font as FontType,
     :color as ColorType,
     :justification as TextJustification or Number,
-    :text as String?
+    :text as String or ResourceId or Null
 };
 
 class Text extends RelativeComponent {
@@ -23,10 +23,16 @@ class Text extends RelativeComponent {
         self._font = options[:font];
         self._color = options[:color];
         self._justification = options[:justification];
-        self._text = options[:text];
+
+        if (options[:text] != null) {
+            self.setText(options[:text]);
+        }
     }
 
-    function setText(text as String) as Void {
+    function setText(text as String or ResourceId) as Void {
+        if (text instanceof ResourceId) {
+            text = WatchUi.loadResource(text);
+        }
         self._text = text;
     }
 
@@ -50,6 +56,6 @@ class Text extends RelativeComponent {
     }
 
     function height() as Number {
-        return Utils.getFontHeight(self._font);
+        return Utils.Fonts.getFontHeight(self._font);
     }
 }

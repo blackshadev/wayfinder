@@ -13,7 +13,7 @@ class AverageSpeed extends RelativeComponent {
             :font => Graphics.FONT_XTINY, 
             :color => Graphics.COLOR_LT_GRAY, 
             :justification => Graphics.TEXT_JUSTIFY_RIGHT,
-            :text => "Average"
+            :text => Rez.Strings.labelAverageSpeed
         });
         
         self.value = new $.Text({

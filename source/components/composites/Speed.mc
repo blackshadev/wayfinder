@@ -9,7 +9,6 @@ class Speed extends RelativeComponent {
 
     private var currentLabel as $.Text;
     private var maxLabel as $.Text;
-    private var microFont as Graphics.VectorFont;
 
     function initialize(offset as Graphics.Point2D) {
         RelativeComponent.initialize();
@@ -19,27 +18,22 @@ class Speed extends RelativeComponent {
             :font => Graphics.FONT_XTINY, 
             :color => Graphics.COLOR_LT_GRAY, 
             :justification => Graphics.TEXT_JUSTIFY_RIGHT,
-            :text => "Speed"
+            :text => Rez.Strings.labelSpeed
         });
         
-        self.microFont = Utils.getFont(
-            ["NotoSans", "RobotoRegular"],
-            20,
-            Graphics.FONT_XTINY
-        );
         self.currentLabel = new $.Text({
             :offset => [offset[0], offset[1]], 
-            :font => self.microFont, 
+            :font => Utils.Fonts.extraTinyFont(), 
             :color => Graphics.COLOR_DK_GRAY, 
             :justification => Graphics.TEXT_JUSTIFY_RIGHT,
-            :text => "cur."
+            :text => Rez.Strings.labelSpeedCurrent
         });
         self.maxLabel = new $.Text({
             :offset => [offset[0], offset[1]], 
-            :font => self.microFont, 
+            :font => Utils.Fonts.extraTinyFont(), 
             :color => Graphics.COLOR_DK_GRAY, 
             :justification => Graphics.TEXT_JUSTIFY_RIGHT,
-            :text => "max."
+            :text => Rez.Strings.labelSpeedMaximum
         });
 
         self.current = new $.Text({

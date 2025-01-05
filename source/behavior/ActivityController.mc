@@ -1,5 +1,6 @@
 import Toybox.ActivityRecording;
 import Toybox.Activity;
+import Toybox.WatchUi;
 import Toybox.FitContributor;
 import Toybox.Lang;
 import Toybox.Timer;
@@ -30,7 +31,10 @@ class ActivityController {
         var opts = getActivitySettings();
         self.session = ActivityRecording.createSession(opts);
 
-        var speedFieldConfig = { :mesgType => FitContributor.MESG_TYPE_RECORD, :units => "MPS" };
+        var speedFieldConfig = { 
+            :mesgType => FitContributor.MESG_TYPE_RECORD, 
+            :units => WatchUi.loadResource(self.settings.unitsSpeedRes())
+        };
         self.field2s = self.session.createField("max speed 2s", 1, FitContributor.DATA_TYPE_FLOAT, speedFieldConfig);
         self.field10s = self.session.createField("max speed 10s", 2, FitContributor.DATA_TYPE_FLOAT, speedFieldConfig);
 
@@ -114,8 +118,8 @@ class ActivityController {
         }
 
         var value = self.speedAggregator.value();
-        self.field2s.setData(value.speed2sMPS());
-        self.field10s.setData(value.speed10sMPS());
+        self.field2s.setData(value.speed2s());
+        self.field10s.setData(value.speed10s());
     }
 
     private function getActivitySettings() {

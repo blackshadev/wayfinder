@@ -16,14 +16,16 @@ class SpeedAggregationProvider {
 
     private var rawSpeedData as Array<Float>;
     private var updateTimer as Timer.Timer;
+    private var unitConverter as UnitConverter;
     private var sensor as SensorProvider;
 
     private var speeds as Array<Float> = [0.0, 0.0];
 
     private var isStarted as Boolean = false;
 
-    function initialize(sensor as SensorProvider) {
+    function initialize(sensor as SensorProvider, unitConverter as UnitConverter) {
         self.sensor = sensor;
+        self.unitConverter = unitConverter;
         self.rawSpeedData = [];
         self.updateTimer = new Timer.Timer();
     }
@@ -98,8 +100,8 @@ class SpeedAggregationProvider {
         }
 
         return new MaxSpeedValues(
-            self.speeds[0],
-            self.speeds[1]
+            self.unitConverter.speedFromMS(self.speeds[0]),
+            self.unitConverter.speedFromMS(self.speeds[1])
         );
     }
 }

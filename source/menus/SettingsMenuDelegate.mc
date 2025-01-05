@@ -4,6 +4,7 @@ import Toybox.WatchUi;
 
 class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
     public static const ACTIVITY_UPDATE = "activity_update";
+    public static const UNITS_SPEED_UPDATE = "units_speed_update";
 
     private var settings as SettingsController;
 
@@ -20,6 +21,10 @@ class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
             case ACTIVITY_UPDATE:
                 self.settings.toggleActivityType();
                 item.setSubLabel(self.settings.activityTypeRes());
+                return;
+            case UNITS_SPEED_UPDATE:
+                self.settings.toggleUnitsSpeed();
+                item.setSubLabel(self.settings.unitsSpeedRes());
                 return;
         }
     }

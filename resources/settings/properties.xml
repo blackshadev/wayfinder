@@ -1,5 +1,6 @@
 <properties>
 
-    <property id="activityType" type="number">0</property>
+    <property id="activityType" type="number">1</property>
+    <property id="unitsSpeed" type="number">9</property>
 
 </properties>

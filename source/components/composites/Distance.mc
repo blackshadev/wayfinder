@@ -14,7 +14,7 @@ class Distance extends RelativeComponent {
             :font => Graphics.FONT_XTINY,
             :color => Graphics.COLOR_LT_GRAY, 
             :justification => Graphics.TEXT_JUSTIFY_LEFT,
-            :text => "Distance"
+            :text => Rez.Strings.labelDistance
         });
         
         self.value = new $.Text({

@@ -30,7 +30,13 @@ module Layout {
             var height = self.height();
 
             for (var i = 0; i < self.components.size(); i++) {
-                var alignment = (height - self.components[i].height()) / 2;
+                var alignment = 0;
+                var curHeight = self.components[i].height();
+
+                // center components which are not the same height as the largest in the row
+                if (height != curHeight) {
+                    alignment = (height - curHeight) / 2  + curHeight / 4;
+                }
 
                 self.components[i].setOffset([
                     self.components[i].offset()[0],

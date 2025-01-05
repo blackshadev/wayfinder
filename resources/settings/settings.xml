@@ -9,4 +9,13 @@
             <listEntry value="0">@Strings.settingsActivityTypeOther</listEntry>
         </settingConfig>
     </setting>
+
+
+    <setting propertyKey="@Properties.unitsSpeed" title="@Strings.settingsUnitsSpeed">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.settingsUnitsSpeedkms</listEntry>
+            <listEntry value="1">@Strings.settingsUnitsSpeedms</listEntry>
+            <listEntry value="2">@Strings.settingsUnitsSpeedmph</listEntry>
+        </settingConfig>
+    </setting>
 </settings>

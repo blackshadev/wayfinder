@@ -16,7 +16,7 @@ class Time extends RelativeComponent {
             :font => Graphics.FONT_XTINY, 
             :color => Graphics.COLOR_LT_GRAY, 
             :justification => Graphics.TEXT_JUSTIFY_LEFT,
-            :text => "Time"
+            :text => Rez.Strings.labelTime
         });
         
         self.value = new $.Text({

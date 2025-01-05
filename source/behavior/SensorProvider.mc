@@ -2,7 +2,7 @@ import Toybox.Activity;
 import Toybox.Lang;
 
 class SensorProvider {
-
+    
     function initialize() {
     }
 

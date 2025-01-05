@@ -9,7 +9,6 @@ class MaxSpeeds extends RelativeComponent {
 
     private var max2sLabel as $.Text;
     private var max10sLabel as $.Text;
-    private var microFont as Graphics.VectorFont;
 
     function initialize(offset as Graphics.Point2D) {
         RelativeComponent.initialize();
@@ -19,7 +18,7 @@ class MaxSpeeds extends RelativeComponent {
             :font => Graphics.FONT_XTINY, 
             :color => Graphics.COLOR_LT_GRAY, 
             :justification => Graphics.TEXT_JUSTIFY_LEFT,
-            :text => "Max"
+            :text => Rez.Strings.labelMaxSpeed
         });
         
         self.max2s = new $.Text({
@@ -35,24 +34,19 @@ class MaxSpeeds extends RelativeComponent {
             :justification => Graphics.TEXT_JUSTIFY_LEFT
         });
 
-        self.microFont = Utils.getFont(
-            ["NotoSans", "RobotoRegular", "RobotoCondensed"],
-            20,
-            Graphics.FONT_XTINY
-        );
         self.max2sLabel = new $.Text({
             :offset => [offset[0], offset[1]], 
-            :font => self.microFont, 
+            :font => Utils.Fonts.extraTinyFont(), 
             :color => Graphics.COLOR_DK_GRAY, 
             :justification => Graphics.TEXT_JUSTIFY_LEFT,
-            :text => " 2s"
+            :text => Rez.Strings.labelMaxSpeed2s
         });
         self.max10sLabel = new $.Text({
             :offset => [offset[0], offset[1]], 
-            :font => self.microFont, 
+            :font => Utils.Fonts.extraTinyFont(), 
             :color => Graphics.COLOR_DK_GRAY, 
             :justification => Graphics.TEXT_JUSTIFY_LEFT,
-            :text => "10s"
+            :text => Rez.Strings.labelMaxSpeed10s
         });
 
         (new Layout.Vertical({ 
@@ -93,8 +87,8 @@ class MaxSpeeds extends RelativeComponent {
             return;
         }
 
-        self.max2s.setText(value.speed2sKMPH().format("%.01f"));
-        self.max10s.setText(value.speed10sKMPH().format("%.01f"));
+        self.max2s.setText(value.speed2s().format("%.01f"));
+        self.max10s.setText(value.speed10s().format("%.01f"));
     }
 
     function layout(dc as Dc) as Void {
