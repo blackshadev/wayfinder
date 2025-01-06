@@ -1,13 +1,12 @@
 <strings>
     <string id="AppName">Wayfinder</string>
-    <string id="AppVesion">0.1.0</string>
+    <string id="AppVesion">0.2.0</string>
     <string id="AppVersionTitle">Version</string>
 
     <string id="fieldTitleMaxSpeed2s">Max speed (2s)</string>
     <string id="fieldTitleMaxSpeed10s">Max speed (10s)</string>
     <string id="fieldLabelMaxSpeed">Max speed</string>
     <string id="fieldUnitMaxSpeed">m/s</string>
-
 
     <string id="labelMaxSpeed">Max</string>
     <string id="labelMaxSpeed2s">2s</string>
@@ -20,9 +19,16 @@
     <string id="labelAverageSpeed">Average</string>
     <string id="labelDistance">Distance</string>
 
-    <string id="menu_set_waypoint">Set waypoint</string>
-    <string id="menu_set_waypoint_no_location">(No Location)</string>
-    <string id="menu_open_settings">Settings</string>
+    <string id="menuTitle">Wayfinder</string>
+    <string id="menuSetWaypoint">Set waypoint</string>
+    <string id="menuSetWaypointNoLocation">(No Location)</string>
+    <string id="menuOpenSettings">Settings</string>
+
+    <string id="exitMenuTitle">Exit for sure?</string>
+    <string id="exitMenuResume">Resume</string>
+    <string id="exitMenuSaveExit">Save &amp; Exit</string>
+    <string id="exitMenuDiscardExit">Discard &amp; Exit</string>
+    <string id="exitMenuExit">Exit</string>
 
     <string id="settingsTitle">Settings</string>
 

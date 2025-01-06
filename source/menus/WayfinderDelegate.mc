@@ -53,7 +53,8 @@ class WayfinderDelegate extends WatchUi.BehaviorDelegate {
     }
 
     function onBack()  as Boolean {
-        self.viewController.reset();
+        self.viewController.back();
+
         return true;
     }
 

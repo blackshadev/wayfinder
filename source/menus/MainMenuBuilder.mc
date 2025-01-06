@@ -9,16 +9,16 @@ class MainMenuBuilder {
     }
 
     public function build() as WatchUi.Menu2 {
-        var menu = new WatchUi.Menu2({:title=>"Wayfinder"});
+        var menu = new WatchUi.Menu2({ :title => "Wayfinder" });
 
-        var noLocationLabel = null as ResourceId?;
+        var noLocationLabel = null as String?;
         if (!self.waypoint.isSettable()) {
-            noLocationLabel = WatchUi.loadResource(Rez.Strings.menu_set_waypoint_no_location);
+            noLocationLabel = WatchUi.loadResource(Rez.Strings.menuSetWaypointNoLocation);
         }
 
         menu.addItem(
             new MenuItem(
-                WatchUi.loadResource(Rez.Strings.menu_set_waypoint),
+                WatchUi.loadResource(Rez.Strings.menuSetWaypoint),
                 noLocationLabel,
                 MainMenuDelegate.WAYPOINT_SET_ID,
                 {}
@@ -27,7 +27,7 @@ class MainMenuBuilder {
 
         menu.addItem(
             new MenuItem(
-                WatchUi.loadResource(Rez.Strings.menu_open_settings),
+                WatchUi.loadResource(Rez.Strings.menuOpenSettings),
                 null,
                 MainMenuDelegate.SETTINGS_OPEN_ID,
                 {}

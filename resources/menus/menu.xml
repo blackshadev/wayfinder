@@ -1,3 +1,0 @@
-<menu id="MainMenu">
-    <menu-item id="waypoint_set" label="@Strings.menu_set_waypoint" />
-</menu>

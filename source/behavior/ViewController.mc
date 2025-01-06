@@ -7,15 +7,35 @@ class ViewController {
     private var views as Array<WatchUi.View> = [];
     private var iX as Number = 0;
     private var dir as Number = 0;
+    private var activity as ActivityController;
     private var delegate as WayfinderDelegate? = null;
 
-    function initialize(views as Array<WatchUi.View>) {
+    function initialize(views as Array<WatchUi.View>, activity as ActivityController) {
         self.views = views;
-        self.delegate = delegate;
+        self.activity = activity;
     }
 
     function setDelegate(delegate as WayfinderDelegate) as Void {
         self.delegate = delegate;
+    }
+
+    function back() as Void {
+        if (self.iX == 0) {
+            self.confirmExitMenu();
+            return;
+        }
+
+        self.reset();
+    }
+
+    function confirmExitMenu() as Void {
+         var menuBuilder = new ExitMenuBuilder(self.activity);
+
+        WatchUi.pushView(
+            menuBuilder.build(),
+            new ExitMenuDelegate(self.activity),
+            WatchUi.SLIDE_LEFT
+        );
     }
 
     function reset() as Void {

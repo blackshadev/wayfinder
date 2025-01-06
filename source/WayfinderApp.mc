@@ -27,7 +27,7 @@ class WayfinderApp extends Application.AppBase {
         self.viewController = new ViewController([
             new MainView(self.waypoint, self.activityInfo, self.unitConverter),
             new SpeedView(self.waypoint, self.activityInfo, self.speedAggregator, self.unitConverter)
-        ]);
+        ], self.activity);
         var delegate = new WayfinderDelegate(
             self.viewController,
             self.waypoint,
