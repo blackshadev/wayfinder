@@ -18,7 +18,7 @@ class MaxSpeeds extends RelativeComponent {
         self.title = new $.Text({
             :offset => [offset[0], offset[1]], 
             :font => Graphics.FONT_XTINY, 
-            :color => Graphics.COLOR_LT_GRAY, 
+            :color => Utils.Colors.greyForeground, 
             :justification => Graphics.TEXT_JUSTIFY_LEFT,
             :text => Rez.Strings.labelMaxSpeed
         });
@@ -26,27 +26,27 @@ class MaxSpeeds extends RelativeComponent {
         self.max2s = new $.Text({
             :offset => [offset[0] + 35, offset[1]], 
             :font => Graphics.FONT_GLANCE_NUMBER, 
-            :color => Graphics.COLOR_WHITE, 
+            :color => Utils.Colors.foreground, 
             :justification => Graphics.TEXT_JUSTIFY_LEFT
         });
         self.max10s = new $.Text({
             :offset => [offset[0] + 35, offset[1]], 
             :font => Graphics.FONT_GLANCE_NUMBER, 
-            :color => Graphics.COLOR_WHITE, 
+            :color => Utils.Colors.foreground, 
             :justification => Graphics.TEXT_JUSTIFY_LEFT
         });
 
         self.max2sLabel = new $.Text({
             :offset => [offset[0], offset[1]], 
             :font => Utils.Fonts.extraTinyFont(), 
-            :color => Graphics.COLOR_DK_GRAY, 
+            :color => Utils.Colors.greyBackground, 
             :justification => Graphics.TEXT_JUSTIFY_LEFT,
             :text => Rez.Strings.labelMaxSpeed2s
         });
         self.max10sLabel = new $.Text({
             :offset => [offset[0], offset[1]], 
             :font => Utils.Fonts.extraTinyFont(), 
-            :color => Graphics.COLOR_DK_GRAY, 
+            :color => Utils.Colors.greyBackground, 
             :justification => Graphics.TEXT_JUSTIFY_LEFT,
             :text => Rez.Strings.labelMaxSpeed10s
         });

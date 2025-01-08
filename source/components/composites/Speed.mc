@@ -18,7 +18,7 @@ class Speed extends RelativeComponent {
         self.title = new $.Text({
             :offset => [offset[0], offset[1]], 
             :font => Graphics.FONT_XTINY, 
-            :color => Graphics.COLOR_LT_GRAY, 
+            :color => Utils.Colors.greyForeground, 
             :justification => Graphics.TEXT_JUSTIFY_RIGHT,
             :text => Rez.Strings.labelSpeed
         });
@@ -26,14 +26,14 @@ class Speed extends RelativeComponent {
         self.currentLabel = new $.Text({
             :offset => [offset[0], offset[1]], 
             :font => Utils.Fonts.extraTinyFont(), 
-            :color => Graphics.COLOR_DK_GRAY, 
+            :color => Utils.Colors.greyBackground, 
             :justification => Graphics.TEXT_JUSTIFY_RIGHT,
             :text => Rez.Strings.labelSpeedCurrent
         });
         self.maxLabel = new $.Text({
             :offset => [offset[0], offset[1]], 
             :font => Utils.Fonts.extraTinyFont(), 
-            :color => Graphics.COLOR_DK_GRAY, 
+            :color => Utils.Colors.greyBackground, 
             :justification => Graphics.TEXT_JUSTIFY_RIGHT,
             :text => Rez.Strings.labelSpeedMaximum
         });
@@ -41,13 +41,13 @@ class Speed extends RelativeComponent {
         self.current = new $.Text({
             :offset => [offset[0], offset[1]], 
             :font => Graphics.FONT_GLANCE_NUMBER, 
-            :color => Graphics.COLOR_WHITE, 
+            :color => Utils.Colors.foreground, 
             :justification => Graphics.TEXT_JUSTIFY_RIGHT
         });
         self.max = new $.Text({
             :offset => [offset[0], offset[1]], 
             :font => Graphics.FONT_GLANCE_NUMBER, 
-            :color => Graphics.COLOR_WHITE, 
+            :color => Utils.Colors.foreground, 
             :justification => Graphics.TEXT_JUSTIFY_RIGHT
         });
 

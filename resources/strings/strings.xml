@@ -45,7 +45,11 @@
     <string id="settingsUnitsSpeedmph">mph</string>
 
     <string id="settingsUnitsDistance">Distance Units</string>
-    <string id="settingsUnitsDistanceMeters">meters</string>
-    <string id="settingsUnitsDistanceMiles">miles</string>
+    <string id="settingsUnitsDistanceMeters">Meters</string>
+    <string id="settingsUnitsDistanceMiles">Miles</string>
+
+    <string id="settingsBackground">Background Color</string>
+    <string id="settingsBackgroundBlack">Black</string>
+    <string id="settingsBackgroundWhite">White</string>
 
 </strings>

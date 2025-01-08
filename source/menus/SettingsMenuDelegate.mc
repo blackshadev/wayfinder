@@ -6,6 +6,7 @@ class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
     public static const ACTIVITY_UPDATE = "activity_update";
     public static const UNITS_SPEED_UPDATE = "units_speed_update";
     public static const UNITS_DISTANCE_UPDATE = "units_distance_update";
+    public static const BACKGROUND_UPDATE = "background_update";
 
     private var settings as SettingsController;
 
@@ -30,6 +31,10 @@ class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
             case UNITS_DISTANCE_UPDATE:
                 self.settings.toggleUnitsDistance();
                 item.setSubLabel(self.settings.unitsDistanceRes());
+                return;
+            case BACKGROUND_UPDATE:
+                self.settings.toggleBackground();
+                item.setSubLabel(self.settings.backgroundRes());
                 return;
         }
     }

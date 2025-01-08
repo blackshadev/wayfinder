@@ -21,9 +21,17 @@ class SettingsController {
     public static const UNITS_DISTANCE_MILES = 1;
     public static const UNITS_DISTANCE_DONOTUSE_UPPER_LIMIT = 2;
 
+    public static const BACKGROUND_UNSET = 9;
+    public static const BACKGROUND_BLACK = 0;
+    public static const BACKGROUND_WHITE = 1;
+    public static const BACKGROUND_DONOTUSE_UPPER_LIMIT = 2;
+
     function initialize() {
         self.setDefaultUnitsSpeed();
         self.setDefaultUnitsDistance();
+        self.setDefaultBackground();
+
+        self.applyBackground();
     }
 
     private function setDefaultUnitsSpeed() as Void {
@@ -52,6 +60,20 @@ class SettingsController {
         }
 
         Application.Properties.setValue("unitsDistance", value);
+    }
+
+    private function setDefaultBackground() as Void {
+        var current = Application.Properties.getValue("background");
+        if (current != BACKGROUND_UNSET && current != null) {
+            return;
+        }
+        
+        var value = BACKGROUND_WHITE;
+        if (System has :getDisplayMode) {
+            value = BACKGROUND_BLACK;
+        }
+
+        Application.Properties.setValue("background", value);
     }
 
     public function activityType() as Number {
@@ -147,4 +169,45 @@ class SettingsController {
         }
     }
 
+    public function background() as Number {
+        var value = Application.Properties.getValue("background");
+
+        switch (value) {
+            case 0: return BACKGROUND_BLACK;
+            case 1: return BACKGROUND_WHITE;
+            default: return BACKGROUND_BLACK;
+        }
+    }
+
+    public function toggleBackground() as Void {
+        var curValue = Application.Properties.getValue("background");
+        var nextValue = (curValue + 1) % SettingsController.BACKGROUND_DONOTUSE_UPPER_LIMIT;
+        Application.Properties.setValue("background", nextValue);
+
+        self.applyBackground();
+    }
+
+    public function backgroundRes() as ResourceId {
+
+        switch (self.background()) {
+            case SettingsController.BACKGROUND_BLACK: 
+                return Rez.Strings.settingsBackgroundBlack;
+            case SettingsController.BACKGROUND_WHITE: 
+                return Rez.Strings.settingsBackgroundWhite;
+            default: 
+                return Rez.Strings.settingsBackgroundBlack;
+        }
+    }
+
+    private function applyBackground() as Void {
+        switch (self.background()) {
+            case SettingsController.BACKGROUND_WHITE: 
+                Utils.Colors.switchToWhiteBackground();
+                break;
+            default: 
+            case SettingsController.BACKGROUND_BLACK: 
+                Utils.Colors.switchToBlackBackground();
+                break;
+        }
+    }
 }

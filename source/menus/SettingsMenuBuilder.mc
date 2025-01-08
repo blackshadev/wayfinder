@@ -38,6 +38,15 @@ class SettingsMenuBuilder {
             )
         );
 
+        menu.addItem(
+            new MenuItem(
+                Rez.Strings.settingsBackground,
+                self.settings.backgroundRes(),
+                SettingsMenuDelegate.BACKGROUND_UPDATE,
+                {}
+            )
+        );
+
         return menu;
     }
 

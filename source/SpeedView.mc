@@ -69,7 +69,7 @@ class SpeedView extends WatchUi.View {
     }
 
     function onUpdate(dc as Dc) as Void {
-        dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
+        dc.setColor(Utils.Colors.background, Utils.Colors.background);
         dc.clear();
 
         self.arrow.draw(dc);

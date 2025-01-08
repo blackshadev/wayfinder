@@ -25,4 +25,12 @@
             <listEntry value="1">@Strings.settingsUnitsDistanceMiles</listEntry>
         </settingConfig>
     </setting>
+
+
+    <setting propertyKey="@Properties.background" title="@Strings.settingsBackground">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.settingsBackgroundBlack</listEntry>
+            <listEntry value="1">@Strings.settingsBackgroundWhite</listEntry>
+        </settingConfig>
+    </setting>
 </settings>
