@@ -40,6 +40,14 @@ class WaypointController {
         self.curAngle = self.calculateAngle();
     }
 
+    public function currentLocation() as Position.Location? {
+        return self.lastPosition;
+    }
+
+    public function waypointLocation() as Position.Location? {
+        return self.waypoint;
+    }
+
     public function angle() as Number? {
         return self.curAngle;
     }

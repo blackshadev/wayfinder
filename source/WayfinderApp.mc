@@ -44,10 +44,16 @@ class WayfinderApp extends Application.AppBase {
     }
 
     private function resetViews() as Void {
-        self.viewController.setViews([
+        var views = [
             new MainView(self.waypoint, self.activityInfo, self.unitConverter),
             new SpeedView(self.waypoint, self.activityInfo, self.speedAggregator, self.unitConverter)
-        ]);
+        ];
+
+        if (WatchUi has :MapTrackView) {
+            views.add(new MapView(self.waypoint));
+        }
+
+        self.viewController.setViews(views);
         self.viewController.resetView();
     }
 

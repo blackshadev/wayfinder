@@ -1,3 +1,9 @@
+## v0.4.0
+
+Mapview for supported devices
+
+- Add mapview with your waypoint on it
+
 ## v0.3.0
 
 Add background option and about menu

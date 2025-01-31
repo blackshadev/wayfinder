@@ -1,6 +1,6 @@
 <strings>
     <string id="AppName">Wayfinder</string>
-    <string id="AppVersion">0.3.0</string>
+    <string id="AppVersion">0.4.0</string>
 
     <string id="fieldTitleMaxSpeed2s">Max speed (2s)</string>
     <string id="fieldTitleMaxSpeed10s">Max speed (10s)</string>
@@ -63,5 +63,7 @@
     <string id="aboutMenuTitle">About</string>
     <string id="aboutMenuAppName">App Name</string>
     <string id="aboutMenuVersion">Version</string>
+
+    <string id="mapNoLocation">No location...</string>
 
 </strings>
