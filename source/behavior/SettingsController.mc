@@ -201,7 +201,7 @@ class SettingsController {
 
     private function applyBackground() as Void {
         switch (self.background()) {
-            case SettingsController.BACKGROUND_WHITE: 
+            case SettingsController.BACKGROUND_WHITE:
                 Utils.Colors.switchToWhiteBackground();
                 break;
             default: 

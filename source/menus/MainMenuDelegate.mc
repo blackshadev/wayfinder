@@ -50,5 +50,6 @@ class MainMenuDelegate extends WatchUi.Menu2InputDelegate {
 
     function onBack() as Void {
         WatchUi.popView(WatchUi.SLIDE_RIGHT);
+        getApp().onSettingsChanged();
     }
 }

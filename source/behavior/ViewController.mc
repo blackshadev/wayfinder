@@ -10,9 +10,12 @@ class ViewController {
     private var activity as ActivityController;
     private var delegate as WayfinderDelegate? = null;
 
-    function initialize(views as Array<WatchUi.View>, activity as ActivityController) {
-        self.views = views;
+    function initialize(activity as ActivityController) {
         self.activity = activity;
+    }
+
+    function setViews(views as Array<WatchUi.View>) as Void {
+        self.views = views;
     }
 
     function setDelegate(delegate as WayfinderDelegate) as Void {
@@ -78,6 +81,14 @@ class ViewController {
         );
     }
 
+    public function resetView() as Void {
+        WatchUi.switchToView(
+            self.views[self.iX], 
+            self.delegate, 
+            WatchUi.SLIDE_IMMEDIATE
+        );
+    }
+
     private function backAnimation() as WatchUi.SlideType {
         if (self.dir == -1) {
             return WatchUi.SLIDE_UP;
@@ -86,7 +97,7 @@ class ViewController {
         return WatchUi.SLIDE_DOWN;
     }
 
-    function getView() {
+    function getView() as [ WatchUi.Views, WatchUi.InputDelegates ] {
         return [self.views[self.iX], self.delegate];
     }
 
