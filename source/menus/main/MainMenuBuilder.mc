@@ -34,6 +34,15 @@ class MainMenuBuilder {
             )
         );
 
+        menu.addItem(
+            new MenuItem(
+                WatchUi.loadResource(Rez.Strings.menuOpenAbout),
+                null,
+                MainMenuDelegate.ABOUT_OPEN_ID,
+                {}
+            )
+        );
+
         return menu;
     }
 }

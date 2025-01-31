@@ -5,6 +5,7 @@ import Toybox.WatchUi;
 class MainMenuDelegate extends WatchUi.Menu2InputDelegate {
     public static const WAYPOINT_SET_ID = "waypoint_set";
     public static const SETTINGS_OPEN_ID = "settings_open";
+    public static const ABOUT_OPEN_ID = "about_open";
 
     private var waypoint as WaypointController;
     private var settings as SettingsController;
@@ -25,6 +26,9 @@ class MainMenuDelegate extends WatchUi.Menu2InputDelegate {
             case SETTINGS_OPEN_ID:
                 self.openSettingsMenu();
                 break;
+            case ABOUT_OPEN_ID:
+                self.openAboutMenu();
+                break;
             default:
                 System.println("No action for id " + id);
         }
@@ -44,6 +48,16 @@ class MainMenuDelegate extends WatchUi.Menu2InputDelegate {
         WatchUi.pushView(
             menuBuilder.build(),
             new SettingsMenuDelegate(self.settings),
+            WatchUi.SLIDE_LEFT
+        );
+    }
+
+    private function openAboutMenu() as Void {
+        var menuBuilder = new AboutMenuBuilder();
+
+        WatchUi.pushView(
+            menuBuilder.build(),
+            new AboutMenuDelegate(),
             WatchUi.SLIDE_LEFT
         );
     }

@@ -8,12 +8,14 @@ class ActivityMenuBuilder {
     }
 
     public function build() as WatchUi.Menu2 {
-        var menu = new WatchUi.Menu2({:title=>"Activity"});
+        var menu = new WatchUi.Menu2({
+            :title => WatchUi.loadResource(Rez.Strings.activityMenuTitle)
+        });
 
         if (self.activity.isPaused()) {
             menu.addItem(
                 new MenuItem(
-                    "Resume",
+                    WatchUi.loadResource(Rez.Strings.activityMenuResume),
                     null,
                     ActivityMenuDelegate.ACTIVITY_RESUME,
                     {}
@@ -22,7 +24,7 @@ class ActivityMenuBuilder {
         } else {
            menu.addItem(
                 new MenuItem(
-                    "Pause",
+                    WatchUi.loadResource(Rez.Strings.activityMenuPause),
                     null,
                     ActivityMenuDelegate.ACTIVITY_PAUSE,
                     {}
@@ -32,7 +34,7 @@ class ActivityMenuBuilder {
         
         menu.addItem(
             new MenuItem(
-                "Save",
+                WatchUi.loadResource(Rez.Strings.activityMenuSave),
                 null,
                 ActivityMenuDelegate.ACTIVITY_SAVE,
                 {}
@@ -41,7 +43,7 @@ class ActivityMenuBuilder {
 
         menu.addItem(
             new MenuItem(
-                "Discard",
+                WatchUi.loadResource(Rez.Strings.activityMenuDiscard),
                 null,
                 ActivityMenuDelegate.ACTIVITY_DISCARD,
                 {}

@@ -1,7 +1,6 @@
 <strings>
     <string id="AppName">Wayfinder</string>
-    <string id="AppVesion">0.2.0</string>
-    <string id="AppVersionTitle">Version</string>
+    <string id="AppVersion">0.3.0</string>
 
     <string id="fieldTitleMaxSpeed2s">Max speed (2s)</string>
     <string id="fieldTitleMaxSpeed10s">Max speed (10s)</string>
@@ -22,7 +21,16 @@
     <string id="menuTitle">Wayfinder</string>
     <string id="menuSetWaypoint">Set waypoint</string>
     <string id="menuSetWaypointNoLocation">(No Location)</string>
-    <string id="menuOpenSettings">Settings</string>
+    <string id="menuOpenSettings">Settings...</string>
+    <string id="menuOpenAbout">About...</string>
+
+    <string id="activityMenuTitle">Activity</string>
+    <string id="activityMenuResume">Resume</string>
+    <string id="activityMenuPause">Pause</string>
+    <string id="activityMenuStart">Start</string>
+    <string id="activityMenuSave">Save</string>
+    <string id="activityMenuDiscard">Discard</string>
+
 
     <string id="exitMenuTitle">Exit for sure?</string>
     <string id="exitMenuResume">Resume</string>
@@ -51,5 +59,9 @@
     <string id="settingsBackground">Background Color</string>
     <string id="settingsBackgroundBlack">Black</string>
     <string id="settingsBackgroundWhite">White</string>
+
+    <string id="aboutMenuTitle">About</string>
+    <string id="aboutMenuAppName">App Name</string>
+    <string id="aboutMenuVersion">Version</string>
 
 </strings>
