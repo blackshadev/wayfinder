@@ -27,6 +27,10 @@ class SettingsController {
     public static const BACKGROUND_DONOTUSE_UPPER_LIMIT = 2;
 
     function initialize() {
+        self.applyFromStorage();
+    }
+
+    public function applyFromStorage() as Void {
         self.setDefaultUnitsSpeed();
         self.setDefaultUnitsDistance();
         self.setDefaultBackground();

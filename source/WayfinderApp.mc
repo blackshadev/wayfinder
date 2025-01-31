@@ -38,6 +38,8 @@ class WayfinderApp extends Application.AppBase {
     }
 
     function onSettingsChanged() as Void {
+        self.settings.applyFromStorage();
+
         self.resetViews();
     }
 

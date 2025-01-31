@@ -87,6 +87,7 @@ class ViewController {
             self.delegate, 
             WatchUi.SLIDE_IMMEDIATE
         );
+        WatchUi.requestUpdate();
     }
 
     private function backAnimation() as WatchUi.SlideType {
