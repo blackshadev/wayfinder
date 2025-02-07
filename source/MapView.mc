@@ -6,15 +6,20 @@ import Toybox.Position;
 
 class MapView extends WatchUi.MapTrackView {
     private var waypoint as WaypointController;
-    // private var updateTimer as Timer.Timer;
+    private var settings as SettingsController;
+    
     private var noLocationText as Text;
+    private var arrow as Arrow;
     private var currentWaypoint as Location? = null;
 
-    function initialize(waypoint as WaypointController) {
+    function initialize(
+        waypoint as WaypointController,
+        settings as SettingsController
+    ) {
         MapTrackView.initialize();
 
-        // self.updateTimer = new Timer.Timer();
         self.waypoint = waypoint;
+        self.settings = settings;
 
         self.noLocationText = new Text({
             :offset => [0, 0],
@@ -24,12 +29,15 @@ class MapView extends WatchUi.MapTrackView {
             :text => Rez.Strings.mapNoLocation
         });
 
+        self.arrow = new Arrow(Utils.Sizing.arrow);
+
         self.setMapMode(WatchUi.MAP_MODE_PREVIEW);
     }
 
     function onLayout(dc as Dc) as Void {
         MapTrackView.onLayout(dc);
 
+        self.arrow.layout(dc);
         self.noLocationText.layout(dc);
 
         self.setScreenVisibleArea(0, 0, dc.getWidth(), dc.getHeight());
@@ -49,15 +57,33 @@ class MapView extends WatchUi.MapTrackView {
 
         if (self.waypointIsStale()) {
             var waypoint = self.waypoint.waypointLocation();
-
             self.currentWaypoint = waypoint;
-            var top_left = waypoint.getProjectedLocation(Math.toRadians(315), 1000);
-            var bottom_right = waypoint.getProjectedLocation(Math.toRadians(135), 1000);
 
-            self.clear();
-            self.setMapVisibleArea(top_left, bottom_right);
-            self.setMapMarker(new MapMarker(waypoint));
+            self.updateMapMarker();
         }
+
+        self.arrow.setAngle(self.waypoint.absoluteAngle());
+        self.arrow.draw(dc);
+    }
+
+    private function updateMapMarker() as Void { 
+        if (self.currentWaypoint == null) {
+            return;
+        }
+
+        self.clear();
+        self.setMapMarker(new MapMarker(self.currentWaypoint));
+    }
+
+    function onShow() as Void {
+        var distance = self.settings.mapZoomDistance() / 2;
+
+        var position = Position.getInfo().position;
+        var top_left = position.getProjectedLocation(Math.toRadians(315), distance);
+        var bottom_right = position.getProjectedLocation(Math.toRadians(135), distance);
+        self.setMapVisibleArea(top_left, bottom_right);
+
+        self.updateMapMarker();
     }
 
     private function waypointIsStale() as Boolean {

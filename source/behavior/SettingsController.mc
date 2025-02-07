@@ -203,6 +203,49 @@ class SettingsController {
         }
     }
 
+    public function mapZoomDistance() as Number {
+        var curValue = Application.Properties.getValue("mapZoomDistance");
+
+        switch (curValue) {
+            case 1000:
+                return 1000;
+            case 1500:
+                return 1500;
+            case 2000:
+                return 2000;
+            case 5000:
+                return 5000;
+
+            default:
+                return 1000;
+        }
+    }
+
+    public function mapZoomDistanceRes() as ResourceId {
+
+        switch (self.mapZoomDistance()) {
+            case 1000: 
+                return Rez.Strings.settings1000m;
+            case 1500:
+                return Rez.Strings.settings1500m;
+            case 2000:
+                return Rez.Strings.settings2km;
+            case 5000:
+                return Rez.Strings.settings5km;
+            
+            default: 
+                return Rez.Strings.settings1000m;
+        }
+    }
+
+    public function toggleMapZoomDistance() as Void {
+        var values = [1000, 1500, 2000, 5000];
+
+        var curValue = self.mapZoomDistance();
+        var nextIndex = (values.indexOf(curValue) + 1) % values.size();
+        Application.Properties.setValue("mapZoomDistance", values[nextIndex]);
+    }
+
     private function applyBackground() as Void {
         switch (self.background()) {
             case SettingsController.BACKGROUND_WHITE:

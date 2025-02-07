@@ -33,4 +33,13 @@
             <listEntry value="1">@Strings.settingsBackgroundWhite</listEntry>
         </settingConfig>
     </setting>
+
+    <setting propertyKey="@Properties.mapZoomDistance" title="@Strings.settingsMapZoomDistance">
+        <settingConfig type="list">
+            <listEntry value="1000">@Strings.settings1000m</listEntry>
+            <listEntry value="1500">@Strings.settings1500m</listEntry>
+            <listEntry value="2000">@Strings.settings2km</listEntry>
+            <listEntry value="5000">@Strings.settings5km</listEntry>
+        </settingConfig>
+    </setting>
 </settings>

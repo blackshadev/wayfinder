@@ -3,4 +3,5 @@
     <property id="unitsSpeed" type="number">9</property>
     <property id="unitsDistance" type="number">9</property>
     <property id="background" type="number">9</property>
+    <property id="mapZoomDistance" type="number">2000</property>
 </properties>

@@ -7,6 +7,7 @@ class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
     public static const UNITS_SPEED_UPDATE = "units_speed_update";
     public static const UNITS_DISTANCE_UPDATE = "units_distance_update";
     public static const BACKGROUND_UPDATE = "background_update";
+    public static const MAP_ZOOM_DISTANCE_UPDATE = "map_zoom_distance_update";
 
     private var settings as SettingsController;
 
@@ -35,6 +36,10 @@ class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
             case BACKGROUND_UPDATE:
                 self.settings.toggleBackground();
                 item.setSubLabel(self.settings.backgroundRes());
+                return;
+            case MAP_ZOOM_DISTANCE_UPDATE:
+                self.settings.toggleMapZoomDistance();
+                item.setSubLabel(self.settings.mapZoomDistanceRes());
                 return;
         }
     }

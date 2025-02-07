@@ -47,6 +47,15 @@ class SettingsMenuBuilder {
             )
         );
 
+        menu.addItem(
+            new MenuItem(
+                Rez.Strings.settingsMapZoomDistance,
+                self.settings.mapZoomDistanceRes(),
+                SettingsMenuDelegate.MAP_ZOOM_DISTANCE_UPDATE,
+                {}
+            )
+        );
+
         return menu;
     }
 

@@ -50,7 +50,7 @@ class WayfinderApp extends Application.AppBase {
         ];
 
         if (WatchUi has :MapTrackView) {
-            views.add(new MapView(self.waypoint));
+            views.add(new MapView(self.waypoint, self.settings));
         }
 
         self.viewController.setViews(views);

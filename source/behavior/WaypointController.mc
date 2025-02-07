@@ -9,7 +9,9 @@ class WaypointController {
     private var waypoint as Position.Location? = null;
     private var shouldSet as Boolean = false;
     private var sensor as SensorProvider;
-    private var curAngle as Number? = null;
+    private var waypointAngle as Number? = null;
+    private var headingAngle as Number? = null;
+    private var relativeWaypointAngle as Number? = null;
 
     function initialize(sensor as SensorProvider) {
         self.sensor = sensor;
@@ -37,7 +39,9 @@ class WaypointController {
             return;
         }
 
-        self.curAngle = self.calculateAngle();
+        self.waypointAngle = self.calculateWaypointAngle();
+        self.headingAngle = self.calculateHeadingAngle();
+        self.relativeWaypointAngle = ((self.waypointAngle - self.headingAngle) + 360) % 360;
     }
 
     public function currentLocation() as Position.Location? {
@@ -49,10 +53,14 @@ class WaypointController {
     }
 
     public function angle() as Number? {
-        return self.curAngle;
+        return self.relativeWaypointAngle;
     }
 
-    private function calculateAngle() as Number? {
+    public function absoluteAngle() as Number? {
+        return self.waypointAngle;
+    }
+
+    private function calculateWaypointAngle() as Number? {
         if (self.lastPosition == null || self.waypoint == null) {
             return null;
         }
@@ -61,10 +69,12 @@ class WaypointController {
         var currentPos = self.lastPosition.toDegrees();
 
         var absoluteAngleInRads = Math.atan2(waypointPos[1] - currentPos[1], waypointPos[0] - currentPos[0]);
-        var absoluteInDegrees = (Math.toDegrees(absoluteAngleInRads).toNumber() + 360) % 360;
-        var headingInDegrees = (Math.toDegrees(self.sensor.heading()).toNumber() + 360) % 360;
+        
+        return (Math.toDegrees(absoluteAngleInRads).toNumber() + 360) % 360;
+    }
 
-        return ((absoluteInDegrees - headingInDegrees) + 360) % 360;
+    private function calculateHeadingAngle() as Number? {
+        return (Math.toDegrees(self.sensor.heading()).toNumber() + 360) % 360;
     }
 
     public function isSet() as Boolean {
