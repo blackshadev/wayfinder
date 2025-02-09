@@ -3,6 +3,7 @@
 Mapview for supported devices
 
 - Add mapview with your waypoint on it
+- Set minimum API to 3.1.0 and add all devices
 
 ## v0.3.0
 
