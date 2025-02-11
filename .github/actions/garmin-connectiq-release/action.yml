@@ -1,0 +1,23 @@
+name: 'Garmin ConnectIQ Release'
+description: 'Exports a garmin connect IQ project ready for release'
+inputs:
+  developerKey:
+    description: 'Developer key to sign the export with. Please do not push this to your repo unencrypted'
+    required: true
+    default: './developer_key'
+  projectJungle:
+    description: 'Path to the monkey.jungle file'
+    required: true
+    default: './monkey.jungle'
+  outputPath:
+    description: 'Output path of the export'
+    required: true
+    default: './out/export.iq'
+outputs: {}
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.projectJungle }}
+    - ${{ inputs.developerKey }}
+    - ${{ inputs.outputPath }}

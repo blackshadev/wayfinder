@@ -1,0 +1,28 @@
+name: Release
+run-name: ${{ github.actor }} is releasing wayfinder 🚀
+on: [push]
+jobs:
+  Create-Release:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Decrypt developer key
+        run: ./.github/scripts/decrypt_secret.sh
+        env:
+          INPUT: ./developer_key.gpg
+          OUTPUT: ./developer_key
+          PASSPHRASE: ${{ secrets.DEVELOPER_KEY_PASSPHRASE }}
+      - name: Create release
+        uses: ./.github/actions/garmin-connectiq-release
+        with:
+          projectJungle: ./monkey.jungle
+          developerKey: ./developer_key
+          outputPath: out/wayfinder.iq
+      - name: Upload release artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release
+          path: out/wayfinder.iq
+
