@@ -1,4 +1,4 @@
-/bin/sh
+#!/bin/sh
 
 PROJECT=$1
 DEVELOPER_KEY=$2
