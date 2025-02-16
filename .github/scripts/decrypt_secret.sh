@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 gpg \
     --quiet --batch --yes --decrypt \
     --passphrase="$PASSPHRASE" \
