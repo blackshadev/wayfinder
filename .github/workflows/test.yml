@@ -1,0 +1,25 @@
+name: Test
+run-name: ${{ github.actor }} is testing wayfinder!
+on: push
+
+jobs:
+  Test-Build:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Decrypt developer key
+        run: ./.github/scripts/decrypt_secret.sh
+        env:
+          INPUT: ./developer_key.gpg
+          OUTPUT: ./developer_key
+          PASSPHRASE: ${{ secrets.DEVELOPER_KEY_PASSPHRASE }}
+      - name: Build
+        uses: blackshadev/garmin-connectiq-build-action@0.1.0
+        with:
+          projectJungle: ./monkey.jungle
+          developerKey: ./developer_key
+          outputPath: out/app.prg
+          device: fr165
+          typeCheck: '1'
