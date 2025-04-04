@@ -24,7 +24,14 @@ class WayfinderApp extends Application.AppBase {
         self.activity = new ActivityController(self.settings, self.speedAggregator);
         self.activityInfo = new ActivityInfoProvider(self.activity);
         
-        self.viewController = new ViewController(self.activity);
+        self.viewController = new ViewController(
+            self.activity,
+            self.waypoint,
+            self.activityInfo,
+            self.speedAggregator, 
+            self.unitConverter,
+            self.settings
+        );
 
         var delegate = new WayfinderDelegate(
             self.viewController,
@@ -34,26 +41,11 @@ class WayfinderApp extends Application.AppBase {
         );
 
         self.viewController.setDelegate(delegate);
-        self.resetViews();
     }
 
     function onSettingsChanged() as Void {
         self.settings.applyFromStorage();
-
-        self.resetViews();
-    }
-
-    private function resetViews() as Void {
-        var views = [
-            new MainView(self.waypoint, self.activityInfo, self.unitConverter),
-            new SpeedView(self.waypoint, self.activityInfo, self.speedAggregator, self.unitConverter)
-        ];
-
-        if (WatchUi has :MapTrackView) {
-            views.add(new MapView(self.waypoint, self.settings));
-        }
-
-        self.viewController.setViews(views);
+        
         self.viewController.resetView();
     }
 
@@ -66,7 +58,7 @@ class WayfinderApp extends Application.AppBase {
     }
 
     function getInitialView() as [ WatchUi.Views ] or [ WatchUi.Views, WatchUi.InputDelegates ] {
-        return self.viewController.getView();
+        return [self.viewController.getView(), self.viewController.getDelegate()];
     }
 }
 
