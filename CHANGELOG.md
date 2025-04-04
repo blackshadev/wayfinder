@@ -1,3 +1,8 @@
+## v0.5.2
+
+Reduce memory and system load by lazy initializing views when required
+
+
 ## v0.4.0
 
 Mapview for supported devices
