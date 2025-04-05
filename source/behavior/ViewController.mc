@@ -7,7 +7,6 @@ class ViewController {
     private const VIEW_MAIN = 0;
     private const VIEW_SPEED = 1;
     private const VIEW_MAP = 2;
-    private const MAX_VIEW = 3;
 
     private var views as Array<Number> = [VIEW_MAIN, VIEW_SPEED];
     private var iX as Number = 0;

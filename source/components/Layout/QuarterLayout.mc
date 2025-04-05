@@ -24,12 +24,10 @@ class QuarterLayout extends Component {
         self.br = br;
         self.bl = bl;
 
-        var offset = Utils.Sizing.offset;
-
-        tl.setOffset([ -offset, -offset ]);
-        tr.setOffset([ offset, -offset ]);
-        br.setOffset([ offset, offset ]);
-        bl.setOffset([ -offset, offset ]);
+        tl.setOffset(Utils.Offsets.tl);
+        tr.setOffset(Utils.Offsets.tr);
+        br.setOffset(Utils.Offsets.br);
+        bl.setOffset(Utils.Offsets.bl);
     }
 
     public function layout(dc as Dc) as Void {
