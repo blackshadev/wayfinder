@@ -31,7 +31,7 @@ module Utils {
                 INSTINCT_2S_SOLAR,
                 INSTINCT_2X_SOLAR,
                 INSTINCT_3_SOLAR
-            ].indexOf(settings.partNumber);
+            ].indexOf(settings.partNumber) > -1;
 
             if (shouldOffsetTopRightForSolarDevices) {
                 self.tr = [self.tr[0] + 18, self.tr[1] - 30];

@@ -1,3 +1,7 @@
+## v0.6.1
+
+Bugfix invalid check for Instinct Solar devices
+
 ## v0.6.0
 
 Introduce special cases for Instinct 3 Solar, Instinct 2 Solar, Instinct 2S Solar, Instinct 2X Solar to move the top right quarter into the extra watch window.
