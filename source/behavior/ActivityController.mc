@@ -34,7 +34,7 @@ class ActivityController {
         var opts = getActivitySettings();
         self.session = ActivityRecording.createSession(opts);
 
-
+        self.createField();
         self.session.start();
         self.speedAggregator.start();
         self.startUpdateValuesTimer();
@@ -93,6 +93,8 @@ class ActivityController {
         self.session.stop();
         self.session.discard();
         self.session = null;
+        self.field10s = null;
+        self.field2s = null;
     }
 
     public function save() as Void {
@@ -106,6 +108,8 @@ class ActivityController {
         self.session.stop();
         self.session.save();
         self.session = null;
+        self.field10s = null;
+        self.field2s = null;
     } 
 
     public function isStarted() as Boolean {

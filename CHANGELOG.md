@@ -1,3 +1,7 @@
+## v0.6.2
+
+Bugfix datafield creation for 2s and 10s max speed
+
 ## v0.6.1
 
 Bugfix invalid check for Instinct Solar devices
