@@ -4,9 +4,9 @@ import Toybox.System;
 import Toybox.Lang;
 
 class UnitConverter {
-    private var _settings as SettingsController;
+    private var _settings as SettingsController or FakeSettingsController;
     
-    function initialize(settings as SettingsController) {
+    function initialize(settings as SettingsController or FakeSettingsController) {
         self._settings = settings;
     }
 
