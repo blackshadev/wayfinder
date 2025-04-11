@@ -22,6 +22,8 @@ class UnitConverter {
                 return ms;
             case SettingsController.UNITS_SPEED_MPH:
                 return ms * 2.23693629;
+            case SettingsController.UNITS_SPEED_KNOTS:
+                return ms * 1.94384449;
         }
 
         throw new NotImplemented();

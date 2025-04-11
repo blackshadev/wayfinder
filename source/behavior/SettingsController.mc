@@ -14,6 +14,7 @@ class SettingsController {
     public static const UNITS_SPEED_KMH = 0;
     public static const UNITS_SPEED_MS = 1;
     public static const UNITS_SPEED_MPH = 2;
+    public static const UNITS_SPEED_KNOTS = 3;
     public static const UNITS_SPEED_DONOTUSE_UPPER_LIMIT = 4;
 
     public static const UNITS_DISTANCE_UNSET = 9;
@@ -121,6 +122,7 @@ class SettingsController {
             case 0: return UNITS_SPEED_KMH;
             case 1: return UNITS_SPEED_MS;
             case 2: return UNITS_SPEED_MPH;
+            case 3: return UNITS_SPEED_KNOTS;
             default: return UNITS_SPEED_KMH;
         }
     }
@@ -134,6 +136,8 @@ class SettingsController {
                 return Rez.Strings.settingsUnitsSpeedms;
             case SettingsController.UNITS_SPEED_MPH: 
                 return Rez.Strings.settingsUnitsSpeedmph;
+            case SettingsController.UNITS_SPEED_KNOTS: 
+                return Rez.Strings.settingsUnitsSpeedknots;
             default: 
                 return Rez.Strings.settingsUnitsSpeedkms;
         }

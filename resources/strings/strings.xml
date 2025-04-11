@@ -31,7 +31,6 @@
     <string id="activityMenuSave">Save</string>
     <string id="activityMenuDiscard">Discard</string>
 
-
     <string id="exitMenuTitle">Exit for sure?</string>
     <string id="exitMenuResume">Resume</string>
     <string id="exitMenuSaveExit">Save &amp; Exit</string>
@@ -51,6 +50,7 @@
     <string id="settingsUnitsSpeedms">m/s</string>
     <string id="settingsUnitsSpeedkms">km/s</string>
     <string id="settingsUnitsSpeedmph">mph</string>
+    <string id="settingsUnitsSpeedknots">knots</string>
 
     <string id="settingsUnitsDistance">Distance Units</string>
     <string id="settingsUnitsDistanceMeters">Meters</string>
