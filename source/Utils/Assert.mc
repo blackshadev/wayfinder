@@ -2,27 +2,21 @@ import Toybox.Test;
 import Toybox.Lang;
 
 module Assert {
-    public function isEqual(logger as Logger, expected, actual) as Boolean {
-        if (actual != expected) {
-            logger.error("Failed asserting that " + expected + " is equal to " + actual);
-            return false;
+    public function isEqual(expected as Object?, actual as Object?) as Void {
+        if (expected == null && actual == null) {
+            return;
         }
 
-        return true;
-    }
-
-    public function expectedException(logger as Logger) as Boolean {
-        logger.error("Expected exception but got none");
-        return false;
-    }
-
-    public function all(all as Array<Boolean>) as Boolean {
-        for (var i = 0; i < all.size(); i++) {
-            if (all[i] == false) {
-                return false;
-            }
+        if (expected == null || actual == null) {
+            Test.assertMessage(false, "Failed asserting that " + expected + " is equal to " + actual);
         }
 
-        return true;
+        Test.assertEqualMessage(expected, actual, "Failed asserting that " + expected + " is equal to " + actual);
+    }
+
+    public function exception(expectedCls, actual) as Void {
+        if (!(actual instanceof expectedCls)) {
+            Test.assertMessage(false, "Failed asserting exception instanceof of "  + expectedCls + " got " + actual);
+        }
     }
 }
