@@ -77,7 +77,7 @@ class ActivityController {
         }
 
         self.stopUpdateValuesTimer();
-        self.speedAggregator.stop();
+        self.speedAggregator.pause();
 
         self.session.stop();
     }

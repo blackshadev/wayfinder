@@ -16,16 +16,16 @@ class SpeedAggregationProvider {
 
     private var rawSpeedData as Array<Float>;
     private var updateTimer as Timer.Timer;
-    private var sensor as SensorProvider;
+    private var sensor as SensorProvider or FakeSensorProvider;
 
     private var speeds as Array<Float> = [0.0, 0.0];
 
     private var isStarted as Boolean = false;
 
-    function initialize(sensor as SensorProvider) {
+    function initialize(sensor as SensorProvider or FakeSensorProvider, timer as Timer.Timer) {
         self.sensor = sensor;
         self.rawSpeedData = [];
-        self.updateTimer = new Timer.Timer();
+        self.updateTimer = timer;
     }
 
     public function start() as Void {
@@ -34,13 +34,12 @@ class SpeedAggregationProvider {
     }
 
     public function reset() as Void {
-        self.stop();
+        self.pause();
         self.speeds = [0.0, 0.0];
         self.rawSpeedData = [];
     }
 
-
-    public function stop() as Void {
+    public function pause() as Void {
         self.updateTimer.stop();
         self.isStarted = false;
     }

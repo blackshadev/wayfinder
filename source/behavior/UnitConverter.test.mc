@@ -2,6 +2,7 @@
 import Toybox.Test;
 import Toybox.Lang;
 
+(:test)
 module WayfinderTests {
     class UnitConverterTest { 
         (:test)

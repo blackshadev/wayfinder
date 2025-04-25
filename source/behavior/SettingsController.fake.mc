@@ -1,7 +1,7 @@
 import Toybox.Lang;
 
+(:test)
 class FakeSettingsController {
-
     private var _distance as Number;
     private var _unitsSpeed as Number;
 

@@ -14,6 +14,18 @@ module Assert {
         Test.assertEqualMessage(expected, actual, "Failed asserting that " + expected + " is equal to " + actual);
     }
 
+    public function isNull(actual) as Void {
+        if (actual != null) {
+            Test.assertMessage(false, "Expected null while given non null value");
+        }
+    }
+
+    public function isNotNull(actual) as Void {
+        if (actual == null) {
+            Test.assertMessage(false, "Expected not to benull while given null value");
+        }
+    }
+
     public function exception(expectedCls, actual) as Void {
         if (!(actual instanceof expectedCls)) {
             Test.assertMessage(false, "Failed asserting exception instanceof of "  + expectedCls + " got " + actual);

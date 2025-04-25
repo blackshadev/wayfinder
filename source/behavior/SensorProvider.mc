@@ -8,21 +8,11 @@ class SensorProvider {
 
     public function heading() as Float? {
         var cur = Sensor.getInfo();
-
-        if (cur == null) {
-            return null;
-        }
-
         return cur.heading;
     }
 
     public function speed() as Float? {
         var cur = Sensor.getInfo();
-
-        if (cur == null) {
-            return null;
-        }
-
         return cur.speed;
     }
 }

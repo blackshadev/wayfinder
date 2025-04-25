@@ -1,6 +1,7 @@
 import Toybox.Application;
 import Toybox.Lang;
 import Toybox.WatchUi;
+import Toybox.Timer;
 
 class WayfinderApp extends Application.AppBase {
 
@@ -19,7 +20,7 @@ class WayfinderApp extends Application.AppBase {
         self.unitConverter = new UnitConverter(self.settings);
 
         self.sensor = new SensorProvider();
-        self.speedAggregator = new SpeedAggregationProvider(self.sensor);
+        self.speedAggregator = new SpeedAggregationProvider(self.sensor, new Timer.Timer());
         self.waypoint = new WaypointController(self.sensor);
         self.activity = new ActivityController(self.settings, self.speedAggregator);
         self.activityInfo = new ActivityInfoProvider(self.activity);

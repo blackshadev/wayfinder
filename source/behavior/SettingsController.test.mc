@@ -2,6 +2,7 @@ import Toybox.Lang;
 import Toybox.Test;
 import Toybox.System;
 
+(:test)
 module WayfinderTests {
     class SettingsControllerTest {
         (:test)
