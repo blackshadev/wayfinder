@@ -40,8 +40,6 @@ module WayfinderTests {
             fakeSensor.setSpeed(80.0);
             SpeedAggregatorHelper.sampleTime(aggregator, 8);
 
-            // Something goes wrong?
-
             var value = aggregator.value();
             Assert.isNotNull(value);
             Assert.isEqual(80.0, value.speed2s);

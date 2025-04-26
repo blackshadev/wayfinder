@@ -30,7 +30,6 @@ class ActivityMenuDelegate extends WatchUi.Menu2InputDelegate {
                 self.activity.resume();
                 break;
             case ACTIVITY_DISCARD:
-                // TODO: confirm?
                 self.activity.discard();
                 break;
             case ACTIVITY_SAVE:
