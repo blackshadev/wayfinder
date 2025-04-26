@@ -1,3 +1,7 @@
+## v0.6.3
+
+Fix speed aggregation memory leak and working
+
 ## v0.6.2
 
 Bugfix datafield creation for 2s and 10s max speed
