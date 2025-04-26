@@ -32,13 +32,15 @@ module WayfinderTests {
             aggregator.start();
 
             fakeSensor.setSpeed(100.0);
-            SpeedAggregatorHelper.sampleTime(aggregator, 1);
+            SpeedAggregatorHelper.sampleTime(aggregator, 1000);
             
             fakeSensor.setSpeed(90.0);
             SpeedAggregatorHelper.sampleTime(aggregator, 2);
 
             fakeSensor.setSpeed(80.0);
             SpeedAggregatorHelper.sampleTime(aggregator, 8);
+
+            // Something goes wrong?
 
             var value = aggregator.value();
             Assert.isNotNull(value);

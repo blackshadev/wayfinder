@@ -14,7 +14,7 @@ class SpeedAggregationProvider {
     private const SIZE_2_SEC = SEC_2 / SAMPLE_TIME;
     private const SIZE_10_SEC = SEC_10 / SAMPLE_TIME;
 
-    private var rawSpeedData as Array<Float>;
+    private var rawSpeedData as FloatRingBuffer;
     private var updateTimer as Timer.Timer;
     private var sensor as SensorProvider or FakeSensorProvider;
 
@@ -24,7 +24,8 @@ class SpeedAggregationProvider {
 
     function initialize(sensor as SensorProvider or FakeSensorProvider, timer as Timer.Timer) {
         self.sensor = sensor;
-        self.rawSpeedData = [];
+
+        self.rawSpeedData = new FloatRingBuffer(SIZE_MAX, 0.0);
         self.updateTimer = timer;
     }
 
@@ -36,7 +37,7 @@ class SpeedAggregationProvider {
     public function reset() as Void {
         self.pause();
         self.speeds = [0.0, 0.0];
-        self.rawSpeedData = [];
+        self.rawSpeedData = new FloatRingBuffer(SIZE_MAX, 0.0);
     }
 
     public function pause() as Void {
@@ -59,36 +60,8 @@ class SpeedAggregationProvider {
             self.speeds[1] = speed;
         }
 
-        var sampleSize = self.rawSpeedData.size();
-        var iX = 0;
-        var iMin = 0;
-        var iOld = 0;
-        var maxSpeed = 0.0;
-
-
-        iMin = Utils.max(self.rawSpeedData.size() - SIZE_2_SEC + 1, 0);
-        iOld = Utils.max(iMin - 1, 0);
-        if (sampleSize > SIZE_2_SEC && self.speeds[0] >= self.rawSpeedData[iOld]) {
-            maxSpeed = 0.0;
-            for (iX = self.rawSpeedData.size() - 1; iX >= iMin; iX--) {
-                maxSpeed = Utils.max(maxSpeed, self.rawSpeedData[iX]);
-            }
-            self.speeds[0] = maxSpeed;
-        }
-
-        iMin = Utils.max(self.rawSpeedData.size() - SIZE_10_SEC + 1, 0);
-        if (sampleSize > SIZE_10_SEC && self.speeds[1] >= self.rawSpeedData[iOld]) {
-            maxSpeed = 0.0;
-            
-            for (iX = self.rawSpeedData.size() - 1; iX >= iMin; iX--) {
-                maxSpeed = Utils.max(maxSpeed, self.rawSpeedData[iX]);
-            }
-            self.speeds[1] = maxSpeed;
-        }
-
-        if (self.rawSpeedData.size() > SIZE_MAX) {
-            self.rawSpeedData = self.rawSpeedData.slice(1, SIZE_MAX - 1);
-        }
+        self.speeds[0] = self.rawSpeedData.max(SIZE_2_SEC);
+        self.speeds[1] = self.rawSpeedData.max(SIZE_10_SEC);
     }
 
     public function value() as MaxSpeedValues? {
