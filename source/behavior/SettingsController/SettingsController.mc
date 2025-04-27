@@ -2,32 +2,11 @@ import Toybox.Lang;
 import Toybox.System;
 import Toybox.Application;
 
-class SettingsController {
-    public static const ACTIVITY_WINDSURFING = 1;
-    public static const ACTIVITY_KITESURFING = 2;
-    public static const ACTIVITY_SURFING = 3;
-    public static const ACTIVITY_OPENWATER_SWIMMING = 4;
-    public static const ACTIVITY_DONOTUSE_UPPER_LIMIT = 5;
-    public static const ACTIVITY_OTHER = 0;
-
-    public static const UNITS_SPEED_UNSET = 9;
-    public static const UNITS_SPEED_KMH = 0;
-    public static const UNITS_SPEED_MS = 1;
-    public static const UNITS_SPEED_MPH = 2;
-    public static const UNITS_SPEED_KNOTS = 3;
-    public static const UNITS_SPEED_DONOTUSE_UPPER_LIMIT = 4;
-
-    public static const UNITS_DISTANCE_UNSET = 9;
-    public static const UNITS_DISTANCE_METERS = 0;
-    public static const UNITS_DISTANCE_MILES = 1;
-    public static const UNITS_DISTANCE_DONOTUSE_UPPER_LIMIT = 2;
-
-    public static const BACKGROUND_UNSET = 9;
-    public static const BACKGROUND_BLACK = 0;
-    public static const BACKGROUND_WHITE = 1;
-    public static const BACKGROUND_DONOTUSE_UPPER_LIMIT = 2;
+class SettingsController extends SettingsControllerInterface {
 
     function initialize() {
+        SettingsControllerInterface.initialize();
+
         self.applyFromStorage();
     }
 
@@ -41,13 +20,13 @@ class SettingsController {
 
     private function setDefaultUnitsSpeed() as Void {
         var current = Application.Properties.getValue("unitsSpeed");
-        if (current != UNITS_SPEED_UNSET && current != null) {
+        if (current != SettingsControllerInterface.SPEED_UNSET && current != null) {
             return;
         }
         
-        var value = UNITS_SPEED_KMH;
+        var value = SettingsControllerInterface.SPEED_KMH;
         if (System.getDeviceSettings().distanceUnits == System.UNIT_STATUTE) {
-            value = UNITS_SPEED_MPH;
+            value = SettingsControllerInterface.SPEED_MPH;
         }
 
         Application.Properties.setValue("unitsSpeed", value);
@@ -55,13 +34,13 @@ class SettingsController {
 
     private function setDefaultUnitsDistance() as Void {
         var current = Application.Properties.getValue("unitsDistance");
-        if (current != UNITS_DISTANCE_UNSET && current != null) {
+        if (current != SettingsControllerInterface.DISTANCE_UNSET && current != null) {
             return;
         }
         
-        var value = UNITS_DISTANCE_METERS;
+        var value = SettingsControllerInterface.DISTANCE_METERS;
         if (System.getDeviceSettings().distanceUnits == System.UNIT_STATUTE) {
-            value = UNITS_DISTANCE_MILES;
+            value = SettingsControllerInterface.DISTANCE_MILES;
         }
 
         Application.Properties.setValue("unitsDistance", value);
@@ -69,40 +48,40 @@ class SettingsController {
 
     private function setDefaultBackground() as Void {
         var current = Application.Properties.getValue("background");
-        if (current != BACKGROUND_UNSET && current != null) {
+        if (current != SettingsControllerInterface.BACKGROUND_UNSET && current != null) {
             return;
         }
         
-        var value = BACKGROUND_WHITE;
+        var value = SettingsControllerInterface.BACKGROUND_WHITE;
         if (System has :getDisplayMode) {
-            value = BACKGROUND_BLACK;
+            value = SettingsControllerInterface.BACKGROUND_BLACK;
         }
 
         Application.Properties.setValue("background", value);
     }
 
-    public function activityType() as Number {
+    public function activityType() as SettingsControllerInterface.ActivityType {
         var value = Application.Properties.getValue("activityType");
 
         switch (value) {
-            case 1: return ACTIVITY_WINDSURFING;
-            case 2: return ACTIVITY_KITESURFING;
-            case 3: return ACTIVITY_SURFING;
-            case 4: return ACTIVITY_OPENWATER_SWIMMING;
-            default: return ACTIVITY_OTHER;
+            case 1: return SettingsControllerInterface.ACTIVITY_WINDSURFING;
+            case 2: return SettingsControllerInterface.ACTIVITY_KITESURFING;
+            case 3: return SettingsControllerInterface.ACTIVITY_SURFING;
+            case 4: return SettingsControllerInterface.ACTIVITY_OPENWATER_SWIMMING;
+            default: return SettingsControllerInterface.ACTIVITY_OTHER;
         }
     }
 
     public function activityTypeRes() as ResourceId {
 
         switch (self.activityType()) {
-            case SettingsController.ACTIVITY_WINDSURFING: 
+            case SettingsControllerInterface.ACTIVITY_WINDSURFING: 
                 return Rez.Strings.settingsActivityTypeWindsurfing;
-            case SettingsController.ACTIVITY_KITESURFING: 
+            case SettingsControllerInterface.ACTIVITY_KITESURFING: 
                 return Rez.Strings.settingsActivityTypeKitesurfing;
-            case SettingsController.ACTIVITY_SURFING: 
+            case SettingsControllerInterface.ACTIVITY_SURFING: 
                 return Rez.Strings.settingsActivityTypeSurfing;
-            case SettingsController.ACTIVITY_OPENWATER_SWIMMING: 
+            case SettingsControllerInterface.ACTIVITY_OPENWATER_SWIMMING: 
                 return Rez.Strings.settingsActivityTypeOpenwaterSwimming;
             default: 
                 return Rez.Strings.settingsActivityTypeOther;
@@ -115,28 +94,28 @@ class SettingsController {
         Application.Properties.setValue("activityType", nextValue);
     }
 
-    public function unitsSpeed() as Number {
+    public function unitsSpeed() as SettingsControllerInterface.SpeedUnit {
         var value = Application.Properties.getValue("unitsSpeed");
 
         switch (value) {
-            case 0: return UNITS_SPEED_KMH;
-            case 1: return UNITS_SPEED_MS;
-            case 2: return UNITS_SPEED_MPH;
-            case 3: return UNITS_SPEED_KNOTS;
-            default: return UNITS_SPEED_KMH;
+            case 0: return SettingsControllerInterface.SPEED_KMH;
+            case 1: return SettingsControllerInterface.SPEED_MS;
+            case 2: return SettingsControllerInterface.SPEED_MPH;
+            case 3: return SettingsControllerInterface.SPEED_KNOTS;
+            default: return SettingsControllerInterface.SPEED_KMH;
         }
     }
 
     public function unitsSpeedRes() as ResourceId {
 
         switch (self.unitsSpeed()) {
-            case SettingsController.UNITS_SPEED_KMH: 
+            case SettingsControllerInterface.SPEED_KMH: 
                 return Rez.Strings.settingsUnitsSpeedkms;
-            case SettingsController.UNITS_SPEED_MS: 
+            case SettingsControllerInterface.SPEED_MS: 
                 return Rez.Strings.settingsUnitsSpeedms;
-            case SettingsController.UNITS_SPEED_MPH: 
+            case SettingsControllerInterface.SPEED_MPH: 
                 return Rez.Strings.settingsUnitsSpeedmph;
-            case SettingsController.UNITS_SPEED_KNOTS: 
+            case SettingsControllerInterface.SPEED_KNOTS: 
                 return Rez.Strings.settingsUnitsSpeedknots;
             default: 
                 return Rez.Strings.settingsUnitsSpeedkms;
@@ -145,45 +124,45 @@ class SettingsController {
 
     public function toggleUnitsSpeed() as Void {
         var curValue = Application.Properties.getValue("unitsSpeed");
-        var nextValue = (curValue + 1) % SettingsController.UNITS_SPEED_DONOTUSE_UPPER_LIMIT;
+        var nextValue = (curValue + 1) % SettingsControllerInterface.SPEED_DONOTUSE_UPPER_LIMIT;
         Application.Properties.setValue("unitsSpeed", nextValue);
     }
 
-    public function distance() as Number {
+    public function distance() as SettingsControllerInterface.DistanceUnit {
         var value = Application.Properties.getValue("unitsDistance");
 
         switch (value) {
-            case 0: return UNITS_DISTANCE_METERS;
-            case 1: return UNITS_DISTANCE_MILES;
-            default: return UNITS_DISTANCE_METERS;
+            case 0: return SettingsControllerInterface.DISTANCE_METERS;
+            case 1: return SettingsControllerInterface.DISTANCE_MILES;
+            default: return SettingsControllerInterface.DISTANCE_METERS;
         }
     }
 
     public function toggleUnitsDistance() as Void {
         var curValue = Application.Properties.getValue("unitsDistance");
-        var nextValue = (curValue + 1) % SettingsController.UNITS_DISTANCE_DONOTUSE_UPPER_LIMIT;
+        var nextValue = (curValue + 1) % SettingsControllerInterface.DISTANCE_DONOTUSE_UPPER_LIMIT;
         Application.Properties.setValue("unitsDistance", nextValue);
     }
 
     public function unitsDistanceRes() as ResourceId {
 
         switch (self.distance()) {
-            case SettingsController.UNITS_DISTANCE_METERS: 
+            case SettingsControllerInterface.DISTANCE_METERS: 
                 return Rez.Strings.settingsUnitsDistanceMeters;
-            case SettingsController.UNITS_DISTANCE_MILES: 
+            case SettingsControllerInterface.DISTANCE_MILES: 
                 return Rez.Strings.settingsUnitsDistanceMiles;
             default: 
                 return Rez.Strings.settingsUnitsDistanceMeters;
         }
     }
 
-    public function background() as Number {
+    public function background() as SettingsControllerInterface.Background {
         var value = Application.Properties.getValue("background");
 
         switch (value) {
-            case 0: return BACKGROUND_BLACK;
-            case 1: return BACKGROUND_WHITE;
-            default: return BACKGROUND_BLACK;
+            case 0: return SettingsControllerInterface.BACKGROUND_BLACK;
+            case 1: return SettingsControllerInterface.BACKGROUND_WHITE;
+            default: return SettingsControllerInterface.BACKGROUND_BLACK;
         }
     }
 
@@ -198,9 +177,9 @@ class SettingsController {
     public function backgroundRes() as ResourceId {
 
         switch (self.background()) {
-            case SettingsController.BACKGROUND_BLACK: 
+            case SettingsControllerInterface.BACKGROUND_BLACK: 
                 return Rez.Strings.settingsBackgroundBlack;
-            case SettingsController.BACKGROUND_WHITE: 
+            case SettingsControllerInterface.BACKGROUND_WHITE: 
                 return Rez.Strings.settingsBackgroundWhite;
             default: 
                 return Rez.Strings.settingsBackgroundBlack;
@@ -252,11 +231,11 @@ class SettingsController {
 
     private function applyBackground() as Void {
         switch (self.background()) {
-            case SettingsController.BACKGROUND_WHITE:
+            case SettingsControllerInterface.BACKGROUND_WHITE:
                 Utils.Colors.switchToWhiteBackground();
                 break;
             default: 
-            case SettingsController.BACKGROUND_BLACK: 
+            case SettingsControllerInterface.BACKGROUND_BLACK: 
                 Utils.Colors.switchToBlackBackground();
                 break;
         }

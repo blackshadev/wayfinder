@@ -1,12 +1,12 @@
 import Toybox.Lang;
 import Toybox.Test;
 
-(:test)
+(:debug)
 module WayfinderTests {
     class SpeedAggregationProviderTest {
         (:test)
         public function testItReturnsNullWhenNotStarted(logger as Logger) as Boolean {
-            var aggregator = new SpeedAggregationProvider(new FakeSensorProvider(), new NoopTimer());
+            var aggregator = new SpeedAggregationProvider(new SensorProviderFake(), new NoopTimer());
             Assert.isNull(aggregator.value());
 
             return true;
@@ -14,7 +14,7 @@ module WayfinderTests {
 
         (:test)
         public function testItReturnsZeroByDefault(logger as Logger) as Boolean {
-            var aggregator = new SpeedAggregationProvider(new FakeSensorProvider(), new NoopTimer());
+            var aggregator = new SpeedAggregationProvider(new SensorProviderFake(), new NoopTimer());
             aggregator.start();
 
             var value = aggregator.value();
@@ -27,7 +27,7 @@ module WayfinderTests {
 
         (:test)
         public function testItMaxesOverTime(logger as Logger) as Boolean {
-            var fakeSensor = new FakeSensorProvider();
+            var fakeSensor = new SensorProviderFake();
             var aggregator = new SpeedAggregationProvider(fakeSensor, new NoopTimer());
             aggregator.start();
 
@@ -50,7 +50,7 @@ module WayfinderTests {
 
         (:test)
         public function testItClearsOnReset(logger as Logger) as Boolean {
-            var fakeSensor = new FakeSensorProvider();
+            var fakeSensor = new SensorProviderFake();
             var aggregator = new SpeedAggregationProvider(fakeSensor, new NoopTimer());
             aggregator.start();
 
@@ -70,7 +70,7 @@ module WayfinderTests {
 
         (:test)
         public function testItReturnsNullOnPause(logger as Logger) as Boolean {
-            var fakeSensor = new FakeSensorProvider();
+            var fakeSensor = new SensorProviderFake();
             var aggregator = new SpeedAggregationProvider(fakeSensor, new NoopTimer());
             aggregator.start();
 

@@ -1,9 +1,10 @@
 import Toybox.Activity;
 import Toybox.Lang;
 
-class SensorProvider {
+class SensorProvider extends SensorProviderInterface {
     
     function initialize() {
+        SensorProviderInterface.initialize();
     }
 
     public function heading() as Float? {

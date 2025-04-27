@@ -1,12 +1,14 @@
 import Toybox.Activity;
 import Toybox.Lang;
 
-(:test)
-class FakeSensorProvider {
+(:debug)
+class SensorProviderFake extends SensorProviderInterface {
     private var _heading as Float = 0.0;
     private var _speed as Float = 0.0;
 
-    function initialize() {}
+    function initialize() {
+        SensorProviderInterface.initialize();
+    }
 
     public function setHeading(heading as Float) as Void {
         self._heading = heading;

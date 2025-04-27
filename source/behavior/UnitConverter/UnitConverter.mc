@@ -3,10 +3,12 @@ import Toybox.Position;
 import Toybox.System;
 import Toybox.Lang;
 
-class UnitConverter {
-    private var _settings as SettingsController or FakeSettingsController;
+class UnitConverter extends UnitConverterInterface {
+    private var _settings as SettingsControllerInterface;
     
-    function initialize(settings as SettingsController or FakeSettingsController) {
+    function initialize(settings as SettingsControllerInterface) {
+        UnitConverterInterface.initialize();
+
         self._settings = settings;
     }
 
@@ -16,13 +18,13 @@ class UnitConverter {
         }
 
         switch (self._settings.unitsSpeed()) {
-            case SettingsController.UNITS_SPEED_KMH:
+            case SettingsControllerInterface.SPEED_KMH:
                 return ms * 3.6;
-            case SettingsController.UNITS_SPEED_MS:
+            case SettingsControllerInterface.SPEED_MS:
                 return ms;
-            case SettingsController.UNITS_SPEED_MPH:
+            case SettingsControllerInterface.SPEED_MPH:
                 return ms * 2.23693629;
-            case SettingsController.UNITS_SPEED_KNOTS:
+            case SettingsControllerInterface.SPEED_KNOTS:
                 return ms * 1.94384449;
         }
 
@@ -35,9 +37,9 @@ class UnitConverter {
         }
 
         switch (self._settings.distance()) {
-            case SettingsController.UNITS_DISTANCE_METERS:
+            case SettingsControllerInterface.DISTANCE_METERS:
                 return meters / 1000;
-            case SettingsController.UNITS_DISTANCE_MILES:
+            case SettingsControllerInterface.DISTANCE_MILES:
                 return meters * 0.000621371192;
         }
 

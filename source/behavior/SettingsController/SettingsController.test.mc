@@ -2,36 +2,36 @@ import Toybox.Lang;
 import Toybox.Test;
 import Toybox.System;
 
-(:test)
+(:debug)
 module WayfinderTests {
     class SettingsControllerTest {
         (:test)
         public function testInitializationDefaults(logger as Logger) as Boolean {
-            Application.Properties.setValue("unitsSpeed", SettingsController.UNITS_SPEED_UNSET);
-            Application.Properties.setValue("unitsDistance", SettingsController.UNITS_DISTANCE_UNSET);
+            Application.Properties.setValue("unitsSpeed", SettingsControllerInterface.SPEED_UNSET);
+            Application.Properties.setValue("unitsDistance", SettingsControllerInterface.DISTANCE_UNSET);
 
             var settings = new SettingsController();
 
-            Assert.isEqual(SettingsController.UNITS_DISTANCE_MILES, settings.distance());
-            Assert.isEqual(SettingsController.UNITS_SPEED_MPH, settings.unitsSpeed());
+            Assert.isEqual(SettingsControllerInterface.DISTANCE_MILES, settings.distance());
+            Assert.isEqual(SettingsControllerInterface.SPEED_MPH, settings.unitsSpeed());
 
             return true;
         }
 
         (:test)
         public function testInitializationUsingProperties(logger as Logger) as Boolean {
-            Application.Properties.setValue("unitsSpeed", SettingsController.UNITS_SPEED_KNOTS);
-            Application.Properties.setValue("unitsDistance", SettingsController.UNITS_DISTANCE_METERS);
-            Application.Properties.setValue("background", SettingsController.BACKGROUND_BLACK);
-            Application.Properties.setValue("activityType", SettingsController.ACTIVITY_KITESURFING);
+            Application.Properties.setValue("unitsSpeed", SettingsControllerInterface.SPEED_KNOTS);
+            Application.Properties.setValue("unitsDistance", SettingsControllerInterface.DISTANCE_METERS);
+            Application.Properties.setValue("background", SettingsControllerInterface.BACKGROUND_BLACK);
+            Application.Properties.setValue("activityType", SettingsControllerInterface.ACTIVITY_KITESURFING);
             Application.Properties.setValue("mapZoomDistance", 5000);
 
             var settings = new SettingsController();
 
-            Assert.isEqual(SettingsController.UNITS_DISTANCE_METERS, settings.distance());
-            Assert.isEqual(SettingsController.UNITS_SPEED_KNOTS, settings.unitsSpeed());
-            Assert.isEqual(SettingsController.BACKGROUND_BLACK, settings.background());
-            Assert.isEqual(SettingsController.ACTIVITY_KITESURFING, settings.activityType());
+            Assert.isEqual(SettingsControllerInterface.DISTANCE_METERS, settings.distance());
+            Assert.isEqual(SettingsControllerInterface.SPEED_KNOTS, settings.unitsSpeed());
+            Assert.isEqual(SettingsControllerInterface.BACKGROUND_BLACK, settings.background());
+            Assert.isEqual(SettingsControllerInterface.ACTIVITY_KITESURFING, settings.activityType());
             Assert.isEqual(5000, settings.mapZoomDistance());
 
             return true;
@@ -39,15 +39,15 @@ module WayfinderTests {
 
         (:test)
         public function testToggleUnitSpeed(logger as Logger) as Boolean {
-            Application.Properties.setValue("unitsSpeed", SettingsController.UNITS_SPEED_MPH);
+            Application.Properties.setValue("unitsSpeed", SettingsControllerInterface.SPEED_MPH);
             var settings = new SettingsController();
 
             var expected = [
-                { :value => SettingsController.UNITS_SPEED_MPH, :res => Rez.Strings.settingsUnitsSpeedmph },
-                { :value => SettingsController.UNITS_SPEED_KNOTS, :res => Rez.Strings.settingsUnitsSpeedknots },
-                { :value => SettingsController.UNITS_SPEED_KMH, :res => Rez.Strings.settingsUnitsSpeedkms },
-                { :value => SettingsController.UNITS_SPEED_MS, :res => Rez.Strings.settingsUnitsSpeedms },
-                { :value => SettingsController.UNITS_SPEED_MPH, :res => Rez.Strings.settingsUnitsSpeedmph },
+                { :value => SettingsControllerInterface.SPEED_MPH, :res => Rez.Strings.settingsUnitsSpeedmph },
+                { :value => SettingsControllerInterface.SPEED_KNOTS, :res => Rez.Strings.settingsUnitsSpeedknots },
+                { :value => SettingsControllerInterface.SPEED_KMH, :res => Rez.Strings.settingsUnitsSpeedkms },
+                { :value => SettingsControllerInterface.SPEED_MS, :res => Rez.Strings.settingsUnitsSpeedms },
+                { :value => SettingsControllerInterface.SPEED_MPH, :res => Rez.Strings.settingsUnitsSpeedmph },
             ];
 
             for (var iX = 0; iX < expected.size(); iX++) {
@@ -62,13 +62,13 @@ module WayfinderTests {
 
         (:test)
         public function testToggleDistance(logger as Logger) as Boolean {
-            Application.Properties.setValue("unitsDistance", SettingsController.UNITS_DISTANCE_MILES);
+            Application.Properties.setValue("unitsDistance", SettingsControllerInterface.DISTANCE_MILES);
             var settings = new SettingsController();
 
             var expected = [
-                { :value => SettingsController.UNITS_DISTANCE_MILES, :res => Rez.Strings.settingsUnitsDistanceMiles },
-                { :value => SettingsController.UNITS_DISTANCE_METERS, :res => Rez.Strings.settingsUnitsDistanceMeters },
-                { :value => SettingsController.UNITS_DISTANCE_MILES, :res => Rez.Strings.settingsUnitsDistanceMiles }
+                { :value => SettingsControllerInterface.DISTANCE_MILES, :res => Rez.Strings.settingsUnitsDistanceMiles },
+                { :value => SettingsControllerInterface.DISTANCE_METERS, :res => Rez.Strings.settingsUnitsDistanceMeters },
+                { :value => SettingsControllerInterface.DISTANCE_MILES, :res => Rez.Strings.settingsUnitsDistanceMiles }
             ];
 
             for (var iX = 0; iX < expected.size(); iX++) {
@@ -106,13 +106,13 @@ module WayfinderTests {
 
         (:test)
         public function testToggleBackground(logger as Logger) as Boolean {
-            Application.Properties.setValue("background", SettingsController.BACKGROUND_BLACK);
+            Application.Properties.setValue("background", SettingsControllerInterface.BACKGROUND_BLACK);
             var settings = new SettingsController();
 
             var expected = [
-                { :value => SettingsController.BACKGROUND_BLACK, :res => Rez.Strings.settingsBackgroundBlack, :bg => Graphics.COLOR_BLACK, :fg => Graphics.COLOR_WHITE },
-                { :value => SettingsController.BACKGROUND_WHITE, :res => Rez.Strings.settingsBackgroundWhite, :bg => Graphics.COLOR_WHITE, :fg => Graphics.COLOR_BLACK },
-                { :value => SettingsController.BACKGROUND_BLACK, :res => Rez.Strings.settingsBackgroundBlack, :bg => Graphics.COLOR_BLACK, :fg => Graphics.COLOR_WHITE },
+                { :value => SettingsControllerInterface.BACKGROUND_BLACK, :res => Rez.Strings.settingsBackgroundBlack, :bg => Graphics.COLOR_BLACK, :fg => Graphics.COLOR_WHITE },
+                { :value => SettingsControllerInterface.BACKGROUND_WHITE, :res => Rez.Strings.settingsBackgroundWhite, :bg => Graphics.COLOR_WHITE, :fg => Graphics.COLOR_BLACK },
+                { :value => SettingsControllerInterface.BACKGROUND_BLACK, :res => Rez.Strings.settingsBackgroundBlack, :bg => Graphics.COLOR_BLACK, :fg => Graphics.COLOR_WHITE },
             ];
 
             for (var iX = 0; iX < expected.size(); iX++) {

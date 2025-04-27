@@ -31,7 +31,7 @@ class ActivityController {
             throw new ActivityAlreadyStarted();
         }
 
-        var opts = getActivitySettings();
+        var opts = self.getActivitySettings();
         self.session = ActivityRecording.createSession(opts);
 
         self.createField();

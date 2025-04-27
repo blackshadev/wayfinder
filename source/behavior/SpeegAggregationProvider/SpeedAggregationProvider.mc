@@ -16,13 +16,13 @@ class SpeedAggregationProvider {
 
     private var rawSpeedData as FloatRingBuffer;
     private var updateTimer as Timer.Timer;
-    private var sensor as SensorProvider or FakeSensorProvider;
+    private var sensor as SensorProviderInterface;
 
     private var speeds as Array<Float> = [0.0, 0.0];
 
     private var isStarted as Boolean = false;
 
-    function initialize(sensor as SensorProvider or FakeSensorProvider, timer as Timer.Timer) {
+    function initialize(sensor as SensorProviderInterface, timer as Timer.Timer) {
         self.sensor = sensor;
 
         self.rawSpeedData = new FloatRingBuffer(SIZE_MAX, 0.0);
