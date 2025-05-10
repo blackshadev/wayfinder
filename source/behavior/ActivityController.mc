@@ -8,6 +8,7 @@ import Toybox.Timer;
 class ActivityController {
     private const FIELD_ID_MAX_SPEED_2S = 1;
     private const FIELD_ID_MAX_SPEED_10S = 2;
+    private const FIELD_ID_MAX_SPEED_30S = 3;
 
     private const UPDATE_TIME = 1000;
 
@@ -17,6 +18,7 @@ class ActivityController {
     private var session as ActivityRecording.Session? = null;
     private var field2s as FitContributor.Field? = null;
     private var field10s as FitContributor.Field? = null;
+    private var field30s as FitContributor.Field? = null;
     private var updateTimer as Timer.Timer;
 
     function initialize(settings as SettingsController, speedAggregator as SpeedAggregationProvider) {
@@ -59,6 +61,13 @@ class ActivityController {
             FitContributor.DATA_TYPE_FLOAT,
             speedFieldConfig
         );
+
+        self.field30s = self.session.createField(
+            WatchUi.loadResource(Rez.Strings.labelMaxSpeed30s),
+            FIELD_ID_MAX_SPEED_30S,
+            FitContributor.DATA_TYPE_FLOAT,
+            speedFieldConfig
+        );
     }
 
     public function resume() as Void {
@@ -93,8 +102,9 @@ class ActivityController {
         self.session.stop();
         self.session.discard();
         self.session = null;
-        self.field10s = null;
         self.field2s = null;
+        self.field10s = null;
+        self.field30s = null;
     }
 
     public function save() as Void {
@@ -108,8 +118,9 @@ class ActivityController {
         self.session.stop();
         self.session.save();
         self.session = null;
-        self.field10s = null;
         self.field2s = null;
+        self.field10s = null;
+        self.field30s = null;
     } 
 
     public function isStarted() as Boolean {
@@ -141,6 +152,7 @@ class ActivityController {
         var value = self.speedAggregator.value();
         self.field2s.setData(value.speed2s);
         self.field10s.setData(value.speed10s);
+        self.field30s.setData(value.speed30s);
     }
 
     private function getActivitySettings() {

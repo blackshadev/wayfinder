@@ -19,46 +19,37 @@ class MaxSpeeds extends RelativeComponent {
             :offset => [offset[0], offset[1]], 
             :font => Graphics.FONT_XTINY, 
             :color => Utils.Colors.greyForeground, 
-            :justification => Graphics.TEXT_JUSTIFY_LEFT,
+            :justification => Graphics.TEXT_JUSTIFY_RIGHT,
             :text => Rez.Strings.labelMaxSpeed
         });
         
         self.max2s = new $.Text({
-            :offset => [offset[0] + 35, offset[1]], 
+            :offset => [offset[0], offset[1]], 
             :font => Graphics.FONT_GLANCE_NUMBER, 
             :color => Utils.Colors.foreground, 
-            :justification => Graphics.TEXT_JUSTIFY_LEFT
+            :justification => Graphics.TEXT_JUSTIFY_RIGHT
         });
         self.max10s = new $.Text({
-            :offset => [offset[0] + 35, offset[1]], 
+            :offset => [offset[0], offset[1]], 
             :font => Graphics.FONT_GLANCE_NUMBER, 
             :color => Utils.Colors.foreground, 
-            :justification => Graphics.TEXT_JUSTIFY_LEFT
+            :justification => Graphics.TEXT_JUSTIFY_RIGHT
         });
 
         self.max2sLabel = new $.Text({
             :offset => [offset[0], offset[1]], 
             :font => Utils.Fonts.extraTinyFont(), 
             :color => Utils.Colors.greyBackground, 
-            :justification => Graphics.TEXT_JUSTIFY_LEFT,
+            :justification => Graphics.TEXT_JUSTIFY_RIGHT,
             :text => Rez.Strings.labelMaxSpeed2s
         });
         self.max10sLabel = new $.Text({
             :offset => [offset[0], offset[1]], 
             :font => Utils.Fonts.extraTinyFont(), 
             :color => Utils.Colors.greyBackground, 
-            :justification => Graphics.TEXT_JUSTIFY_LEFT,
+            :justification => Graphics.TEXT_JUSTIFY_RIGHT,
             :text => Rez.Strings.labelMaxSpeed10s
         });
-
-        (new Layout.Vertical({ 
-            :direction => Layout.Downwards, 
-            :spacing => Utils.Sizing.spacing 
-        })).apply([
-            self.title,
-            new Layout.Row([self.max2s, self.max2sLabel]),
-            new Layout.Row([self.max10s, self.max10sLabel]),
-        ]);
 
         self.setValue(null);
     }
@@ -77,8 +68,8 @@ class MaxSpeeds extends RelativeComponent {
             :spacing => Utils.Sizing.spacing 
         })).apply([
             self.title,
-            new Layout.Row([ self.max2sLabel, self.max2s ]),
-            new Layout.Row([ self.max10sLabel, self.max10s ])
+            new Layout.Row([ self.max2s, self.max2sLabel ]),
+            new Layout.Row([ self.max10s, self.max10sLabel ])
         ]);
     }
 
@@ -103,9 +94,11 @@ class MaxSpeeds extends RelativeComponent {
         self.max2sLabel.layout(dc);
         self.max10sLabel.layout(dc);
 
+        System.println(self.title.height());
+
         var w = self.max10sLabel.calculateTextWidth(dc);
-        self.max2s.updateOffset(self._offset[0] + w + Utils.Sizing.spacingL, null);
-        self.max10s.updateOffset(self._offset[0] + w + Utils.Sizing.spacingL, null);
+        self.max2s.updateOffset(self._offset[0] - w - Utils.Sizing.spacingL, null);
+        self.max10s.updateOffset(self._offset[0] - w - Utils.Sizing.spacingL, null);
 
         self.max2s.layout(dc);
         self.max10s.layout(dc);

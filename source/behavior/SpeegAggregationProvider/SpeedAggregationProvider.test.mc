@@ -21,6 +21,7 @@ module WayfinderTests {
             Assert.isNotNull(value);
             Assert.isEqual(0.0, value.speed2s);
             Assert.isEqual(0.0, value.speed10s);
+            Assert.isEqual(0.0, value.speed30s);
 
             return true;
         }
@@ -33,17 +34,22 @@ module WayfinderTests {
 
             fakeSensor.setSpeed(100.0);
             SpeedAggregatorHelper.sampleTime(aggregator, 1000);
-            
+
+            fakeSensor.setSpeed(95.0);
+            SpeedAggregatorHelper.sampleTime(aggregator, 30);
+
             fakeSensor.setSpeed(90.0);
             SpeedAggregatorHelper.sampleTime(aggregator, 2);
 
             fakeSensor.setSpeed(80.0);
             SpeedAggregatorHelper.sampleTime(aggregator, 8);
 
+
             var value = aggregator.value();
             Assert.isNotNull(value);
             Assert.isEqual(80.0, value.speed2s);
             Assert.isEqual(90.0, value.speed10s);
+            Assert.isEqual(95.0, value.speed30s);
 
             return true;
         }
@@ -64,6 +70,7 @@ module WayfinderTests {
             Assert.isNotNull(value);
             Assert.isEqual(0.0, value.speed2s);
             Assert.isEqual(0.0, value.speed10s);
+            Assert.isEqual(0.0, value.speed30s);
 
             return true;
         }

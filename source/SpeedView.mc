@@ -12,9 +12,9 @@ class SpeedView extends WatchUi.View {
 
     private var arrow as Arrow;
     private var time as Time;
-    private var speed as Speed;
-    private var averageSpeed as AverageSpeed;
+    private var currentSpeed as CurrentSpeed;
     private var maxSpeeds as MaxSpeeds;
+    private var maxSpeeds2 as MaxSpeeds2;
 
     private var quarterLayout as QuarterLayout;
     
@@ -35,15 +35,15 @@ class SpeedView extends WatchUi.View {
         self.arrow = new Arrow(Utils.Sizing.arrow);
         
         self.time = new Time(new TimeProvider(), [0, 0]);
-        self.averageSpeed = new AverageSpeed(unitConverter, [0, 0]);
-        self.speed = new Speed(unitConverter, [0, 0]);
+        self.currentSpeed = new CurrentSpeed(unitConverter, [0, 0]);
         self.maxSpeeds = new MaxSpeeds(unitConverter, [0, 0]);
+        self.maxSpeeds2 = new MaxSpeeds2(unitConverter, [0, 0]);
 
         self.quarterLayout = new QuarterLayout(
-            self.averageSpeed,
+            self.currentSpeed,
             self.time,
-            self.maxSpeeds,
-            self.speed
+            self.maxSpeeds2,
+            self.maxSpeeds
         );
 
         self.updateTimer = new Timer.Timer();
@@ -62,9 +62,10 @@ class SpeedView extends WatchUi.View {
 
     function updateValues() as Void {
         self.arrow.setAngle(self.waypoint.angle());
-        self.averageSpeed.setValue(self.activityInfo.speed());
-        self.speed.setValue(self.activityInfo.speed());
+        self.currentSpeed.setValue(self.activityInfo.speed());
         self.maxSpeeds.setValue(self.speedAggregator.value());
+        self.maxSpeeds2.setMaxSpeeds(self.speedAggregator.value());
+        self.maxSpeeds2.setSpeed(self.activityInfo.speed());
 
     }
 
