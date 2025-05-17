@@ -64,9 +64,7 @@ class SpeedView extends WatchUi.View {
         self.arrow.setAngle(self.waypoint.angle());
         self.currentSpeed.setValue(self.activityInfo.speed());
         self.maxSpeeds.setValue(self.speedAggregator.value());
-        self.maxSpeeds2.setMaxSpeeds(self.speedAggregator.value());
-        self.maxSpeeds2.setSpeed(self.activityInfo.speed());
-
+        self.maxSpeeds2.setAvgSpeeds(self.speedAggregator.value());
     }
 
     function onUpdate(dc as Dc) as Void {

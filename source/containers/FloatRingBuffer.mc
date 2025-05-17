@@ -18,6 +18,23 @@ class FloatRingBuffer {
         self.data[self.lastIndex] = value;
     }
 
+    public function values(indices as Array<Number>) as Array<Float>
+    {
+        var values = [] as Array<Float>;
+
+        for (var iX = 0; iX < indices.size(); iX++) {
+            values.add(self.value(indices[iX]));
+        }
+
+        return values;
+    }
+
+    public function value(index as Number) as Float {
+        var normalizedIndex = (self.lastIndex - index + self.data.size()) % self.data.size();
+
+        return self.data[normalizedIndex];
+    }
+
     public function max(range as Number) as Float {
         range = Utils.min(self.size, range);
 

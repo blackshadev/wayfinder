@@ -2,16 +2,19 @@
     <string id="AppName">Wayfinder</string>
     <string id="AppVersion">0.6.3</string>
 
-    <string id="fieldTitleMaxSpeed2s">Max speed (2s)</string>
-    <string id="fieldTitleMaxSpeed10s">Max speed (10s)</string>
-    <string id="fieldTitleMaxSpeed30s">Max speed (30s)</string>
-    <string id="fieldLabelMaxSpeed">Max speed</string>
-    <string id="fieldUnitMaxSpeed">m/s</string>
+    <string id="fieldTitleAvgSpeed2s">Avg speed (2s)</string>
+    <string id="fieldTitleAvgSpeed10s">Avg speed (10s)</string>
+    <string id="fieldTitleAvgSpeed30m">Avg speed (30m)</string>
+    <string id="fieldTitleAvgSpeed60m">Avg speed (60m)</string>
+    <string id="fieldLabelAvgSpeed">Avg speed</string>
+    <string id="fieldUnitSpeed">m/s</string>
 
-    <string id="labelMaxSpeed">Max</string>
-    <string id="labelMaxSpeed2s">2s</string>
-    <string id="labelMaxSpeed10s">10s</string>
-    <string id="labelMaxSpeed30s">30s</string>
+    <string id="labelAvgSpeed">Avg</string>
+    <string id="labelAvgSpeed2s">2s</string>
+    <string id="labelAvgSpeed10s">10s</string>
+    <string id="labelAvgSpeed30m">30m</string>
+    <string id="labelAvgSpeed60m">60m</string>
+
     <string id="labelSpeed">Speed</string>
     <string id="labelSpeedCurrent">cur.</string>
     <string id="labelSpeedMaximum">max.</string>
@@ -67,6 +70,13 @@
     <string id="settings1500m">1.5km</string>
     <string id="settings2km">2.0km</string>
     <string id="settings5km">5.0km</string>
+
+    <string id="settingsArrowSize">Arrow size</string>
+    <string id="settingsArrowSizeNone">No arrow</string>
+    <string id="settingsArrowSizeSmall">Small</string>
+    <string id="settingsArrowSizeNormal">Normal</string>
+    <string id="settingsArrowSizeLarge">Large</string>
+    <string id="settingsArrowSizeExtraLarge">Extra Large</string>
 
     <string id="aboutMenuTitle">About</string>
     <string id="aboutMenuAppName">App Name</string>

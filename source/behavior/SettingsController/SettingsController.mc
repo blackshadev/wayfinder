@@ -168,7 +168,7 @@ class SettingsController extends SettingsControllerInterface {
 
     public function toggleBackground() as Void {
         var curValue = Application.Properties.getValue("background");
-        var nextValue = (curValue + 1) % SettingsController.BACKGROUND_DONOTUSE_UPPER_LIMIT;
+        var nextValue = (curValue + 1) % SettingsControllerInterface.BACKGROUND_DONOTUSE_UPPER_LIMIT;
         Application.Properties.setValue("background", nextValue);
 
         self.applyBackground();
@@ -183,6 +183,18 @@ class SettingsController extends SettingsControllerInterface {
                 return Rez.Strings.settingsBackgroundWhite;
             default: 
                 return Rez.Strings.settingsBackgroundBlack;
+        }
+    }
+
+    private function applyBackground() as Void {
+        switch (self.background()) {
+            case SettingsControllerInterface.BACKGROUND_WHITE:
+                Utils.Colors.switchToWhiteBackground();
+                break;
+            default: 
+            case SettingsControllerInterface.BACKGROUND_BLACK: 
+                Utils.Colors.switchToBlackBackground();
+                break;
         }
     }
 
@@ -229,15 +241,40 @@ class SettingsController extends SettingsControllerInterface {
         Application.Properties.setValue("mapZoomDistance", values[nextIndex]);
     }
 
-    private function applyBackground() as Void {
-        switch (self.background()) {
-            case SettingsControllerInterface.BACKGROUND_WHITE:
-                Utils.Colors.switchToWhiteBackground();
-                break;
+    public function arrowSize() as SettingsControllerInterface.ArrowSize {
+        var value = Application.Properties.getValue("arrowSize");
+
+        switch (value) {
+            case 0: return SettingsControllerInterface.ARROW_SIZE_NONE;
+            case 1: return SettingsControllerInterface.ARROW_SIZE_SMALL;
+            case 2: return SettingsControllerInterface.ARROW_SIZE_NORMAL;
+            case 3: return SettingsControllerInterface.ARROW_SIZE_LARGE;
+            case 4: return SettingsControllerInterface.ARROW_SIZE_EXTRA_LARGE;
+            default: return SettingsControllerInterface.ARROW_SIZE_NORMAL;
+        }
+    }
+
+    public function toggleArrowSize() as Void {
+        var curValue = Application.Properties.getValue("arrowSize");
+        var nextValue = (curValue + 1) % SettingsControllerInterface.ACTIVITY_DONOTUSE_UPPER_LIMIT;
+        Application.Properties.setValue("arrowSize", nextValue);
+    }
+
+    public function arrowSizeRes() as ResourceId {
+        switch (self.arrowSize()) {
+            case SettingsControllerInterface.ARROW_SIZE_NONE: 
+                return Rez.Strings.settingsArrowSizeNone;
+            case SettingsControllerInterface.ARROW_SIZE_SMALL: 
+                return Rez.Strings.settingsArrowSizeSmall;
+            case SettingsControllerInterface.ARROW_SIZE_NORMAL: 
+                return Rez.Strings.settingsArrowSizeNormal;
+            case SettingsControllerInterface.ARROW_SIZE_LARGE: 
+                return Rez.Strings.settingsArrowSizeLarge;
+            case SettingsControllerInterface.ARROW_SIZE_EXTRA_LARGE: 
+                return Rez.Strings.settingsArrowSizeExtraLarge;
+                
             default: 
-            case SettingsControllerInterface.BACKGROUND_BLACK: 
-                Utils.Colors.switchToBlackBackground();
-                break;
+                return Rez.Strings.settingsArrowSizeNormal;
         }
     }
 }

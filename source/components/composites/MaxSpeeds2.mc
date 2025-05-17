@@ -4,10 +4,10 @@ import Toybox.Lang;
 class MaxSpeeds2 extends RelativeComponent {
     private var unitConverter as UnitConverter;
 
-    private var max30s as $.Text;
-    private var max as $.Text;
-    private var max30sLabel as $.Text;
-    private var maxLabel as $.Text;
+    private var avg30m as $.Text;
+    private var avg30mLabel as $.Text;
+    private var avg60m as $.Text;
+    private var avg60mLabel as $.Text;
     private var topOffset as Layout.Offset;
 
     function initialize(unitConverter as UnitConverter, offset as Graphics.Point2D) {
@@ -19,94 +19,88 @@ class MaxSpeeds2 extends RelativeComponent {
             :offset => [offset[0], offset[1]],
             :size => [0, Utils.Fonts.getFontHeight(Graphics.FONT_XTINY)]
         });
-        self.max30s = new $.Text({
+        self.avg30m = new $.Text({
             :offset => [offset[0], offset[1]], 
             :font => Graphics.FONT_GLANCE_NUMBER, 
             :color => Utils.Colors.foreground, 
             :justification => Graphics.TEXT_JUSTIFY_LEFT
         });
-        self.max = new $.Text({
+        self.avg60m = new $.Text({
             :offset => [offset[0], offset[1]], 
             :font => Graphics.FONT_GLANCE_NUMBER, 
             :color => Utils.Colors.foreground, 
             :justification => Graphics.TEXT_JUSTIFY_LEFT
         });
 
-        self.max30sLabel = new $.Text({
+        self.avg30mLabel = new $.Text({
             :offset => [offset[0], offset[1]], 
             :font => Utils.Fonts.extraTinyFont(), 
             :color => Utils.Colors.greyBackground, 
             :justification => Graphics.TEXT_JUSTIFY_LEFT,
-            :text => Rez.Strings.labelMaxSpeed30s
+            :text => Rez.Strings.labelAvgSpeed30m
         });
-        self.maxLabel = new $.Text({
+        self.avg60mLabel = new $.Text({
             :offset => [offset[0], offset[1]], 
             :font => Utils.Fonts.extraTinyFont(), 
             :color => Utils.Colors.greyBackground, 
             :justification => Graphics.TEXT_JUSTIFY_LEFT,
-            :text => Rez.Strings.labelMaxSpeed
+            :text => Rez.Strings.labelAvgSpeed60m
         });
 
-        self.setMaxSpeeds(null);
-        self.setSpeed(null);
+        self.setAvgSpeeds(null);
     }
 
     function setOffset(offset) as Void {
         RelativeComponent.setOffset(offset);
 
         self.topOffset.setOffset(offset);
-        self.max30sLabel.setOffset(offset);
-        self.maxLabel.setOffset(offset);
-        self.max30s.setOffset(offset);
-        self.max.setOffset(offset);
+        self.avg30mLabel.setOffset(offset);
+        self.avg30m.setOffset(offset);
+        self.avg60mLabel.setOffset(offset);
+        self.avg60m.setOffset(offset);
 
         (new Layout.Vertical({ 
             :direction => Layout.Downwards, 
             :spacing => Utils.Sizing.spacing 
         })).apply([
             self.topOffset,
-            new Layout.Row([ self.max30sLabel, self.max30s ]),
-            new Layout.Row([ self.maxLabel, self.max ])
+            new Layout.Row([ self.avg30mLabel, self.avg30m ]),
+            new Layout.Row([ self.avg60mLabel, self.avg60m ])
         ]);
     }
 
-    function setMaxSpeeds(maxSpeed as MaxSpeedValues?) as Void {
-        if (maxSpeed == null) {
-            self.max30s.setText("--");
+    function setAvgSpeeds(speeds as AverageSpeedValues?) as Void {
+        if (speeds == null) {
+            self.avg30m.setText("--");
+            self.avg60m.setText("--");
             return;
         }
 
-        var max30s = self.unitConverter.speedFromMS(maxSpeed.speed30s);
-        self.max30s.setText(max30s.format("%.01f"));
+        var avg30m = self.unitConverter.speedFromMS(speeds.speed30m);
+        self.avg30m.setText(avg30m.format("%.01f"));
+
+        var avg60m = self.unitConverter.speedFromMS(speeds.speed60m);
+        self.avg60m.setText(avg60m.format("%.01f"));
     }
 
-    function setSpeed(speed as SpeedValue?) as Void {
-        if (speed == null) {
-            self.max.setText("--");
-            return;
-        }
-
-        var max = self.unitConverter.speedFromMS(speed.max);
-        self.max.setText(max.format("%.01f"));
-    }
 
     function layout(dc as Dc) as Void {
-        self.max30sLabel.layout(dc);
-        self.maxLabel.layout(dc);
+        self.avg30mLabel.layout(dc);
+        self.avg60mLabel.layout(dc);
 
-        var w = self.maxLabel.calculateTextWidth(dc);
-        self.max30s.updateOffset(self._offset[0] + w + Utils.Sizing.spacingL, null);
-        self.max.updateOffset(self._offset[0] + w + Utils.Sizing.spacingL, null);
+        var w = self.avg60mLabel.calculateTextWidth(dc);
+        self.avg30m.updateOffset(self._offset[0] + w + Utils.Sizing.spacingL, null);
+        self.avg60m.updateOffset(self._offset[0] + w + Utils.Sizing.spacingL, null);
 
-        self.max30s.layout(dc);
-        self.max.layout(dc);
+        self.avg30m.layout(dc);
+        self.avg60m.layout(dc);
     }
 
     function draw(dc as Dc) as Void {
-        self.max30s.draw(dc);
-        self.max.draw(dc);
+        self.avg30m.draw(dc);
+        self.avg60m.draw(dc);
 
-        self.max30sLabel.draw(dc);
-        self.maxLabel.draw(dc);
+        self.avg30mLabel.draw(dc);
+        self.avg60mLabel.draw(dc);
     }
 }

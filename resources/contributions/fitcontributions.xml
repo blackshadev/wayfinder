@@ -4,9 +4,9 @@
         displayInChart="true"
         sortOrder = "0"
         precision="1"
-        chartTitle="@Strings.fieldTitleMaxSpeed2s"
-        dataLabel="@Strings.fieldLabelMaxSpeed"
-        unitLabel="@Strings.fieldUnitMaxSpeed"
+        chartTitle="@Strings.fieldTitleAvgSpeed2s"
+        dataLabel="@Strings.fieldLabelAvgSpeed"
+        unitLabel="@Strings.fieldUnitSpeed"
         fillColor="#4394E5"
     />
     
@@ -15,9 +15,31 @@
         displayInChart="true"
         sortOrder = "1"
         precision="1"
-        chartTitle="@Strings.fieldTitleMaxSpeed10s"
-        dataLabel="@Strings.fieldLabelMaxSpeed"
-        unitLabel="@Strings.fieldUnitMaxSpeed"
+        chartTitle="@Strings.fieldTitleAvgSpeed10s"
+        dataLabel="@Strings.fieldLabelAvgSpeed"
+        unitLabel="@Strings.fieldUnitSpeed"
         fillColor="#004D99"
-    />     
+    />
+
+    <fitField 
+        id="3"
+        displayInChart="true"
+        sortOrder = "2"
+        precision="1"
+        chartTitle="@Strings.fieldTitleAvgSpeed30m"
+        dataLabel="@Strings.fieldLabelAvgSpeed"
+        unitLabel="@Strings.fieldUnitSpeed"
+        fillColor="#004D99"
+    />
+
+    <fitField 
+        id="4"
+        displayInChart="true"
+        sortOrder = "3"
+        precision="1"
+        chartTitle="@Strings.fieldTitleAvgSpeed60m"
+        dataLabel="@Strings.fieldLabelAvgSpeed"
+        unitLabel="@Strings.fieldUnitSpeed"
+        fillColor="#004D99"
+    />
 </fitContributions>

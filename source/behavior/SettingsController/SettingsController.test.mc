@@ -7,6 +7,7 @@ module WayfinderTests {
     class SettingsControllerTest {
         (:test)
         public function testInitializationDefaults(logger as Logger) as Boolean {
+            Application.Properties.setValue("arrowSize", SettingsControllerInterface.ARROW_SIZE_NORMAL);
             Application.Properties.setValue("unitsSpeed", SettingsControllerInterface.SPEED_UNSET);
             Application.Properties.setValue("unitsDistance", SettingsControllerInterface.DISTANCE_UNSET);
 
@@ -14,6 +15,7 @@ module WayfinderTests {
 
             Assert.isEqual(SettingsControllerInterface.DISTANCE_MILES, settings.distance());
             Assert.isEqual(SettingsControllerInterface.SPEED_MPH, settings.unitsSpeed());
+            Assert.isEqual(SettingsControllerInterface.ARROW_SIZE_NORMAL, settings.arrowSize());
 
             return true;
         }
@@ -25,6 +27,7 @@ module WayfinderTests {
             Application.Properties.setValue("background", SettingsControllerInterface.BACKGROUND_BLACK);
             Application.Properties.setValue("activityType", SettingsControllerInterface.ACTIVITY_KITESURFING);
             Application.Properties.setValue("mapZoomDistance", 5000);
+            Application.Properties.setValue("arrowSize", SettingsControllerInterface.ARROW_SIZE_SMALL);
 
             var settings = new SettingsController();
 
@@ -32,6 +35,7 @@ module WayfinderTests {
             Assert.isEqual(SettingsControllerInterface.SPEED_KNOTS, settings.unitsSpeed());
             Assert.isEqual(SettingsControllerInterface.BACKGROUND_BLACK, settings.background());
             Assert.isEqual(SettingsControllerInterface.ACTIVITY_KITESURFING, settings.activityType());
+            Assert.isEqual(SettingsControllerInterface.ARROW_SIZE_SMALL, settings.arrowSize());
             Assert.isEqual(5000, settings.mapZoomDistance());
 
             return true;
@@ -146,6 +150,31 @@ module WayfinderTests {
                 Assert.isEqual(expected[iX][:res], settings.activityTypeRes());
 
                 settings.toggleActivityType();
+            }
+
+            return true;
+        }
+
+        (:test)
+        public function testToggleArrowSize(logger as Logger) as Boolean {
+            Application.Properties.setValue("arrowSize", SettingsControllerInterface.ARROW_SIZE_LARGE);
+            var settings = new SettingsController();
+
+            var expected = [
+                { :value => SettingsControllerInterface.ARROW_SIZE_LARGE, :res => Rez.Strings.settingsArrowSizeLarge },
+                { :value => SettingsControllerInterface.ARROW_SIZE_EXTRA_LARGE, :res => Rez.Strings.settingsArrowSizeExtraLarge },
+                { :value => SettingsControllerInterface.ARROW_SIZE_NONE, :res => Rez.Strings.settingsArrowSizeNone },
+                { :value => SettingsControllerInterface.ARROW_SIZE_SMALL, :res => Rez.Strings.settingsArrowSizeSmall },
+                { :value => SettingsControllerInterface.ARROW_SIZE_NORMAL, :res => Rez.Strings.settingsArrowSizeNormal },
+                { :value => SettingsControllerInterface.ARROW_SIZE_LARGE, :res => Rez.Strings.settingsArrowSizeLarge },
+                { :value => SettingsControllerInterface.ARROW_SIZE_EXTRA_LARGE, :res => Rez.Strings.settingsArrowSizeExtraLarge },
+            ];
+
+            for (var iX = 0; iX < expected.size(); iX++) {
+                Assert.isEqual(expected[iX][:value], settings.arrowSize());
+                Assert.isEqual(expected[iX][:res], settings.arrowSizeRes());
+
+                settings.toggleArrowSize();
             }
 
             return true;

@@ -50,11 +50,30 @@ class SettingsControllerInterface {
     public static const BACKGROUND_WHITE = White;
     public static const BACKGROUND_DONOTUSE_UPPER_LIMIT = 2;
 
+    private enum ArrowSize {
+        None = 0,
+        Small = 1,
+        Normal = 2,
+        Large = 3,
+        ExtraLarge = 4,
+    }
+
+    public static const ARROW_SIZE_NONE = None;
+    public static const ARROW_SIZE_SMALL = Small;
+    public static const ARROW_SIZE_NORMAL = Normal;
+    public static const ARROW_SIZE_LARGE = Large;
+    public static const ARROW_SIZE_EXTRA_LARGE = ExtraLarge;
+    public static const ARROW_SIZE_DONOTUSE_UPPER_LIMIT = 5;
+
     public function distance() as DistanceUnit {
         throw new NotImplemented();
     }
 
     public function unitsSpeed() as SpeedUnit {
+        throw new NotImplemented();
+    }
+
+    public function arrowSize() as ArrowSize {
         throw new NotImplemented();
     }
 }

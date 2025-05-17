@@ -42,4 +42,14 @@
             <listEntry value="5000">@Strings.settings5km</listEntry>
         </settingConfig>
     </setting>
+
+    <setting propertyKey="@Properties.arrowSize" title="@Strings.settingsArrowSize">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.settingsArrowSizeNone</listEntry>
+            <listEntry value="1">@Strings.settingsArrowSizeSmall</listEntry>
+            <listEntry value="2">@Strings.settingsArrowSizeNormal</listEntry>
+            <listEntry value="3">@Strings.settingsArrowSizeLarge</listEntry>
+            <listEntry value="4">@Strings.settingsArrowSizeExtraLarge</listEntry>
+        </settingConfig>
+    </setting>
 </settings>
