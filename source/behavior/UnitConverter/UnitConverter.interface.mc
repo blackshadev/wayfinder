@@ -1,6 +1,6 @@
 import Toybox.Lang;
 
-class UnitConverterInterface {
+class BoundUnitConverterInterface {
     public function speedFromMS(ms as Float?) as Float? {
         throw new NotImplemented();
     }

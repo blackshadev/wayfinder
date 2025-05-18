@@ -6,7 +6,7 @@ import Toybox.Timer;
 class WayfinderApp extends Application.AppBase {
 
     public var waypoint as WaypointController;
-    public var unitConverter as UnitConverter;
+    public var unitConverter as SettingsBoundUnitConverter;
     public var activity as ActivityController;
     public var activityInfo as ActivityInfoProvider;
     public var sensor as SensorProvider;
@@ -17,7 +17,7 @@ class WayfinderApp extends Application.AppBase {
     function initialize() {
         AppBase.initialize();
         self.settings = new SettingsController();
-        self.unitConverter = new UnitConverter(self.settings);
+        self.unitConverter = new SettingsBoundUnitConverter(self.settings);
 
         self.sensor = new SensorProvider();
         self.speedAggregator = new SpeedAggregationProvider(self.sensor, new Timer.Timer());

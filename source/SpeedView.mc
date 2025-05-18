@@ -24,7 +24,7 @@ class SpeedView extends WatchUi.View {
         waypoint as WaypointController,
         activityInfo as ActivityInfoProvider,
         speedAggregator as SpeedAggregationProvider,
-        unitConverter as UnitConverter
+        unitConverter as SettingsBoundUnitConverter
     ) {
         View.initialize();
 

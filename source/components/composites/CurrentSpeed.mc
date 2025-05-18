@@ -2,12 +2,12 @@ import Toybox.Graphics;
 import Toybox.Lang;
 
 class CurrentSpeed extends RelativeComponent {
-    private var unitConverter as UnitConverter;
+    private var unitConverter as SettingsBoundUnitConverter;
 
     private var label as $.Text;
     private var value as $.Text;
 
-    function initialize(unitConverter as UnitConverter, offset as Graphics.Point2D) {
+    function initialize(unitConverter as SettingsBoundUnitConverter, offset as Graphics.Point2D) {
         RelativeComponent.initialize();
 
         self.unitConverter = unitConverter;

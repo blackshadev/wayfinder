@@ -15,7 +15,7 @@ class ViewController {
     private var waypoint as WaypointController;
     private var activityInfo as ActivityInfoProvider;
     private var speedAggregator as SpeedAggregationProvider;
-    private var unitConverter as UnitConverter;
+    private var unitConverter as SettingsBoundUnitConverter;
     private var settings as SettingsController;
 
     private var delegate as WayfinderDelegate? = null;
@@ -25,7 +25,7 @@ class ViewController {
         waypoint as WaypointController,
         activityInfo as ActivityInfoProvider,
         speedAggregator as SpeedAggregationProvider, 
-        unitConverter as UnitConverter,
+        unitConverter as SettingsBoundUnitConverter,
         settings as SettingsController
     ) {
         self.activity = activity;

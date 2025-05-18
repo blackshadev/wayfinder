@@ -7,7 +7,7 @@
     <string id="fieldTitleAvgSpeed30m">Avg speed (30m)</string>
     <string id="fieldTitleAvgSpeed60m">Avg speed (60m)</string>
     <string id="fieldLabelAvgSpeed">Avg speed</string>
-    <string id="fieldUnitSpeed">m/s</string>
+    <string id="fieldUnitSpeed">kt</string>
 
     <string id="labelAvgSpeed">Avg</string>
     <string id="labelAvgSpeed2s">2s</string>

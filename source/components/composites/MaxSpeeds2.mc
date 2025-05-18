@@ -2,7 +2,7 @@ import Toybox.Graphics;
 import Toybox.Lang;
 
 class MaxSpeeds2 extends RelativeComponent {
-    private var unitConverter as UnitConverter;
+    private var unitConverter as SettingsBoundUnitConverter;
 
     private var avg30m as $.Text;
     private var avg30mLabel as $.Text;
@@ -10,7 +10,7 @@ class MaxSpeeds2 extends RelativeComponent {
     private var avg60mLabel as $.Text;
     private var topOffset as Layout.Offset;
 
-    function initialize(unitConverter as UnitConverter, offset as Graphics.Point2D) {
+    function initialize(unitConverter as SettingsBoundUnitConverter, offset as Graphics.Point2D) {
         RelativeComponent.initialize();
 
         self.unitConverter = unitConverter;

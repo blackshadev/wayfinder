@@ -23,12 +23,14 @@ class ActivityController {
     private var field60m as FitContributor.Field? = null;
 
     private var updateTimer as Timer.Timer;
+    private var converter as UnitConverter;
 
     function initialize(settings as SettingsController, speedAggregator as SpeedAggregationProvider) {
         self.settings = settings;
         self.speedAggregator = speedAggregator;
 
         self.updateTimer = new Timer.Timer();
+        self.converter = new UnitConverter();
     }
 
     public function start() as Void {
@@ -157,15 +159,15 @@ class ActivityController {
     }
 
     public function updateValues() as Void {
-        if (self.field2s == null || self.field10s == null) {
+        if (self.field2s == null || self.field10s == null || self.field30m == null || self.field60m == null) {
             return;
         }
 
         var value = self.speedAggregator.value();
-        self.field2s.setData(value.speed2s);
-        self.field10s.setData(value.speed10s);
-        self.field30m.setData(value.speed30m);
-        self.field60m.setData(value.speed60m);
+        self.field2s.setData(self.converter.speedFromMS(value.speed2s, SettingsControllerInterface.SPEED_KNOTS));
+        self.field10s.setData(self.converter.speedFromMS(value.speed10s, SettingsControllerInterface.SPEED_KNOTS));
+        self.field30m.setData(self.converter.speedFromMS(value.speed30m, SettingsControllerInterface.SPEED_KNOTS));
+        self.field60m.setData(self.converter.speedFromMS(value.speed60m, SettingsControllerInterface.SPEED_KNOTS));
     }
 
     private function getActivitySettings() {

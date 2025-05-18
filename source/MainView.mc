@@ -22,7 +22,7 @@ class MainView extends WatchUi.View {
     function initialize(
         waypoint as WaypointController,
         activityInfo as ActivityInfoProvider,
-        unitConverter as UnitConverter
+        unitConverter as SettingsBoundUnitConverter
     ) {
         View.initialize();
 
