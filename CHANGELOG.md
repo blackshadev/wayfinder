@@ -1,22 +1,29 @@
+## v0.7.0
+
+- Replace average speed over x seconds instead of max speed over x seconds
+- Add average 30m and 60m.
+- Add back from activity recording menu to prevent stopping recording when accidentally pressing the start/stop button
+- Add scafolding for introducing max average speeds recording and other fun stuff. 
+
 ## v0.6.3
 
-Fix speed aggregation memory leak and working
+- 1Fix speed aggregation memory leak and working
 
 ## v0.6.2
 
-Bugfix datafield creation for 2s and 10s max speed
+- Bugfix datafield creation for 2s and 10s max speed
 
 ## v0.6.1
 
-Bugfix invalid check for Instinct Solar devices
+- Bugfix invalid check for Instinct Solar devices
 
 ## v0.6.0
 
-Introduce special cases for Instinct 3 Solar, Instinct 2 Solar, Instinct 2S Solar, Instinct 2X Solar to move the top right quarter into the extra watch window.
+- Introduce special cases for Instinct 3 Solar, Instinct 2 Solar, Instinct 2S Solar, Instinct 2X Solar to move the top right quarter into the extra watch window.
 
 ## v0.5.2
 
-Reduce memory and system load by lazy initializing views when required
+- Reduce memory and system load by lazy initializing views when required
 
 
 ## v0.4.0
