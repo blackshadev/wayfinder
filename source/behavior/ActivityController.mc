@@ -6,31 +6,18 @@ import Toybox.Lang;
 import Toybox.Timer;
 
 class ActivityController {
-    private const FIELD_ID_AVG_SPEED_2S = 1;
-    private const FIELD_ID_AVG_SPEED_10S = 2;
-    private const FIELD_ID_AVG_SPEED_30M = 3;
-    private const FIELD_ID_AVG_SPEED_60M = 4;
-
-    private const UPDATE_TIME = 1000;
-
     private var settings as SettingsController;
     private var speedAggregator as SpeedAggregationProvider;
+    private var activityFieldFactories as Array<ActivityFieldFactory>;
+    private var activityFields as Array<ActivityField> = [];
 
     private var session as ActivityRecording.Session? = null;
-    private var field2s as FitContributor.Field? = null;
-    private var field10s as FitContributor.Field? = null;
-    private var field30m as FitContributor.Field? = null;
-    private var field60m as FitContributor.Field? = null;
 
-    private var updateTimer as Timer.Timer;
-    private var converter as UnitConverter;
 
-    function initialize(settings as SettingsController, speedAggregator as SpeedAggregationProvider) {
+    function initialize(settings as SettingsController, speedAggregator as SpeedAggregationProvider, activityFieldFactories as Array<ActivityFieldFactory>) {
         self.settings = settings;
         self.speedAggregator = speedAggregator;
-
-        self.updateTimer = new Timer.Timer();
-        self.converter = new UnitConverter();
+        self.activityFieldFactories = activityFieldFactories;
     }
 
     public function start() as Void {
@@ -41,45 +28,12 @@ class ActivityController {
         var opts = self.getActivitySettings();
         self.session = ActivityRecording.createSession(opts);
 
-        self.createField();
-        self.session.start();
-        self.speedAggregator.start();
-        self.startUpdateValuesTimer();
-    }
+        self.activityFields = [];
+        for (var iX = 0; iX < self.activityFieldFactories.size(); iX++) {
+            self.activityFields.add(self.activityFieldFactories[iX].create(session));
+        }
 
-    private function createField() as Void {
-        var speedFieldConfig = { 
-            :mesgType => FitContributor.MESG_TYPE_RECORD, 
-            :units => WatchUi.loadResource(self.settings.unitsSpeedRes())
-        };
-
-        self.field2s = self.session.createField(
-            WatchUi.loadResource(Rez.Strings.labelAvgSpeed2s),
-            FIELD_ID_AVG_SPEED_2S,
-            FitContributor.DATA_TYPE_FLOAT,
-            speedFieldConfig
-        );
-
-        self.field10s = self.session.createField(
-            WatchUi.loadResource(Rez.Strings.labelAvgSpeed10s),
-            FIELD_ID_AVG_SPEED_10S,
-            FitContributor.DATA_TYPE_FLOAT,
-            speedFieldConfig
-        );
-
-        self.field30m = self.session.createField(
-            WatchUi.loadResource(Rez.Strings.labelAvgSpeed30m),
-            FIELD_ID_AVG_SPEED_30M,
-            FitContributor.DATA_TYPE_FLOAT,
-            speedFieldConfig
-        );
-
-        self.field60m = self.session.createField(
-            WatchUi.loadResource(Rez.Strings.labelAvgSpeed60m),
-            FIELD_ID_AVG_SPEED_60M,
-            FitContributor.DATA_TYPE_FLOAT,
-            speedFieldConfig
-        );
+        self.resume();
     }
 
     public function resume() as Void {
@@ -89,7 +43,10 @@ class ActivityController {
 
         self.session.start();
         self.speedAggregator.start();
-        self.startUpdateValuesTimer();
+        
+        for (var iX = 0; iX < self.activityFieldFactories.size(); iX++) {
+            self.activityFields[iX].start();
+        }
     }
 
     public function pause() as Void {
@@ -97,9 +54,10 @@ class ActivityController {
             throw new ActivityNotStarted();
         }
 
-        self.stopUpdateValuesTimer();
+        for (var iX = 0; iX < self.activityFieldFactories.size(); iX++) {
+            self.activityFields[iX].stop();
+        }
         self.speedAggregator.pause();
-
         self.session.stop();
     }
 
@@ -108,16 +66,16 @@ class ActivityController {
             throw new ActivityNotStarted();
         }
 
-        self.stopUpdateValuesTimer();
-        self.speedAggregator.reset();
+        for (var iX = 0; iX < self.activityFieldFactories.size(); iX++) {
+            self.activityFields[iX].stop();
+        }
 
+        self.speedAggregator.reset();
         self.session.stop();
         self.session.discard();
+
+        self.activityFields = [];
         self.session = null;
-        self.field2s = null;
-        self.field10s = null;
-        self.field30m = null;
-        self.field60m = null;
     }
 
     public function save() as Void {
@@ -125,16 +83,17 @@ class ActivityController {
             throw new ActivityNotStarted();
         }
 
-        self.stopUpdateValuesTimer();
+        for (var iX = 0; iX < self.activityFieldFactories.size(); iX++) {
+            self.activityFields[iX].stop();
+        }
+
         self.speedAggregator.reset();
 
         self.session.stop();
         self.session.save();
         self.session = null;
-        self.field2s = null;
-        self.field10s = null;
-        self.field30m = null;
-        self.field60m = null;
+
+        self.activityFields = [];
     } 
 
     public function isStarted() as Boolean {
@@ -148,26 +107,6 @@ class ActivityController {
         }
 
         return !self.session.isRecording();
-    }
-
-    private function stopUpdateValuesTimer() as Void {
-        self.updateTimer.stop();
-    }
-
-    private function startUpdateValuesTimer() as Void {
-        self.updateTimer.start(method(:updateValues), UPDATE_TIME, true);
-    }
-
-    public function updateValues() as Void {
-        if (self.field2s == null || self.field10s == null || self.field30m == null || self.field60m == null) {
-            return;
-        }
-
-        var value = self.speedAggregator.value();
-        self.field2s.setData(self.converter.speedFromMS(value.speed2s, SettingsControllerInterface.SPEED_KNOTS));
-        self.field10s.setData(self.converter.speedFromMS(value.speed10s, SettingsControllerInterface.SPEED_KNOTS));
-        self.field30m.setData(self.converter.speedFromMS(value.speed30m, SettingsControllerInterface.SPEED_KNOTS));
-        self.field60m.setData(self.converter.speedFromMS(value.speed60m, SettingsControllerInterface.SPEED_KNOTS));
     }
 
     private function getActivitySettings() {

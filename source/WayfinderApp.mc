@@ -22,7 +22,13 @@ class WayfinderApp extends Application.AppBase {
         self.sensor = new SensorProvider();
         self.speedAggregator = new SpeedAggregationProvider(self.sensor, new Timer.Timer());
         self.waypoint = new WaypointController(self.sensor);
-        self.activity = new ActivityController(self.settings, self.speedAggregator);
+        self.activity = new ActivityController(
+            self.settings, 
+            self.speedAggregator, 
+            [
+                new AverageSpeedActivityFieldFactory(self.speedAggregator)
+            ]
+        );
         self.activityInfo = new ActivityInfoProvider(self.activity);
         
         self.viewController = new ViewController(

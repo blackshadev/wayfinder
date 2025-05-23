@@ -94,8 +94,6 @@ class MaxSpeeds extends RelativeComponent {
         self.avg2sLabel.layout(dc);
         self.avg10sLabel.layout(dc);
 
-        System.println(self.title.height());
-
         var w = self.avg10sLabel.calculateTextWidth(dc);
         self.avg2s.updateOffset(self._offset[0] - w - Utils.Sizing.spacingL, null);
         self.avg10s.updateOffset(self._offset[0] - w - Utils.Sizing.spacingL, null);
