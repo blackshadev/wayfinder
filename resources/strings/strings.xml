@@ -30,6 +30,7 @@
     <string id="menuOpenAbout">About...</string>
 
     <string id="activityMenuTitle">Activity</string>
+    <string id="activityMenuBack">Back</string>
     <string id="activityMenuResume">Resume</string>
     <string id="activityMenuPause">Pause</string>
     <string id="activityMenuStart">Start</string>

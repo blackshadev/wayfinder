@@ -7,6 +7,7 @@ class ActivityMenuDelegate extends WatchUi.Menu2InputDelegate {
     public static const ACTIVITY_RESUME = "activity_resume";
     public static const ACTIVITY_DISCARD = "activity_discard";
     public static const ACTIVITY_SAVE = "activity_save";
+    public static const ACTIVITY_NOTHING = "activity_nothing";
 
     private var activity as ActivityController;
 
@@ -34,6 +35,8 @@ class ActivityMenuDelegate extends WatchUi.Menu2InputDelegate {
                 break;
             case ACTIVITY_SAVE:
                 self.activity.save();
+                break;
+            case ACTIVITY_NOTHING:
                 break;
         }
 

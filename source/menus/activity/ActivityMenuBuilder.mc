@@ -12,6 +12,15 @@ class ActivityMenuBuilder {
             :title => WatchUi.loadResource(Rez.Strings.activityMenuTitle)
         });
 
+        menu.addItem(
+            new MenuItem(
+                WatchUi.loadResource(Rez.Strings.activityMenuBack),
+                null,
+                ActivityMenuDelegate.ACTIVITY_NOTHING,
+                {}
+            )
+        );
+
         if (self.activity.isPaused()) {
             menu.addItem(
                 new MenuItem(
