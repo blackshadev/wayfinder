@@ -31,7 +31,7 @@ class SpeedAggregationProvider {
         self.sensor = sensor;
         self.updateTimer = timer;
 
-        self.rawSpeedData = new FloatRingBuffer(SIZE_MAX, 0.0);
+        self.rawSpeedData = new FloatRingBuffer(SIZE_MAX);
         self.speeds = new AverageValueList([
             SIZE_2_SEC,
             SIZE_10_SEC,
@@ -48,7 +48,7 @@ class SpeedAggregationProvider {
     public function reset() as Void {
         self.pause();
         self.speeds.reset();
-        self.rawSpeedData = new FloatRingBuffer(SIZE_MAX, 0.0);
+        self.rawSpeedData.reset();
     }
 
     public function pause() as Void {

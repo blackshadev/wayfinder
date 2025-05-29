@@ -5,17 +5,24 @@ class FloatRingBuffer {
     private var data as Array<Float> = [];
     private var size as Number;
 
-    public function initialize(size as Number, defaultValue as Float) {
+    public function initialize(size as Number) {
         self.size = size;
-        
-        for (var iX = 0; iX < size; iX++) {
-            self.data.add(defaultValue);
-        }
+    }
+
+    public function reset() as Void {
+        self.lastIndex = -1;
+        self.data = [];
     }
 
     public function add(value as Float) as Void {
         self.lastIndex = (self.lastIndex + 1) % self.size;
-        self.data[self.lastIndex] = value;
+
+        if (self.lastIndex < self.data.size()) {
+            self.data[self.lastIndex] = value;
+            return;
+        }
+
+        self.data.add(value);
     }
 
     public function values(indices as Array<Number>) as Array<Float>
@@ -30,29 +37,11 @@ class FloatRingBuffer {
     }
 
     public function value(index as Number) as Float {
-        var normalizedIndex = (self.lastIndex - index + self.data.size()) % self.data.size();
-
-        return self.data[normalizedIndex];
-    }
-
-    public function max(range as Number) as Float {
-        range = Utils.min(self.size, range);
-
-        var iX = self.lastIndex < 0 ? self.size - 1 : self.lastIndex;
-        var max = self.data[iX];
-
-        while (range > 0) {
-            if (max < self.data[iX]) {
-                max = self.data[iX];
-            }
-
-            range -= 1;
-            iX = (iX - 1) % self.size;
-            if (iX < 0) {
-                iX = self.size - 1;
-            }
+        var normalizedIndex = (self.lastIndex - index + self.size) % self.size;
+        if (normalizedIndex >= self.data.size()) {
+            return 0.0;
         }
 
-        return max;
+        return self.data[normalizedIndex];
     }
 }
