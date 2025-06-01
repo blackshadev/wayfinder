@@ -17,8 +17,8 @@ class AverageValueList {
         }
     }
 
-    public function values() as Array<Float> {
-        var values = [] as Array<Float>;
+    public function values() as Array<AverageValue> {
+        var values = [] as Array<AverageValue>;
         for (var iX = 0; iX < self._averages.size(); iX++) {
             values.add(self._averages[iX].value());
         }

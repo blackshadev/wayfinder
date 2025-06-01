@@ -9,6 +9,10 @@ class FloatRingBuffer {
         self.size = size;
     }
 
+    public function capacity() as Number {
+        return self.data.size();
+    }
+
     public function reset() as Void {
         self.lastIndex = -1;
         self.data = [];

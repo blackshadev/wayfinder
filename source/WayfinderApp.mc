@@ -26,7 +26,8 @@ class WayfinderApp extends Application.AppBase {
             self.settings, 
             self.speedAggregator, 
             [
-                new AverageSpeedActivityFieldFactory(self.speedAggregator)
+                new AverageSpeedActivityFieldFactory(self.speedAggregator),
+                new MaxAverageSpeedActivityFieldFactory(self.speedAggregator),
             ]
         );
         self.activityInfo = new ActivityInfoProvider(self.activity);

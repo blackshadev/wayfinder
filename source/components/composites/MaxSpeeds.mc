@@ -80,8 +80,8 @@ class MaxSpeeds extends RelativeComponent {
             return;
         }
 
-        var avg2s = self.unitConverter.speedFromMS(value.speed2s);
-        var avg10s = self.unitConverter.speedFromMS(value.speed10s);
+        var avg2s = self.unitConverter.speedFromMS(value.speed2s.value);
+        var avg10s = self.unitConverter.speedFromMS(value.speed10s.value);
 
         self.avg2s.setText(avg2s.format("%.01f"));
         self.avg10s.setText(avg10s.format("%.01f"));

@@ -76,6 +76,7 @@ class SpeedAggregationProvider {
         }
 
         var values = self.speeds.values();
+        
         return new AverageSpeedValues(
             values[0],
             values[1],

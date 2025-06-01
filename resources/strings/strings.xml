@@ -2,6 +2,13 @@
     <string id="AppName">Wayfinder</string>
     <string id="AppVersion">0.7.0</string>
 
+
+    <string id="fieldTitleMaxAvgSpeed2s">Max. Avg. speed (2s)</string>
+    <string id="fieldTitleMaxAvgSpeed10s">Max. Avg. speed (10s)</string>
+    <string id="fieldTitleMaxAvgSpeed30m">Max. Avg. speed (30m)</string>
+    <string id="fieldTitleMaxAvgSpeed60m">Max. Avg. speed (60m)</string>
+    <string id="fieldLabelMaxAvgSpeed">Max. Avg. speed</string>
+
     <string id="fieldTitleAvgSpeed2s">Avg speed (2s)</string>
     <string id="fieldTitleAvgSpeed10s">Avg speed (10s)</string>
     <string id="fieldTitleAvgSpeed30m">Avg speed (30m)</string>

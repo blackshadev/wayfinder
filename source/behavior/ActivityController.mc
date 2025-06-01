@@ -68,6 +68,7 @@ class ActivityController {
 
         for (var iX = 0; iX < self.activityFieldFactories.size(); iX++) {
             self.activityFields[iX].stop();
+            self.activityFields[iX].reset();
         }
 
         self.speedAggregator.reset();

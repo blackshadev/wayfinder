@@ -17,12 +17,16 @@ class MovingAverage {
         self.totalSum = (self.totalSum - oldValue) + newValue;
     }
 
-    public function value() as Float {
+    public function value() as AverageValue {
         if (count == 0) {
-            return 0.0;
+            return AverageValue.empty();
         }
 
-        return self.totalSum / self.count;
+        return AverageValue.fromSample(
+            self.totalSum / self.count, 
+            self.count, 
+            self.limit
+        );
     }
 
 

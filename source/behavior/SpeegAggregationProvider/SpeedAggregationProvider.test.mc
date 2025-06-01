@@ -19,10 +19,14 @@ module WayfinderTests {
 
             var value = aggregator.value();
             Assert.isNotNull(value);
-            Assert.isEqual(0.0, value.speed2s);
-            Assert.isEqual(0.0, value.speed10s);
-            Assert.isEqual(0.0, value.speed30m);
-            Assert.isEqual(0.0, value.speed60m);
+            Assert.isEqual(0.0, value.speed2s.value);
+            Assert.isEqual(false, value.speed2s.isComplete);
+            Assert.isEqual(0.0, value.speed10s.value);
+            Assert.isEqual(false, value.speed10s.isComplete);
+            Assert.isEqual(0.0, value.speed30m.value);
+            Assert.isEqual(false, value.speed30m.isComplete);
+            Assert.isEqual(0.0, value.speed60m.value);
+            Assert.isEqual(false, value.speed60m.isComplete);
 
             return true;
         }
@@ -51,10 +55,14 @@ module WayfinderTests {
 
             var value = aggregator.value();
             Assert.isNotNull(value);
-            Assert.isEqual(80.0, value.speed2s);
-            Assert.isEqual(82.0, value.speed10s);
-            Assert.isEqual(104.038887, value.speed30m);
-            Assert.isEqual(107.019447, value.speed60m);
+            Assert.isEqual(80.0, value.speed2s.value);
+            Assert.isEqual(true, value.speed2s.isComplete);
+            Assert.isEqual(82.0, value.speed10s.value);
+            Assert.isEqual(true, value.speed10s.isComplete);
+            Assert.isEqual(104.038887, value.speed30m.value);
+            Assert.isEqual(true, value.speed30m.isComplete);
+            Assert.isEqual(107.019447, value.speed60m.value);
+            Assert.isEqual(true, value.speed60m.isComplete);
 
             return true;
         }
@@ -73,10 +81,14 @@ module WayfinderTests {
 
             var value = aggregator.value();
             Assert.isNotNull(value);
-            Assert.isEqual(0.0, value.speed2s);
-            Assert.isEqual(0.0, value.speed10s);
-            Assert.isEqual(0.0, value.speed30m);
-            Assert.isEqual(0.0, value.speed60m);
+            Assert.isEqual(0.0, value.speed2s.value);
+            Assert.isEqual(false, value.speed2s.isComplete);
+            Assert.isEqual(0.0, value.speed10s.value);
+            Assert.isEqual(false, value.speed10s.isComplete);
+            Assert.isEqual(0.0, value.speed30m.value);
+            Assert.isEqual(false, value.speed30m.isComplete);
+            Assert.isEqual(0.0, value.speed60m.value);
+            Assert.isEqual(false, value.speed60m.isComplete);
 
             return true;
         }

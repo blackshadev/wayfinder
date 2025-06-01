@@ -42,4 +42,48 @@
         unitLabel="@Strings.fieldUnitSpeed"
         fillColor="#004D99"
     />
+
+    <fitField 
+        id="5" 
+        displayInChart="true"
+        sortOrder = "4"
+        precision="1"
+        chartTitle="@Strings.fieldTitleMaxAvgSpeed2s"
+        dataLabel="@Strings.fieldLabelMaxAvgSpeed"
+        unitLabel="@Strings.fieldUnitSpeed"
+        fillColor="#4394E5"
+    />
+    
+    <fitField 
+        id="6"
+        displayInChart="true"
+        sortOrder = "5"
+        precision="1"
+        chartTitle="@Strings.fieldTitleMaxAvgSpeed10s"
+        dataLabel="@Strings.fieldLabelMaxAvgSpeed"
+        unitLabel="@Strings.fieldUnitSpeed"
+        fillColor="#004D99"
+    />
+
+    <fitField 
+        id="7"
+        displayInChart="true"
+        sortOrder = "6"
+        precision="1"
+        chartTitle="@Strings.fieldTitleMaxAvgSpeed30m"
+        dataLabel="@Strings.fieldLabelMaxAvgSpeed"
+        unitLabel="@Strings.fieldUnitSpeed"
+        fillColor="#004D99"
+    />
+
+    <fitField 
+        id="8"
+        displayInChart="true"
+        sortOrder = "7"
+        precision="1"
+        chartTitle="@Strings.fieldTitleMaxAvgSpeed60m"
+        dataLabel="@Strings.fieldLabelMaxAvgSpeed"
+        unitLabel="@Strings.fieldUnitSpeed"
+        fillColor="#004D99"
+    />
 </fitContributions>

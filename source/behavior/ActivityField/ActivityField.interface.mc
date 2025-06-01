@@ -14,4 +14,8 @@ class ActivityField {
     public function stop() as Void {
         throw new NotImplemented();
     }
+
+    public function reset() as Void {
+        throw new NotImplemented();
+    }
 }
