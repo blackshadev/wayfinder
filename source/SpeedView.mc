@@ -7,7 +7,7 @@ import Toybox.Timer;
 
 class SpeedView extends WatchUi.View {
     private var activityInfo as ActivityInfoProvider;
-    private var speedAggregator as SpeedAggregationProvider;
+    private var averageSpeeds as AverageSpeedsProvider;
     private var waypoint as WaypointController;
 
     private var arrow as Arrow;
@@ -23,13 +23,13 @@ class SpeedView extends WatchUi.View {
     function initialize(
         waypoint as WaypointController,
         activityInfo as ActivityInfoProvider,
-        speedAggregator as SpeedAggregationProvider,
+        averageSpeeds as AverageSpeedsProvider,
         unitConverter as SettingsBoundUnitConverter
     ) {
         View.initialize();
 
         self.activityInfo = activityInfo;
-        self.speedAggregator = speedAggregator;
+        self.averageSpeeds = averageSpeeds;
         self.waypoint = waypoint;
 
         self.arrow = new Arrow(Utils.Sizing.arrow);
@@ -63,8 +63,8 @@ class SpeedView extends WatchUi.View {
     function updateValues() as Void {
         self.arrow.setAngle(self.waypoint.angle());
         self.currentSpeed.setValue(self.activityInfo.speed());
-        self.maxSpeeds.setValue(self.speedAggregator.value());
-        self.maxSpeeds2.setAvgSpeeds(self.speedAggregator.value());
+        self.maxSpeeds.setValue(self.averageSpeeds.value());
+        self.maxSpeeds2.setAvgSpeeds(self.averageSpeeds.value());
     }
 
     function onUpdate(dc as Dc) as Void {

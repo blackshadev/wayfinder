@@ -14,7 +14,7 @@ class ViewController {
     private var activity as ActivityController;
     private var waypoint as WaypointController;
     private var activityInfo as ActivityInfoProvider;
-    private var speedAggregator as SpeedAggregationProvider;
+    private var averageSpeeds as AverageSpeedsProvider;
     private var unitConverter as SettingsBoundUnitConverter;
     private var settings as SettingsController;
 
@@ -24,14 +24,14 @@ class ViewController {
         activity as ActivityController,
         waypoint as WaypointController,
         activityInfo as ActivityInfoProvider,
-        speedAggregator as SpeedAggregationProvider, 
+        averageSpeeds as AverageSpeedsProvider, 
         unitConverter as SettingsBoundUnitConverter,
         settings as SettingsController
     ) {
         self.activity = activity;
         self.waypoint = waypoint;
         self.activityInfo = activityInfo;
-        self.speedAggregator = speedAggregator;
+        self.averageSpeeds = averageSpeeds;
         self.unitConverter = unitConverter;
         self.settings = settings;
 
@@ -124,7 +124,7 @@ class ViewController {
     function getView() as WatchUi.Views {
         switch (self.iX) {
             case VIEW_SPEED:
-                return new SpeedView(self.waypoint, self.activityInfo, self.speedAggregator, self.unitConverter);
+                return new SpeedView(self.waypoint, self.activityInfo, self.averageSpeeds, self.unitConverter);
             case VIEW_MAP:
                 return new MapView(self.waypoint, self.settings);
             case VIEW_MAIN: 

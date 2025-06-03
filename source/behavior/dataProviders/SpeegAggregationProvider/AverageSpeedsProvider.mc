@@ -4,7 +4,7 @@ import Toybox.System;
 import Toybox.Lang;
 import Toybox.Timer;
 
-class SpeedAggregationProvider {
+class AverageSpeedsProvider extends AverageSpeedsProviderInterface {
     private const SAMPLE_TIME = 500;
 
     private const SEC_2 = 2000;
@@ -28,6 +28,8 @@ class SpeedAggregationProvider {
     private var isStarted as Boolean = false;
 
     function initialize(sensor as SensorProviderInterface, timer as Timer.Timer) {
+        AverageSpeedsProviderInterface.initialize();
+        
         self.sensor = sensor;
         self.updateTimer = timer;
 

@@ -11,7 +11,7 @@ class AverageSpeedActivityField extends ActivityField {
 
     private static const UPDATE_TIME = 1000;
     
-    private var speedAggregator as SpeedAggregationProvider;
+    private var averageSpeeds as AverageSpeedsProvider;
     
     private var field2s as FitContributor.Field;
     private var field10s as FitContributor.Field;
@@ -21,10 +21,10 @@ class AverageSpeedActivityField extends ActivityField {
     private var converter as UnitConverter;
     private var updateTimer as Timer.Timer;
 
-    function initialize(session as Session, speedAggregator as SpeedAggregationProvider) {
+    function initialize(session as Session, averageSpeeds as AverageSpeedsProvider) {
         ActivityField.initialize();
 
-        self.speedAggregator = speedAggregator;
+        self.averageSpeeds = averageSpeeds;
 
         self.converter = new UnitConverter();
         self.updateTimer = new Timer.Timer();
@@ -74,7 +74,7 @@ class AverageSpeedActivityField extends ActivityField {
     public function reset() as Void {}
 
     public function updateValues() as Void {
-        var value = self.speedAggregator.value();
+        var value = self.averageSpeeds.value();
 
         self.field2s.setData(self.converter.speedFromMS(value.speed2s.value, SettingsControllerInterface.SPEED_KNOTS));
         self.field10s.setData(self.converter.speedFromMS(value.speed10s.value, SettingsControllerInterface.SPEED_KNOTS));

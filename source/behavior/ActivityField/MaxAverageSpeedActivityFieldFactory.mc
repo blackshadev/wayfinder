@@ -2,15 +2,15 @@ import Toybox.ActivityRecording;
 import Toybox.FitContributor;
 
 class MaxAverageSpeedActivityFieldFactory extends ActivityFieldFactory {
-    private var speedAggregator as SpeedAggregationProvider;
+    private var maxAverageSpeeds as MaxAverageSpeedsProvider;
 
-    function initialize(speedAggregator as SpeedAggregationProvider) {
+    function initialize(maxAverageSpeeds as MaxAverageSpeedsProvider) {
         ActivityFieldFactory.initialize();
         
-        self.speedAggregator = speedAggregator;
+        self.maxAverageSpeeds = maxAverageSpeeds;
     }
 
     public function create(session as Session) as ActivityField {
-        return new MaxAverageSpeedActivityField(session, self.speedAggregator);
+        return new MaxAverageSpeedActivityField(session, self.maxAverageSpeeds);
     }
 }

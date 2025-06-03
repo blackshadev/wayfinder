@@ -11,7 +11,8 @@ class WayfinderApp extends Application.AppBase {
     public var activityInfo as ActivityInfoProvider;
     public var sensor as SensorProvider;
     public var settings as SettingsController;
-    public var speedAggregator as SpeedAggregationProvider;
+    public var averageSpeeds as AverageSpeedsProvider;
+    public var maxAverageSpeeds as MaxAverageSpeedsProvider;
     public var viewController as ViewController;
 
     function initialize() {
@@ -20,14 +21,15 @@ class WayfinderApp extends Application.AppBase {
         self.unitConverter = new SettingsBoundUnitConverter(self.settings);
 
         self.sensor = new SensorProvider();
-        self.speedAggregator = new SpeedAggregationProvider(self.sensor, new Timer.Timer());
+        self.averageSpeeds = new AverageSpeedsProvider(self.sensor, new Timer.Timer());
+        self.maxAverageSpeeds = new MaxAverageSpeedsProvider(self.averageSpeeds);
         self.waypoint = new WaypointController(self.sensor);
         self.activity = new ActivityController(
             self.settings, 
-            self.speedAggregator, 
+            self.averageSpeeds, 
             [
-                new AverageSpeedActivityFieldFactory(self.speedAggregator),
-                new MaxAverageSpeedActivityFieldFactory(self.speedAggregator),
+                new AverageSpeedActivityFieldFactory(self.averageSpeeds),
+                new MaxAverageSpeedActivityFieldFactory(self.maxAverageSpeeds),
             ]
         );
         self.activityInfo = new ActivityInfoProvider(self.activity);
@@ -36,7 +38,7 @@ class WayfinderApp extends Application.AppBase {
             self.activity,
             self.waypoint,
             self.activityInfo,
-            self.speedAggregator, 
+            self.averageSpeeds, 
             self.unitConverter,
             self.settings
         );

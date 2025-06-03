@@ -11,10 +11,8 @@ class MaxAverageSpeedActivityField extends ActivityField {
 
     private static const UPDATE_TIME = 1000;
     
-    private var speedAggregator as SpeedAggregationProvider;
+    private var maxAverageSpeeds as MaxAverageSpeedsProvider;
     
-    private var maxAvgSpeed as MaxAverageSpeedValues;
-
     private var field2s as FitContributor.Field;
     private var field10s as FitContributor.Field;
     private var field30m as FitContributor.Field;
@@ -23,10 +21,10 @@ class MaxAverageSpeedActivityField extends ActivityField {
     private var converter as UnitConverter;
     private var updateTimer as Timer.Timer;
 
-    function initialize(session as Session, speedAggregator as SpeedAggregationProvider) {
+    function initialize(session as Session, maxAverageSpeeds as MaxAverageSpeedsProvider) {
         ActivityField.initialize();
 
-        self.speedAggregator = speedAggregator;
+        self.maxAverageSpeeds = maxAverageSpeeds;
 
         self.converter = new UnitConverter();
         self.updateTimer = new Timer.Timer();
@@ -63,8 +61,6 @@ class MaxAverageSpeedActivityField extends ActivityField {
             FitContributor.DATA_TYPE_FLOAT,
             fieldConfig
         );
-
-        self.maxAvgSpeed = new MaxAverageSpeedValues();
     }
 
     public function start() as Void {
@@ -72,7 +68,7 @@ class MaxAverageSpeedActivityField extends ActivityField {
     }
 
     public function reset() as Void {
-        self.maxAvgSpeed = new MaxAverageSpeedValues();
+        self.maxAverageSpeeds.reset();
     }
 
     public function stop() as Void {
@@ -80,13 +76,11 @@ class MaxAverageSpeedActivityField extends ActivityField {
     }
 
     public function updateValues() as Void {
-        var value = self.speedAggregator.value();
+        var value = self.maxAverageSpeeds.value();
 
-        self.maxAvgSpeed.update(value);
-
-        self.field2s.setData(self.converter.speedFromMS(self.maxAvgSpeed.speed2s, SettingsControllerInterface.SPEED_KNOTS));
-        self.field10s.setData(self.converter.speedFromMS(self.maxAvgSpeed.speed10s, SettingsControllerInterface.SPEED_KNOTS));
-        self.field30m.setData(self.converter.speedFromMS(self.maxAvgSpeed.speed30m, SettingsControllerInterface.SPEED_KNOTS));
-        self.field60m.setData(self.converter.speedFromMS(self.maxAvgSpeed.speed60m, SettingsControllerInterface.SPEED_KNOTS));
+        self.field2s.setData(self.converter.speedFromMS(value.speed2s, SettingsControllerInterface.SPEED_KNOTS));
+        self.field10s.setData(self.converter.speedFromMS(value.speed10s, SettingsControllerInterface.SPEED_KNOTS));
+        self.field30m.setData(self.converter.speedFromMS(value.speed30m, SettingsControllerInterface.SPEED_KNOTS));
+        self.field60m.setData(self.converter.speedFromMS(value.speed60m, SettingsControllerInterface.SPEED_KNOTS));
     }
 }
