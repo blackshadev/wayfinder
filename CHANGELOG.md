@@ -1,9 +1,13 @@
-## v0.7.0
+## v0.7.0 (unreleased)
 
+Features
 - Replace average speed over x seconds instead of max speed over x seconds
 - Add average 30m and 60m.
 - Add back from activity recording menu to prevent stopping recording when accidentally pressing the start/stop button
-- Add scafolding for introducing max average speeds recording and other fun stuff. 
+- Add scafolding for introducing max average speeds recording and other fun stuff.
+
+Bugfix
+- Remove safety checks on interacting with the activity. It seems some actions and UI updates can lack behind to we shouldn't throw on invalid state, we just ignore it for now.
 
 ## v0.6.3
 
