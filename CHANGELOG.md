@@ -8,6 +8,7 @@ Features
 
 Bugfix
 - Remove safety checks on interacting with the activity. It seems some actions and UI updates can lack behind to we shouldn't throw on invalid state, we just ignore it for now.
+- Reduce usage of timers using a global app timer.
 
 ## v0.6.3
 

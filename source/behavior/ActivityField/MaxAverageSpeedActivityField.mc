@@ -9,8 +9,6 @@ class MaxAverageSpeedActivityField extends ActivityField {
     private const FIELD_ID_AVG_SPEED_30M = 7;
     private const FIELD_ID_AVG_SPEED_60M = 8;
 
-    private static const UPDATE_TIME = 1000;
-    
     private var maxAverageSpeeds as MaxAverageSpeedsProvider;
     
     private var field2s as FitContributor.Field;
@@ -19,7 +17,7 @@ class MaxAverageSpeedActivityField extends ActivityField {
     private var field60m as FitContributor.Field;
 
     private var converter as UnitConverter;
-    private var updateTimer as Timer.Timer;
+    private var updateTimer as TimerSubscription;
 
     function initialize(session as Session, maxAverageSpeeds as MaxAverageSpeedsProvider) {
         ActivityField.initialize();
@@ -27,7 +25,7 @@ class MaxAverageSpeedActivityField extends ActivityField {
         self.maxAverageSpeeds = maxAverageSpeeds;
 
         self.converter = new UnitConverter();
-        self.updateTimer = new Timer.Timer();
+        self.updateTimer = AppTimer.subscribeOnUpdate(method(:updateValues));
 
         var fieldConfig = { 
             :mesgType => FitContributor.MESG_TYPE_SESSION, 
@@ -64,7 +62,7 @@ class MaxAverageSpeedActivityField extends ActivityField {
     }
 
     public function start() as Void {
-        self.updateTimer.start(method(:updateValues), UPDATE_TIME, true);
+        self.updateTimer.start();
     }
 
     public function reset() as Void {

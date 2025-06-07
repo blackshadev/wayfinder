@@ -14,9 +14,13 @@ class WayfinderApp extends Application.AppBase {
     public var averageSpeeds as AverageSpeedsProvider;
     public var maxAverageSpeeds as MaxAverageSpeedsProvider;
     public var viewController as ViewController;
+    public var updateTimer as AppTimer;
 
     function initialize() {
         AppBase.initialize();
+
+        self.updateTimer = new AppTimer(1000, new Timer.Timer());
+
         self.settings = new SettingsController();
         self.unitConverter = new SettingsBoundUnitConverter(self.settings);
 
@@ -61,10 +65,12 @@ class WayfinderApp extends Application.AppBase {
 
     function onStart(state as Dictionary?) as Void {
         self.waypoint.start();
+        self.updateTimer.start();
     }
 
     function onStop(state as Dictionary?) as Void {
         self.waypoint.stop();
+        self.updateTimer.stop();
     }
 
     function getInitialView() as [ WatchUi.Views ] or [ WatchUi.Views, WatchUi.InputDelegates ] {

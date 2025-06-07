@@ -9,8 +9,6 @@ class AverageSpeedActivityField extends ActivityField {
     private const FIELD_ID_AVG_SPEED_30M = 3;
     private const FIELD_ID_AVG_SPEED_60M = 4;
 
-    private static const UPDATE_TIME = 1000;
-    
     private var averageSpeeds as AverageSpeedsProvider;
     
     private var field2s as FitContributor.Field;
@@ -19,15 +17,15 @@ class AverageSpeedActivityField extends ActivityField {
     private var field60m as FitContributor.Field;
 
     private var converter as UnitConverter;
-    private var updateTimer as Timer.Timer;
+    private var updateTimer as TimerSubscription;
 
     function initialize(session as Session, averageSpeeds as AverageSpeedsProvider) {
         ActivityField.initialize();
 
         self.averageSpeeds = averageSpeeds;
+        self.updateTimer = AppTimer.subscribeOnUpdate(method(:updateValues));
 
         self.converter = new UnitConverter();
-        self.updateTimer = new Timer.Timer();
 
         var fieldConfig = { 
             :mesgType => FitContributor.MESG_TYPE_RECORD, 
@@ -64,7 +62,7 @@ class AverageSpeedActivityField extends ActivityField {
     }
 
     public function start() as Void {
-        self.updateTimer.start(method(:updateValues), UPDATE_TIME, true);
+        self.updateTimer.start();
     }
 
     public function stop() as Void {

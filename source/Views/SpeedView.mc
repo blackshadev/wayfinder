@@ -18,7 +18,7 @@ class SpeedView extends WatchUi.View {
 
     private var quarterLayout as QuarterLayout;
     
-    private var updateTimer as Timer.Timer;
+    private var timerSubscription as TimerSubscription;
 
     function initialize(
         waypoint as WaypointController,
@@ -46,7 +46,7 @@ class SpeedView extends WatchUi.View {
             self.maxSpeeds
         );
 
-        self.updateTimer = new Timer.Timer();
+        self.timerSubscription = AppTimer.subscribeOnUpdate(method(:forceUpdate));
     }
 
     function onLayout(dc as Dc) as Void {
@@ -77,11 +77,10 @@ class SpeedView extends WatchUi.View {
 
     function onShow() as Void {
         self.updateValues();
-        
-        self.updateTimer.start(method(:forceUpdate), 1000, true);
+        self.timerSubscription.start();
     }
 
     function onHide() as Void {
-        self.updateTimer.stop();
+        self.timerSubscription.stop();
     }
 }

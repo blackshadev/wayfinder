@@ -11,13 +11,13 @@ class MainView extends WatchUi.View {
 
     private var arrow as Arrow;
 
-    private var updateTimer as Timer.Timer;
     private var time as Time;
     private var duration as Duration;
     private var speed as Speed;
     private var distance as Distance;
 
     private var quarterLayout as QuarterLayout;
+    private var timerSubscription as TimerSubscription;
 
     function initialize(
         waypoint as WaypointController,
@@ -43,7 +43,7 @@ class MainView extends WatchUi.View {
             self.speed
         );
 
-        self.updateTimer = new Timer.Timer();
+        self.timerSubscription = AppTimer.subscribeOnUpdate(method(:forceUpdate));
     }
 
     function onLayout(dc as Dc) as Void {
@@ -78,10 +78,12 @@ class MainView extends WatchUi.View {
 
     function onShow() as Void {
         self.updateValues();
-        self.updateTimer.start(method(:forceUpdate), 1000, true);
+
+        self.timerSubscription.start();
+
     }
 
     function onHide() as Void {
-        self.updateTimer.stop();
+        self.timerSubscription.stop();
     }
 }
