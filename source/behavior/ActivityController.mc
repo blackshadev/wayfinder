@@ -38,7 +38,7 @@ class ActivityController {
 
     public function resume() as Void {
         if (self.session == null) {
-            throw new ActivityNotStarted();
+            return;
         }
 
         self.session.start();
@@ -51,7 +51,7 @@ class ActivityController {
 
     public function pause() as Void {
         if (self.session == null) {
-            throw new ActivityNotStarted();
+            return;
         }
 
         for (var iX = 0; iX < self.activityFieldFactories.size(); iX++) {
@@ -63,7 +63,7 @@ class ActivityController {
 
     public function discard() as Void {
         if (self.session == null) {
-            throw new ActivityNotStarted();
+            return;
         }
 
         for (var iX = 0; iX < self.activityFieldFactories.size(); iX++) {
@@ -81,7 +81,7 @@ class ActivityController {
 
     public function save() as Void {
         if (self.session == null) {
-            throw new ActivityNotStarted();
+            return;
         }
 
         for (var iX = 0; iX < self.activityFieldFactories.size(); iX++) {
