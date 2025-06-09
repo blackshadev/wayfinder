@@ -6,7 +6,7 @@ module WayfinderTests {
     class AverageSpeedsProviderTest {
         (:test)
         public function testItReturnsNullWhenNotStarted(logger as Logger) as Boolean {
-            var aggregator = new AverageSpeedsProvider(new SensorProviderFake(), new NoopTimer());
+            var aggregator = new AverageSpeedsProvider(new SensorProviderFake(), new StubTimer());
             Assert.isNull(aggregator.value());
 
             return true;
@@ -14,7 +14,7 @@ module WayfinderTests {
 
         (:test)
         public function testItReturnsZeroByDefault(logger as Logger) as Boolean {
-            var aggregator = new AverageSpeedsProvider(new SensorProviderFake(), new NoopTimer());
+            var aggregator = new AverageSpeedsProvider(new SensorProviderFake(), new StubTimer());
             aggregator.start();
 
             var value = aggregator.value();
@@ -34,7 +34,7 @@ module WayfinderTests {
         (:test)
         public function testItMaxesOverTime(logger as Logger) as Boolean {
             var fakeSensor = new SensorProviderFake();
-            var aggregator = new AverageSpeedsProvider(fakeSensor, new NoopTimer());
+            var aggregator = new AverageSpeedsProvider(fakeSensor, new StubTimer());
             aggregator.start();
 
             fakeSensor.setSpeed(110.0);
@@ -70,7 +70,7 @@ module WayfinderTests {
         (:test)
         public function testItClearsOnReset(logger as Logger) as Boolean {
             var fakeSensor = new SensorProviderFake();
-            var aggregator = new AverageSpeedsProvider(fakeSensor, new NoopTimer());
+            var aggregator = new AverageSpeedsProvider(fakeSensor, new StubTimer());
             aggregator.start();
 
             fakeSensor.setSpeed(100.0);
@@ -96,7 +96,7 @@ module WayfinderTests {
         (:test)
         public function testItReturnsNullOnPause(logger as Logger) as Boolean {
             var fakeSensor = new SensorProviderFake();
-            var aggregator = new AverageSpeedsProvider(fakeSensor, new NoopTimer());
+            var aggregator = new AverageSpeedsProvider(fakeSensor, new StubTimer());
             aggregator.start();
 
             fakeSensor.setSpeed(100.0);

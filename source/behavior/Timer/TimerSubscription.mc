@@ -3,9 +3,9 @@ import Toybox.Timer;
 
 class TimerSubscription {
     private var _method as Method;
-    private var _timer as AppTimer;
+    private var _timer as AppTimerInterface;
 
-    function initialize(method as Method, timer as AppTimer) {
+    function initialize(method as Method, timer as AppTimerInterface) {
         self._method = method;
         self._timer = timer;
     }
