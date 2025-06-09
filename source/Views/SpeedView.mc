@@ -13,8 +13,8 @@ class SpeedView extends WatchUi.View {
     private var arrow as Arrow;
     private var time as Time;
     private var currentSpeed as CurrentSpeed;
-    private var maxSpeeds as MaxSpeeds;
-    private var maxSpeeds2 as MaxSpeeds2;
+    private var avgSpeeds as AverageSpeeds;
+    private var avgSpeeds2 as AverageSpeeds2;
 
     private var quarterLayout as QuarterLayout;
     
@@ -36,14 +36,14 @@ class SpeedView extends WatchUi.View {
         
         self.time = new Time(new TimeProvider(), [0, 0]);
         self.currentSpeed = new CurrentSpeed(unitConverter, [0, 0]);
-        self.maxSpeeds = new MaxSpeeds(unitConverter, [0, 0]);
-        self.maxSpeeds2 = new MaxSpeeds2(unitConverter, [0, 0]);
+        self.avgSpeeds = new AverageSpeeds(unitConverter, [0, 0]);
+        self.avgSpeeds2 = new AverageSpeeds2(unitConverter, [0, 0]);
 
         self.quarterLayout = new QuarterLayout(
             self.currentSpeed,
             self.time,
-            self.maxSpeeds2,
-            self.maxSpeeds
+            self.avgSpeeds2,
+            self.avgSpeeds
         );
 
         self.timerSubscription = AppTimer.subscribeOnUpdate(method(:forceUpdate));
@@ -63,8 +63,8 @@ class SpeedView extends WatchUi.View {
     function updateValues() as Void {
         self.arrow.setAngle(self.waypoint.angle());
         self.currentSpeed.setValue(self.activityInfo.speed());
-        self.maxSpeeds.setValue(self.averageSpeeds.value());
-        self.maxSpeeds2.setAvgSpeeds(self.averageSpeeds.value());
+        self.avgSpeeds.setValue(self.averageSpeeds.value());
+        self.avgSpeeds2.setAvgSpeeds(self.averageSpeeds.value());
     }
 
     function onUpdate(dc as Dc) as Void {

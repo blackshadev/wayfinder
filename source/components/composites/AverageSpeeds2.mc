@@ -1,7 +1,7 @@
 import Toybox.Graphics;
 import Toybox.Lang;
 
-class MaxSpeeds2 extends RelativeComponent {
+class AverageSpeeds2 extends RelativeComponent {
     private var unitConverter as SettingsBoundUnitConverter;
 
     private var avg30m as $.Text;
