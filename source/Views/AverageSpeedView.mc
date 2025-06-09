@@ -5,7 +5,7 @@ import Toybox.Lang;
 import Toybox.System;
 import Toybox.Timer;
 
-class SpeedView extends WatchUi.View {
+class AverageSpeedView extends WatchUi.View {
     private var activityInfo as ActivityInfoProvider;
     private var averageSpeeds as AverageSpeedsProvider;
     private var waypoint as WaypointController;

@@ -124,7 +124,7 @@ class ViewController {
     function getView() as WatchUi.Views {
         switch (self.iX) {
             case VIEW_SPEED:
-                return new SpeedView(self.waypoint, self.activityInfo, self.averageSpeeds, self.unitConverter);
+                return new AverageSpeedView(self.waypoint, self.activityInfo, self.averageSpeeds, self.unitConverter);
             case VIEW_MAP:
                 return new MapView(self.waypoint, self.settings);
             case VIEW_MAIN: 
