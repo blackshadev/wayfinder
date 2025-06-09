@@ -5,16 +5,18 @@ import Toybox.WatchUi;
 
 class ViewController {
     private const VIEW_MAIN = 0;
-    private const VIEW_SPEED = 1;
-    private const VIEW_MAP = 2;
+    private const VIEW_AVG_SPEED = 1;
+    private const VIEW_MAX_AVG_SPEED = 2;
+    private const VIEW_MAP = 3;
 
-    private var views as Array<Number> = [VIEW_MAIN, VIEW_SPEED];
+    private var views as Array<Number> = [VIEW_MAIN, VIEW_AVG_SPEED, VIEW_MAX_AVG_SPEED];
     private var iX as Number = 0;
     private var dir as Number = 0;
     private var activity as ActivityController;
     private var waypoint as WaypointController;
     private var activityInfo as ActivityInfoProvider;
     private var averageSpeeds as AverageSpeedsProvider;
+    private var maxAverageSpeeds as MaxAverageSpeedsProvider;
     private var unitConverter as SettingsBoundUnitConverter;
     private var settings as SettingsController;
 
@@ -25,6 +27,7 @@ class ViewController {
         waypoint as WaypointController,
         activityInfo as ActivityInfoProvider,
         averageSpeeds as AverageSpeedsProvider, 
+        maxAverageSpeeds as MaxAverageSpeedsProvider, 
         unitConverter as SettingsBoundUnitConverter,
         settings as SettingsController
     ) {
@@ -32,6 +35,7 @@ class ViewController {
         self.waypoint = waypoint;
         self.activityInfo = activityInfo;
         self.averageSpeeds = averageSpeeds;
+        self.maxAverageSpeeds = maxAverageSpeeds;
         self.unitConverter = unitConverter;
         self.settings = settings;
 
@@ -123,8 +127,10 @@ class ViewController {
 
     function getView() as WatchUi.Views {
         switch (self.iX) {
-            case VIEW_SPEED:
+            case VIEW_AVG_SPEED:
                 return new AverageSpeedView(self.waypoint, self.activityInfo, self.averageSpeeds, self.unitConverter);
+            case VIEW_MAX_AVG_SPEED:
+                return new MaxAverageSpeedView(self.waypoint, self.activityInfo, self.maxAverageSpeeds, self.unitConverter);
             case VIEW_MAP:
                 return new MapView(self.waypoint, self.settings);
             case VIEW_MAIN: 

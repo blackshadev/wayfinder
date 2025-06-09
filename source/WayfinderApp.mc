@@ -31,6 +31,7 @@ class WayfinderApp extends Application.AppBase {
         self.activity = new ActivityController(
             self.settings, 
             self.averageSpeeds, 
+            self.maxAverageSpeeds,
             [
                 new AverageSpeedActivityFieldFactory(self.averageSpeeds),
                 new MaxAverageSpeedActivityFieldFactory(self.maxAverageSpeeds),
@@ -42,7 +43,8 @@ class WayfinderApp extends Application.AppBase {
             self.activity,
             self.waypoint,
             self.activityInfo,
-            self.averageSpeeds, 
+            self.averageSpeeds,
+            self.maxAverageSpeeds, 
             self.unitConverter,
             self.settings
         );

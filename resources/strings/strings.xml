@@ -16,12 +16,14 @@
     <string id="fieldLabelAvgSpeed">Avg speed</string>
     <string id="fieldUnitSpeed">kt</string>
 
-    <string id="labelAvgSpeed">Avg</string>
+    <string id="labelMaxAvgSpeed">Max. Avg.</string>
+    <string id="labelAvgSpeed">Avg.</string>
     <string id="labelAvgSpeed2s">2s</string>
     <string id="labelAvgSpeed10s">10s</string>
     <string id="labelAvgSpeed30m">30m</string>
     <string id="labelAvgSpeed60m">60m</string>
 
+    <string id="labelMaxSpeed">Max.</string>
     <string id="labelSpeed">Speed</string>
     <string id="labelSpeedCurrent">cur.</string>
     <string id="labelSpeedMaximum">max.</string>

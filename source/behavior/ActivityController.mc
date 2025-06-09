@@ -8,15 +8,17 @@ import Toybox.Timer;
 class ActivityController {
     private var settings as SettingsController;
     private var averageSpeeds as AverageSpeedsProvider;
+    private var maxAverageSpeeds as MaxAverageSpeedsProvider;
     private var activityFieldFactories as Array<ActivityFieldFactory>;
     private var activityFields as Array<ActivityField> = [];
 
     private var session as ActivityRecording.Session? = null;
 
 
-    function initialize(settings as SettingsController, averageSpeeds as AverageSpeedsProvider, activityFieldFactories as Array<ActivityFieldFactory>) {
+    function initialize(settings as SettingsController, averageSpeeds as AverageSpeedsProvider, mavAverageSpeeds as MaxAverageSpeedsProvider, activityFieldFactories as Array<ActivityFieldFactory>) {
         self.settings = settings;
         self.averageSpeeds = averageSpeeds;
+        self.maxAverageSpeeds = mavAverageSpeeds;
         self.activityFieldFactories = activityFieldFactories;
     }
 
@@ -43,6 +45,7 @@ class ActivityController {
 
         self.session.start();
         self.averageSpeeds.start();
+        self.maxAverageSpeeds.start();
         
         for (var iX = 0; iX < self.activityFieldFactories.size(); iX++) {
             self.activityFields[iX].start();
@@ -57,6 +60,7 @@ class ActivityController {
         for (var iX = 0; iX < self.activityFieldFactories.size(); iX++) {
             self.activityFields[iX].stop();
         }
+        self.maxAverageSpeeds.pause();
         self.averageSpeeds.pause();
         self.session.stop();
     }
@@ -71,6 +75,7 @@ class ActivityController {
             self.activityFields[iX].reset();
         }
 
+        self.maxAverageSpeeds.reset();
         self.averageSpeeds.reset();
         self.session.stop();
         self.session.discard();
@@ -88,6 +93,7 @@ class ActivityController {
             self.activityFields[iX].stop();
         }
 
+        self.maxAverageSpeeds.reset();
         self.averageSpeeds.reset();
 
         self.session.stop();

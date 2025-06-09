@@ -3,12 +3,26 @@ class MaxAverageSpeedsProvider {
 
     private var maxAvgSpeed as MaxAverageSpeedValues;
 
+    private var timer as TimerSubscription;
+
     function initialize(averageSpeeds as AverageSpeedsProviderInterface) {
         self.averageSpeeds = averageSpeeds;
         self.maxAvgSpeed = MaxAverageSpeedValues.empty();
+
+        // TODO: introduce a subscribe on Sample Update for all data providers
+        self.timer = AppTimer.subscribeOnUpdate(method(:update));
+    }
+
+    public function start() as Void {
+        self.timer.start();
+    }
+
+    public function pause() as Void {
+        self.timer.stop();
     }
 
     public function reset() as Void {
+        self.pause();
         self.maxAvgSpeed = MaxAverageSpeedValues.empty();
     }
 
