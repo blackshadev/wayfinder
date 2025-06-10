@@ -2,7 +2,6 @@ import Toybox.WatchUi;
 import Toybox.Lang;
 
 class TimeProvider {
-    private const FORMAT = "$1$:$2$";
     private var is12Hour = false;
 
     public function initialize() {
@@ -13,7 +12,7 @@ class TimeProvider {
         self.is12Hour = System.getDeviceSettings().is24Hour;
     }
 
-    public function getText() as String {
+    public function getText(format as String) as String {
         var clockTime = System.getClockTime();
         var hours = clockTime.hour;
 
@@ -21,6 +20,6 @@ class TimeProvider {
             hours = hours - 12;
         }
 
-        return Lang.format(FORMAT, [hours, clockTime.min.format("%02d")]);
+        return Lang.format(format, [hours, clockTime.min.format("%02d")]);
     }
 }

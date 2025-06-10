@@ -5,6 +5,7 @@ class Time extends RelativeComponent {
     private var timeProvider as TimeProvider;
     private var label as $.Text;
     private var value as $.Text;
+    private var showDoubleColons as Boolean = true;
 
     function initialize(timeProvider as TimeProvider, offset as Graphics.Point2D) {
         RelativeComponent.initialize();
@@ -44,8 +45,13 @@ class Time extends RelativeComponent {
         self.value.layout(dc);
     }
 
-    function draw(dc as Dc) as Void {        
-        self.value.setText(self.timeProvider.getText());
+    function draw(dc as Dc) as Void {
+        self.showDoubleColons = !self.showDoubleColons;
+        var timeFormat = self.showDoubleColons ? "$1$:$2$" : "$1$ $2$";
+
+        var time = self.timeProvider.getText(timeFormat);
+
+        self.value.setText(time);
         
         self.label.draw(dc);
         self.value.draw(dc);
