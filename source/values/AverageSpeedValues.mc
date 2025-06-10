@@ -12,9 +12,9 @@ class AverageSpeedValues {
         speed30m as AverageValue,
         speed60m as AverageValue
     ) {
-        self.speed2s = speed2s;
-        self.speed10s = speed10s;
-        self.speed30m = speed30m;
-        self.speed60m = speed60m;
+        self.speed2s = speed2s.abs();
+        self.speed10s = speed10s.abs();
+        self.speed30m = speed30m.abs();
+        self.speed60m = speed60m.abs();
     }
 }

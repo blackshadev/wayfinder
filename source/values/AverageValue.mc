@@ -1,4 +1,5 @@
 import Toybox.Lang;
+import Toybox.Math;
 
 class AverageValue {
     public var value as Float;
@@ -20,5 +21,9 @@ class AverageValue {
     ) as AverageValue {
         var isComplete = sampleCount >= targetSampleCount;
         return new AverageValue(value, isComplete);
+    }
+
+    public function abs() as AverageValue {
+        return new AverageValue(self.value.abs(), self.isComplete);
     }
 }
