@@ -5,22 +5,14 @@ import Toybox.Lang;
 import Toybox.Timer;
 
 class AverageSpeedsProvider extends AverageSpeedsProviderInterface {
-    private const SAMPLE_TIME = 500;
-
     private const SEC_2 = 2000;
     private const SEC_10 = 10000;
     private const MIN_30 = 1800000;
     private const MIN_60 = 3600000;
     private const MAX_TIME = MIN_60;
 
-    private const SIZE_2_SEC = SEC_2 / SAMPLE_TIME;
-    private const SIZE_10_SEC = SEC_10 / SAMPLE_TIME;
-    private const SIZE_30_MIN = MIN_30 / SAMPLE_TIME;
-    private const SIZE_60_MIN = MIN_60 / SAMPLE_TIME;
-    private const SIZE_MAX = SIZE_60_MIN;
-
     private var rawSpeedData as FloatRingBuffer;
-    private var updateTimer as Timer.Timer;
+    private var updateTimer as TimerSubscription;
     private var sensor as SensorProviderInterface;
 
     private var speeds as AverageValueList;
@@ -31,19 +23,21 @@ class AverageSpeedsProvider extends AverageSpeedsProviderInterface {
         AverageSpeedsProviderInterface.initialize();
         
         self.sensor = sensor;
-        self.updateTimer = timer;
+        self.updateTimer = getApp().sampleTimer.subscribeOnSample(method(:sample));
 
-        self.rawSpeedData = new FloatRingBuffer(SIZE_MAX);
+        var sampleTime = getApp().sampleTimer.time;
         self.speeds = new AverageValueList([
-            SIZE_2_SEC,
-            SIZE_10_SEC,
-            SIZE_30_MIN,
-            SIZE_60_MIN,
+            SEC_2 / sampleTime,
+            SEC_10 / sampleTime,
+            MIN_30 / sampleTime,
+            MIN_60 / sampleTime
         ]);
+
+        self.rawSpeedData = new FloatRingBuffer(MAX_TIME / sampleTime);
     }
 
     public function start() as Void {
-        self.updateTimer.start(method(:sample), SAMPLE_TIME, true);
+        self.updateTimer.start();
         self.isStarted = true;
     }
 

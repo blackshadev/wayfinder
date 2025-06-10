@@ -7,6 +7,7 @@ import Toybox.Timer;
 
 class ActivityController {
     private var settings as SettingsController;
+    private var sampleTimer as AppTimer;
     private var averageSpeeds as AverageSpeedsProvider;
     private var maxAverageSpeeds as MaxAverageSpeedsProvider;
     private var activityFieldFactories as Array<ActivityFieldFactory>;
@@ -14,9 +15,15 @@ class ActivityController {
 
     private var session as ActivityRecording.Session? = null;
 
-
-    function initialize(settings as SettingsController, averageSpeeds as AverageSpeedsProvider, mavAverageSpeeds as MaxAverageSpeedsProvider, activityFieldFactories as Array<ActivityFieldFactory>) {
+    function initialize(
+        settings as SettingsController, 
+        sampleTimer as AppTimer,
+        averageSpeeds as AverageSpeedsProvider, 
+        mavAverageSpeeds as MaxAverageSpeedsProvider, 
+        activityFieldFactories as Array<ActivityFieldFactory>
+    ) {
         self.settings = settings;
+        self.sampleTimer = sampleTimer;
         self.averageSpeeds = averageSpeeds;
         self.maxAverageSpeeds = mavAverageSpeeds;
         self.activityFieldFactories = activityFieldFactories;
@@ -46,6 +53,7 @@ class ActivityController {
         self.session.start();
         self.averageSpeeds.start();
         self.maxAverageSpeeds.start();
+        self.sampleTimer.start();
         
         for (var iX = 0; iX < self.activityFieldFactories.size(); iX++) {
             self.activityFields[iX].start();
@@ -60,8 +68,11 @@ class ActivityController {
         for (var iX = 0; iX < self.activityFieldFactories.size(); iX++) {
             self.activityFields[iX].stop();
         }
+
+        self.sampleTimer.stop();
         self.maxAverageSpeeds.pause();
         self.averageSpeeds.pause();
+
         self.session.stop();
     }
 
@@ -75,8 +86,10 @@ class ActivityController {
             self.activityFields[iX].reset();
         }
 
+        self.sampleTimer.stop();
         self.maxAverageSpeeds.reset();
         self.averageSpeeds.reset();
+
         self.session.stop();
         self.session.discard();
 
@@ -93,6 +106,7 @@ class ActivityController {
             self.activityFields[iX].stop();
         }
 
+        self.sampleTimer.stop();
         self.maxAverageSpeeds.reset();
         self.averageSpeeds.reset();
 
@@ -106,7 +120,6 @@ class ActivityController {
     public function isStarted() as Boolean {
         return self.session != null;
     }
-
 
     public function isPaused() as Boolean {
         if (!self.isStarted()) {

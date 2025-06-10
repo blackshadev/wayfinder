@@ -9,8 +9,7 @@ class MaxAverageSpeedsProvider {
         self.averageSpeeds = averageSpeeds;
         self.maxAvgSpeed = MaxAverageSpeedValues.empty();
 
-        // TODO: introduce a subscribe on Sample Update for all data providers
-        self.timer = AppTimer.subscribeOnUpdate(method(:update));
+        self.timer = AppTimer.subscribeOnSample(method(:update));
     }
 
     public function start() as Void {

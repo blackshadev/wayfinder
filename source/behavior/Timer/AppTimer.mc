@@ -2,20 +2,20 @@ import Toybox.Lang;
 import Toybox.Timer;
 
 class AppTimer extends AppTimerInterface {
-    private var _timer as Timer.Timer;
+    public var time as Number = 0;
 
-    private var _time as Integer = 0;
+    private var _timer as Timer.Timer;
     private var _callbacks as Array<Method> = [];
 
-    public function initialize(time as Integer, timer as Timer.Timer) {
+    public function initialize(time as Number, timer as Timer.Timer) {
         AppTimerInterface.initialize();
-
-        self._time = time;
         self._timer = timer;
+
+        self.time = time;
     }
 
     public function start() as Void {
-        self._timer.start(method(:call), self._time, true);
+        self._timer.start(method(:call), self.time, true);
     }
 
     public function stop() as Void {
@@ -38,5 +38,9 @@ class AppTimer extends AppTimerInterface {
 
     public static function subscribeOnUpdate(callback as Method) as TimerSubscription {
         return new TimerSubscription(callback, getApp().updateTimer);
+    }
+
+    public static function subscribeOnSample(callback as Method) as TimerSubscription {
+        return new TimerSubscription(callback, getApp().sampleTimer);
     }
 }
