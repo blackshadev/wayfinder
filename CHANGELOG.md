@@ -1,4 +1,4 @@
-## v0.7.0 (unreleased)
+## v0.7.0
 
 Features
 - Replace average speed over x seconds instead of max speed over x seconds
