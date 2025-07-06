@@ -6,8 +6,8 @@ module WayfinderTests {
     class TimerSubscriptionTest {
         (:test)
         function testTimerSubscription(logger as Logger) as Boolean {
-            var stubCallback = new StubCallback();
-            var stubTimer = new StubAppTimer();
+            var stubCallback = new WayfinderTests.StubCallback();
+            var stubTimer = new WayfinderTests.StubAppTimer();
 
             var method = new Method(stubCallback, :call);
             var sub = new TimerSubscription(method, stubTimer);

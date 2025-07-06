@@ -1,7 +1,6 @@
 import Toybox.Lang;
 import Toybox.Timer;
 
-
 (:debug)
 module WayfinderTests {
     class StubTimer extends Timer.Timer {

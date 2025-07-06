@@ -7,7 +7,7 @@ module WayfinderTests {
     class AppTimerTest {
         (:test)
         function testEmptyAppTimer(logger as Logger) as Boolean {
-            var timer = new AppTimer(1000, new StubTimer());
+            var timer = new AppTimer(1000, new WayfinderTests.StubTimer());
 
             timer.call();
             timer.call();
@@ -17,7 +17,7 @@ module WayfinderTests {
 
         (:test)
         function testAppTimerStartsTimer(logger as Logger) as Boolean {
-            var stubTimer = new StubTimer();
+            var stubTimer = new WayfinderTests.StubTimer();
             var timer = new AppTimer(99, stubTimer);
 
             timer.start();
@@ -30,8 +30,8 @@ module WayfinderTests {
 
         (:test)
         function testCallsCallbacksAppTimer(logger as Logger) as Boolean {
-            var timer = new AppTimer(1000, new StubTimer());
-            var stubCallback = new StubCallback();
+            var timer = new AppTimer(1000, new WayfinderTests.StubTimer());
+            var stubCallback = new WayfinderTests.StubCallback();
             
             Assert.isEqual(0, stubCallback.calledTimes());
 
@@ -60,9 +60,9 @@ module WayfinderTests {
 
         (:test)
         function testTimerCallsAppTimer(logger as Logger) as Boolean {
-            var stubTimer = new StubTimer();
+            var stubTimer = new WayfinderTests.StubTimer();
             var timer = new AppTimer(1000, stubTimer);
-            var stubCallback = new StubCallback();
+            var stubCallback = new WayfinderTests.StubCallback();
             
             Assert.isEqual(false, stubCallback.isCalled());
 
