@@ -94,4 +94,8 @@
 
     <string id="mapNoLocation">No location...</string>
 
+    <string id="fieldLabelGnssConfig">GNSS Config</string>
+    <string id="fieldLabelFixQuality">Fix Quality</string>
+    <string id="fieldUnitNone">none</string>
+
 </strings>

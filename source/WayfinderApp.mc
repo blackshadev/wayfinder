@@ -10,6 +10,7 @@ class WayfinderApp extends Application.AppBase {
     public var activity as ActivityController;
     public var activityInfo as ActivityInfoProvider;
     public var sensor as SensorProvider;
+    public var location as LocationProvider;
     public var settings as SettingsController;
     public var averageSpeeds as AverageSpeedsProvider;
     public var maxAverageSpeeds as MaxAverageSpeedsProvider;
@@ -29,13 +30,15 @@ class WayfinderApp extends Application.AppBase {
         self.sensor = new SensorProvider();
         self.averageSpeeds = new AverageSpeedsProvider(self.sensor, new Timer.Timer());
         self.maxAverageSpeeds = new MaxAverageSpeedsProvider(self.averageSpeeds);
-        self.waypoint = new WaypointController(self.sensor);
+        self.location = new LocationProvider();
+        self.waypoint = new WaypointController(self.location, self.sensor);
         self.activity = new ActivityController(
             self.settings,
             self.sampleTimer,
             self.averageSpeeds,
             self.maxAverageSpeeds,
             [
+                new GpsInformationFieldFactory(self.location),
                 new AverageSpeedActivityFieldFactory(self.averageSpeeds),
                 new MaxAverageSpeedActivityFieldFactory(self.maxAverageSpeeds),
             ]
@@ -69,13 +72,13 @@ class WayfinderApp extends Application.AppBase {
     }
 
     function onStart(state as Dictionary?) as Void {
-        self.waypoint.start();
+        self.location.start();
         self.updateTimer.start();
         self.sampleTimer.start();
     }
 
     function onStop(state as Dictionary?) as Void {
-        self.waypoint.stop();
+        self.location.stop();
         self.updateTimer.stop();
         self.sampleTimer.stop();
     }

@@ -86,4 +86,19 @@
         unitLabel="@Strings.fieldUnitSpeed"
         fillColor="#004D99"
     />
+
+
+    <fitField 
+        id="10"
+        sortOrder="10"
+        dataLabel="@Strings.fieldLabelGnssConfig"
+        unitLabel="@Strings.fieldUnitNone"
+    />
+
+    <fitField 
+        id="11"
+        sortOrder="11"
+        dataLabel="@Strings.fieldLabelFixQuality"
+        unitLabel="@Strings.fieldUnitNone"
+    />
 </fitContributions>

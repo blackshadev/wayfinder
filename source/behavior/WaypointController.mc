@@ -4,37 +4,31 @@ import Toybox.System;
 import Toybox.Lang;
 
 class WaypointController {
+    private var location as LocationProvider;
+    private var sensor as SensorProvider;
 
     private var lastPosition as Position.Location? = null;
     private var waypoint as Position.Location? = null;
     private var shouldSet as Boolean = false;
-    private var sensor as SensorProvider;
     private var waypointAngle as Number? = null;
     private var headingAngle as Number? = null;
     private var relativeWaypointAngle as Number? = null;
+    private var updateTimer as TimerSubscription;
 
-    function initialize(sensor as SensorProvider) {
+    function initialize(location as LocationProvider, sensor as SensorProvider) {
+        self.location = location;
         self.sensor = sensor;
+
+        self.updateTimer = AppTimer.subscribeOnUpdate(method(:update));
+        self.updateTimer.start();
     }
 
-    public function start() as Void {
-        Position.enableLocationEvents(Position.LOCATION_CONTINUOUS, method(:onPosition));
-    }
-
-    public function stop() as Void {
-        Position.enableLocationEvents(Position.LOCATION_DISABLE, null);
-    }
-
-    function onPosition(info as Position.Info) as Void {
-        self.lastPosition = info.position;
+    public function update() as Void {
+        self.lastPosition = self.location.getLastPosition();
         if (self.shouldSet) {
             self.set();
         }
 
-        self.didChange();
-    }
-
-    private function didChange() as Void {
         if (self.lastPosition == null || self.waypoint == null) {
             return;
         }
