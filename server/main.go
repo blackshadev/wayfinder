@@ -2,14 +2,13 @@ package main
 
 import (
 	"fmt"
-	"net/http"
+
+	srv "wayfinder.littledev.nl/server/server"
 )
 
 func main() {
-	router := http.NewServeMux()
+	s := srv.CreateServer(":8080")
 
-	router.Handle("GET /public/", http.StripPrefix("/public", http.FileServer(http.Dir("./public/"))))
-
-	fmt.Println("Webserver running on 8080")
-	http.ListenAndServe(":8080", router)
+	fmt.Println("Server running on 8080")
+	s.Start()
 }

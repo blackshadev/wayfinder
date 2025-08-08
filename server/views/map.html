@@ -1,0 +1,111 @@
+{{ template "_layout.html" . }}
+
+{{ define "head" }}
+<style>
+    main {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+    }
+
+    #map {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+    }
+
+    button {
+        border: 0;
+        background-color: transparent;
+    }
+
+    .bigger-bar.leaflet-bar .leaflet-control-button {
+        width: 45px;
+        height: 45px;
+        line-height: 45px;
+    }
+</style>
+{{ end }}
+
+{{ define "body" }}
+<main>
+    <div id="map"></div>
+</main>
+<script>
+    var map = L.map('map').setView([51.505, -0.09], 15);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    map.on('click', addMarker);
+
+    const CustomControls = L.Control.extend({
+        options: {
+            position: 'topright',
+        },
+        onAdd: function (map) {
+            const container = L.DomUtil.create('div', 'bigger-bar leaflet-bar leaflet-control');
+            container.title = "Map controls";
+
+            const locateButton = L.DomUtil.create('a', 'leaflet-control-button', container);
+            L.DomUtil.create('i', 'fa-solid fa-location-crosshairs', locateButton);
+            L.DomEvent.disableClickPropagation(locateButton);
+            L.DomEvent.on(locateButton, 'click', getCurrentLocation);
+            locateButton.title = locateButton.ariaLabel = "Go to current location";
+            locateButton.role = 'button';
+
+            const saveButton = L.DomUtil.create('a', 'leaflet-control-button', container);
+            L.DomUtil.create('i', 'fa-solid fa-circle-check ', saveButton);
+            L.DomEvent.disableClickPropagation(saveButton);
+            L.DomEvent.on(saveButton, 'click', save);
+            saveButton.title = saveButton.ariaLabel = "Save";
+            saveButton.role = 'button';
+
+            return container;
+        },
+
+        onRemove: function (map) { }
+    });
+    (new CustomControls({ position: 'bottomleft' })).addTo(map);
+
+    const allMarkers = [];
+    function addMarker(ev) {
+        const marker = L.marker(ev.latlng, {
+            title: 'waypoint',
+            draggable: true,
+        })
+            .on('popupopen', function (ev) {
+                const idx = allMarkers.indexOf(marker);
+                ev.popup.setContent(`Waypoint ${idx + 1} <button aria-label="Remove marker" title="Remove marker" onclick="removeMarker(${idx})"><i class="fa-solid fa-trash"></i></button>`);
+            })
+            .bindPopup(`Waypoint x`)
+            .addTo(map);
+
+        allMarkers.push(marker);
+    }
+
+    function removeMarker(idx) {
+        map.removeLayer(allMarkers[idx]);
+        allMarkers.splice(idx, 1);
+    }
+
+    function save() {
+        const coords = allMarkers
+            .map(function (m) {
+                return m.getLatLng();
+            });
+
+        console.log(coords);
+    }
+
+    function getCurrentLocation() {
+        map.locate({
+            setView: true,
+            maxZoom: 15,
+        });
+    }
+
+    getCurrentLocation();
+</script>
+{{ end }}
