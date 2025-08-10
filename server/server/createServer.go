@@ -1,9 +1,15 @@
 package server
 
 import (
+	"encoding/json"
 	"html/template"
 	"log"
 	"net/http"
+
+	"wayfinder.littledev.nl/server/devicerepository"
+	"wayfinder.littledev.nl/server/generator"
+	"wayfinder.littledev.nl/server/model"
+	"wayfinder.littledev.nl/server/storage"
 )
 
 func CreateServer(port string) *Server {
@@ -13,11 +19,17 @@ func CreateServer(port string) *Server {
 	server := &Server{
 		port:   port,
 		router: router,
+		devices: &devicerepository.DeviceRepository{
+			Storage:   storage.CreateInternalStorage[model.DeviceCode, *model.DeviceInstance](),
+			Generator: &generator.DeviceCodeGenerator{},
+		},
 	}
 
 	server.router.Handle("GET /public/", http.StripPrefix("/public", http.FileServer(http.Dir("./public/"))))
-	server.router.HandleFunc("GET /{code}", server.deviceCodeHandler)
 	server.router.HandleFunc("GET /", server.indexHandler)
+	server.router.HandleFunc("GET /{code}/", server.mapHandler)
+	server.router.HandleFunc("POST /api/device/", server.newDeviceHandler)
+	server.router.HandleFunc("GET /api/device/{code}/", server.fillDeviceHandler)
 
 	return server
 }
@@ -32,4 +44,16 @@ func (s *Server) ServeTemplate(w http.ResponseWriter, view string, data any) {
 	if err != nil {
 		log.Fatalln(err)
 	}
+}
+
+type apiError struct {
+	Error string `json:"error"`
+}
+
+func (s *Server) SendApiError(w http.ResponseWriter, statuscode int, err error) {
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(statuscode)
+	json.NewEncoder(w).Encode(apiError{
+		Error: err.Error(),
+	})
 }

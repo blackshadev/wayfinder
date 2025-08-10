@@ -8,7 +8,7 @@ import (
 
 var codeValidator = regexp.MustCompile("^[0-9a-zA-Z]{4}$")
 
-func (s *Server) deviceCodeHandler(w http.ResponseWriter, r *http.Request) {
+func (s *Server) mapHandler(w http.ResponseWriter, r *http.Request) {
 	code := r.PathValue("code")
 
 	if !codeValidator.MatchString(code) {
