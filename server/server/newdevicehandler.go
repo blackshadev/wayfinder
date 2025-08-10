@@ -10,7 +10,12 @@ type newDeviceResponse struct {
 }
 
 func (s *Server) newDeviceHandler(w http.ResponseWriter, r *http.Request) {
-	device := s.devices.New()
+	device, err := s.devices.New()
+
+	if err != nil {
+		s.SendJsonError(w, 500, err)
+		return
+	}
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)

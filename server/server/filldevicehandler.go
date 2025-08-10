@@ -20,7 +20,7 @@ func (s *Server) fillDeviceHandler(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&fillDeviceData)
 
 	if err != nil {
-		s.SendApiError(w, 400, err)
+		s.SendJsonError(w, 400, err)
 		return
 	}
 

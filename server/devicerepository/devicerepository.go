@@ -1,6 +1,7 @@
 package devicerepository
 
 import (
+	"fmt"
 	"time"
 
 	"wayfinder.littledev.nl/server/generator"
@@ -13,8 +14,31 @@ type DeviceRepository struct {
 	Generator generator.Generator[model.DeviceCode]
 }
 
-func (ds *DeviceRepository) New() *model.DeviceInstance {
-	code := ds.Generator.Generate()
+const max_tries = 20
+
+func (ds *DeviceRepository) getUniqueDeviceCode() (model.DeviceCode, error) {
+	var code model.DeviceCode
+	tries := 0
+	for {
+		code = ds.Generator.Generate()
+		if tries += 1; !ds.Storage.Has(code) {
+			break
+		}
+
+		if tries > max_tries {
+			return model.DeviceCode(""), fmt.Errorf("unable to generate unique device code, to many tries")
+		}
+	}
+
+	return code, nil
+}
+
+func (ds *DeviceRepository) New() (*model.DeviceInstance, error) {
+	code, err := ds.getUniqueDeviceCode()
+
+	if err != nil {
+		return nil, err
+	}
 
 	device := &model.DeviceInstance{
 		Code:      code,
@@ -25,11 +49,11 @@ func (ds *DeviceRepository) New() *model.DeviceInstance {
 
 	ds.Storage.Set(code, device)
 
-	return device
+	return device, nil
 }
 
 func (ds *DeviceRepository) Fill(code model.DeviceCode, waypoints []model.Waypoint) bool {
-	if device, ok := ds.Storage.Get(code); ok {
+	if device, ok := ds.Storage.Get(code); ok && !device.Filled {
 		device.Waypoints = waypoints
 		device.Filled = true
 		return true
@@ -39,7 +63,7 @@ func (ds *DeviceRepository) Fill(code model.DeviceCode, waypoints []model.Waypoi
 }
 
 func (ds *DeviceRepository) GetWaypoints(code model.DeviceCode) ([]model.Waypoint, bool) {
-	if device, ok := ds.Storage.Get(code); ok {
+	if device, ok := ds.Storage.Get(code); ok && device.Filled {
 		return device.Waypoints, true
 	}
 
