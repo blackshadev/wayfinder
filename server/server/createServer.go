@@ -29,7 +29,8 @@ func CreateServer(port string) *Server {
 	server.router.HandleFunc("GET /", server.indexHandler)
 	server.router.HandleFunc("GET /{code}/", server.mapHandler)
 	server.router.HandleFunc("POST /api/device/", server.newDeviceHandler)
-	server.router.HandleFunc("GET /api/device/{code}/", server.fillDeviceHandler)
+	server.router.HandleFunc("POST /api/device/{code}/", server.fillDeviceHandler)
+	server.router.HandleFunc("GET /api/device/{code}/", server.getDeviceWaypointsHandler)
 
 	return server
 }
