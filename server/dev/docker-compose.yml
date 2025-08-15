@@ -1,0 +1,20 @@
+services:
+  wayfinder:
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    environment:
+      PORT: 8080
+      CLEANUP: 30
+    networks:
+      - wayfinder-network
+    labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.wayfinder.rule=Host(`wayfinder.local`)"
+        - "traefik.http.routers.wayfinder.tls=true"
+        - "traefik.http.routers.wayfinder.entrypoints=web-secure"
+        - "traefik.http.services.wayfinder.loadbalancer.server.port=8080"
+
+networks:
+    wayfinder-network:
+        driver: bridge
