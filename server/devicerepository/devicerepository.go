@@ -77,3 +77,11 @@ func (ds *DeviceRepository) Get(code model.DeviceCode) (*model.DeviceInstance, b
 
 	return nil, false
 }
+
+func (ds *DeviceRepository) Cleanup() {
+	for _, device := range ds.Storage.Values() {
+		if device.CreatedAt.Add(time.Hour).Before(time.Now()) {
+			ds.Storage.Delete(device.Code)
+		}
+	}
+}

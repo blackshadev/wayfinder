@@ -4,10 +4,12 @@ import (
 	"net/http"
 
 	"wayfinder.littledev.nl/server/devicerepository"
+	"wayfinder.littledev.nl/server/scheduler"
 )
 
 type Server struct {
-	port    string
-	router  *http.ServeMux
-	devices devicerepository.DeviceRepositoryInterface
+	server    *http.Server
+	router    *http.ServeMux
+	scheduler *scheduler.Scheduler
+	devices   devicerepository.DeviceRepositoryInterface
 }

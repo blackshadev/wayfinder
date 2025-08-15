@@ -28,3 +28,16 @@ func (s *internalMemoryStorage[K, T]) Get(key K) (T, bool) {
 	var empty T
 	return empty, false
 }
+
+func (s *internalMemoryStorage[K, T]) Delete(key K) {
+	delete(s.records, key)
+}
+
+func (s *internalMemoryStorage[K, T]) Values() []T {
+	values := make([]T, 0, len(s.records))
+	for _, value := range s.records {
+		values = append(values, value)
+	}
+
+	return values
+}

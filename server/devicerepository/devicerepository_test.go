@@ -199,3 +199,68 @@ func TestGetWaypointsFailsForNotFilledDevices(t *testing.T) {
 	assert.False(t, ok)
 	assert.Equal(t, []model.Waypoint{}, waypoints)
 }
+
+func TestCleanup(t *testing.T) {
+
+	fakeDevices := []*model.DeviceInstance{
+		{
+			Code:      "0001",
+			Waypoints: []model.Waypoint{},
+			Filled:    false,
+			CreatedAt: time.Now().Add(-time.Hour).Add(-time.Second),
+		},
+		{
+			Code:      "0002",
+			Waypoints: []model.Waypoint{},
+			Filled:    false,
+			CreatedAt: time.Now().Add(-time.Minute),
+		},
+		{
+			Code:      "0003",
+			Waypoints: []model.Waypoint{},
+			Filled:    false,
+			CreatedAt: time.Now().Add(24 * -time.Hour),
+		},
+		{
+			Code:      "0004",
+			Waypoints: []model.Waypoint{},
+			Filled:    false,
+			CreatedAt: time.Now().Add(30 * -time.Minute),
+		},
+		{
+			Code:      "0005",
+			Waypoints: []model.Waypoint{},
+			Filled:    false,
+			CreatedAt: time.Now().Add(66 * -time.Minute),
+		},
+		{
+			Code:      "0006",
+			Waypoints: []model.Waypoint{},
+			Filled:    false,
+			CreatedAt: time.Now(),
+		},
+	}
+
+	storage := storage.CreateInternalStorage[model.DeviceCode, *model.DeviceInstance]()
+
+	for _, device := range fakeDevices {
+		storage.Set(device.Code, device)
+	}
+
+	repo := &devicerepository.DeviceRepository{
+		Storage:   storage,
+		Generator: &generator.DeviceCodeGenerator{},
+	}
+
+	repo.Cleanup()
+
+	assert.Len(t, repo.Storage.Values(), 3)
+	assert.True(t, repo.Storage.Has(model.DeviceCode("0004")))
+	assert.True(t, repo.Storage.Has(model.DeviceCode("0002")))
+	assert.True(t, repo.Storage.Has(model.DeviceCode("0006")))
+
+	assert.False(t, repo.Storage.Has(model.DeviceCode("0001")))
+	assert.False(t, repo.Storage.Has(model.DeviceCode("0003")))
+	assert.False(t, repo.Storage.Has(model.DeviceCode("0005")))
+
+}
