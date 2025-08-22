@@ -3,7 +3,7 @@ import Toybox.Communications;
 
 class WaypointServerClient {
     
-    const BASE_URL = "https://b76b0e4e5c60.ngrok-free.app";
+    const BASE_URL = "https://736c9065855a.ngrok-free.app";
     
     public function registerDevice(
         onComplete as Method(statusCode as Number, data as Dictionary) as Void

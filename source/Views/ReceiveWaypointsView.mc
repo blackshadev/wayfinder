@@ -6,7 +6,8 @@ import Toybox.Position;
 import Toybox.Communications;
 
 class ReceiveWaypointsView extends WatchUi.View {
-    private var deviceCode as WaypointServerDeviceCode;
+    private var retrievalStatus as WaypointRetrievalStatus;
+    private var retrievalDone as WaypointRetrievalDone;
     private var server as WaypointServerRetriever;
 
     private var updateTimerSubscription as TimerSubscription;
@@ -20,18 +21,21 @@ class ReceiveWaypointsView extends WatchUi.View {
 
         self.updateTimerSubscription = AppTimer.subscribeOnUpdate(method(:forceUpdate));
 
-        self.deviceCode = new WaypointServerDeviceCode([0, 0]);
+        self.retrievalStatus = new WaypointRetrievalStatus([0, 0]);
+        self.retrievalDone = new WaypointRetrievalDone([0, 0]);
 
-        self.deviceCode.setOffset([0, -self.deviceCode.height() / 2]);
+        self.retrievalStatus.setOffset([0, -self.retrievalStatus.height() / 2]);
+        self.retrievalDone.setOffset([0, -self.retrievalDone.height() / 2]);
     }
 
     function onLayout(dc as Dc) as Void {
-       self.deviceCode.layout(dc);
+       self.retrievalStatus.layout(dc);
+       self.retrievalDone.layout(dc);
     }
 
     function forceUpdate() as Void {
-        System.println(self.server.deviceCode());
-        self.deviceCode.setCode(self.server.deviceCode());
+        self.retrievalStatus.setCode(self.server.deviceCode());
+        self.retrievalDone.setCount(self.server.waypoints().size());
 
         WatchUi.requestUpdate();
     }
@@ -41,7 +45,11 @@ class ReceiveWaypointsView extends WatchUi.View {
         dc.setColor(color, color);
         dc.clear();
 
-        self.deviceCode.draw(dc);
+        if (self.server.stage() != WaypointServerRetriever.Done) {
+            self.retrievalStatus.draw(dc);
+        } else {
+            self.retrievalDone.draw(dc);
+        }
     }
 
     function onShow() as Void {

@@ -81,10 +81,6 @@ class WaypointServerRetriever {
     public function onReceiveWaypoints(status as Number, data as Dictionary) as Void {
         self._hasPendingRequest = false;
 
-        System.println("waypoints");
-        System.println(status);
-        System.println(data);
-
         if (status == 404) {
             return;
         }
@@ -144,7 +140,7 @@ class WaypointServerRetriever {
             return;
         }
 
-        if (self._stage == AwaitingWaypoints || self._stage == WaypointRetrievalError) {
+        if (self._stage == AwaitingWaypoints || self._stage == WaypointRetrievalError || self._stage == Done) {
             self.retrieveWaypoints();
             return;
         }
