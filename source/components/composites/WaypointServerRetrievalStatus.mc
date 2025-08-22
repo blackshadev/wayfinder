@@ -15,7 +15,7 @@ class WaypointRetrievalStatus extends RelativeComponent {
             :font => Graphics.FONT_XTINY, 
             :color => Utils.Colors.greyForeground, 
             :justification => Graphics.TEXT_JUSTIFY_CENTER,
-            :text => "Device Code"
+            :text => Rez.Strings.waypointsDeviceCode,
         });
 
         self.code = new $.Text({
@@ -23,7 +23,7 @@ class WaypointRetrievalStatus extends RelativeComponent {
             :font => Graphics.FONT_MEDIUM, 
             :color => Utils.Colors.foreground, 
             :justification => Graphics.TEXT_JUSTIFY_CENTER,
-            :text => "----"
+            :text => "",
         });
 
         self.target = new $.Text({
@@ -32,10 +32,14 @@ class WaypointRetrievalStatus extends RelativeComponent {
             :color => Utils.Colors.greyForeground, 
             :justification => Graphics.TEXT_JUSTIFY_CENTER,
             :fitTextToArea => true,
-            :text => "on wayfinder.littledev.nl"
+            :text => "",
         });
 
         self.busyIndicator = new BusyIndicator([offset[0], offset[1]]);
+    }
+
+    function setTarget(target as String) as Void {
+        self.target.setText("on " + target);
     }
 
     function setCode(code as String) as Void {

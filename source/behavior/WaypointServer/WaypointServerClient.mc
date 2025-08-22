@@ -4,7 +4,17 @@ import Toybox.Communications;
 class WaypointServerClient {
     
     const BASE_URL = "https://736c9065855a.ngrok-free.app";
-    
+
+    public function target() as String {
+        return BASE_URL.substring("https://".length(), null);
+    }
+
+    public function openDeviceCode(deviceCode as String) as Void {
+        var url =  BASE_URL + "/" + deviceCode.toLower();
+
+        Communications.openWebPage(url, null, null);
+    }
+
     public function registerDevice(
         onComplete as Method(statusCode as Number, data as Dictionary) as Void
     ) as Void {
@@ -24,7 +34,6 @@ class WaypointServerClient {
     ) as Void {
         var url = BASE_URL + "/api/device/" + code.toLower();
 
-        System.println(url);
         Communications.makeWebRequest(
             url,
             null, 

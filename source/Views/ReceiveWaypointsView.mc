@@ -34,6 +34,7 @@ class ReceiveWaypointsView extends WatchUi.View {
     }
 
     function forceUpdate() as Void {
+        self.retrievalStatus.setTarget(self.server.target());
         self.retrievalStatus.setCode(self.server.deviceCode());
         self.retrievalDone.setCount(self.server.waypoints().size());
 

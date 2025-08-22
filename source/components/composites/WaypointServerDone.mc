@@ -15,7 +15,7 @@ class WaypointRetrievalDone extends RelativeComponent {
             :font => Graphics.FONT_XTINY, 
             :color => Utils.Colors.greyForeground, 
             :justification => Graphics.TEXT_JUSTIFY_CENTER,
-            :text => "Retrieved"
+            :text => Rez.Strings.waypointsRetrieved,
         });
 
         self.count = new $.Text({
@@ -23,7 +23,7 @@ class WaypointRetrievalDone extends RelativeComponent {
             :font => Graphics.FONT_MEDIUM, 
             :color => Utils.Colors.foreground, 
             :justification => Graphics.TEXT_JUSTIFY_CENTER,
-            :text => "0 waypoints"
+            :text => ""
         });
 
         self.backLabel = new $.Text({
@@ -32,7 +32,7 @@ class WaypointRetrievalDone extends RelativeComponent {
             :color => Utils.Colors.greyForeground, 
             :justification => Graphics.TEXT_JUSTIFY_CENTER,
             :fitTextToArea => true,
-            :text => "Go back, to continue"
+            :text => Rez.Strings.waypointsResume,
         });
 
         self.busyIndicator = new BusyIndicator([offset[0], offset[1]]);

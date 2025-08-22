@@ -21,9 +21,6 @@ func (s *Server) getDeviceWaypointsHandler(w http.ResponseWriter, r *http.Reques
 
 	device, ok := s.devices.Get(model.CreateDeviceCode(code))
 
-	println(device)
-	println(ok)
-
 	if !ok || !device.Filled {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusNotFound)

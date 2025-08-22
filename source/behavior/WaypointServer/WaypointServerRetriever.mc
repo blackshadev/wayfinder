@@ -31,7 +31,7 @@ class WaypointServerRetriever {
 
         self._tickerTimerSubscription = AppTimer.subscribeOnUpdate(method(:tick));
     }
-    
+
     public function stop() as Void {
         self._tickerTimerSubscription.stop();
         Communications.cancelAllRequests();
@@ -66,6 +66,7 @@ class WaypointServerRetriever {
 
         self._deviceCode = data["code"];
         self._stage = AwaitingWaypoints;
+        self._client.openDeviceCode(self._deviceCode);
     }
 
     public function retrieveWaypoints() as Void {
@@ -106,6 +107,10 @@ class WaypointServerRetriever {
 
         self._waypoints = waypoints;
         self._stage = Done;
+    }
+
+    public function target() as String {
+        return self._client.target();
     }
 
     public function deviceCode() as String {

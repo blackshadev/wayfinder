@@ -98,4 +98,8 @@
     <string id="fieldLabelFixQuality">Fix Quality</string>
     <string id="fieldUnitNone">none</string>
 
+    <string id="waypointsDeviceCode">Device Code</string>
+    <string id="waypointsRetrieved">Retrieved</string>
+    <string id="waypointsResume">Go back, to continue</string>
+
 </strings>
