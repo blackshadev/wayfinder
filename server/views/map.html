@@ -1,7 +1,12 @@
 {{ template "_layout.html" . }}
 
 {{ define "head" }}
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 <style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
     main {
         position: absolute;
         height: 100%;
@@ -25,6 +30,7 @@
         line-height: 45px;
     }
 </style>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js" defer async></script>
 {{ end }}
 
 {{ define "body" }}
@@ -93,10 +99,37 @@
     function save() {
         const coords = allMarkers
             .map(function (m) {
-                return m.getLatLng();
+                const latLon = m.getLatLng();
+
+                return {
+                    latitude: latLon.lat,
+                    longitude: latLon.lng,
+                }
             });
 
-        console.log(coords);
+        fetch(`/api/device/{{ .Code }}`, {
+            method: 'POST',
+            body: JSON.stringify({ waypoints: coords }),
+            cache: "no-cache",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(success).catch(console.error);
+    }
+
+    function success(response) {
+        console.log(response);
+        if (response.status === 404) {
+            toast("Invalid device code", { isError: true });
+            return;
+        }
+
+        if (response.status < 200 || status.status > 299) {
+            toast("Failed to save", { isError: true });
+            return;
+        }
+
+        toast("Waypoints saved");
     }
 
     function getCurrentLocation() {
@@ -104,6 +137,20 @@
             setView: true,
             maxZoom: 15,
         });
+    }
+
+    function toast(text, opts) {
+        opts = opts || {};
+
+        Toastify({
+            text: text,
+            duration: 3000,
+            position: "center",
+            stopOnFocus: true,
+            style: {
+                background: opts.isError ? '#f87171' : '#22c55e',
+            }
+        }).showToast();
     }
 
     getCurrentLocation();

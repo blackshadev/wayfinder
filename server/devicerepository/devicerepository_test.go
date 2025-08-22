@@ -105,7 +105,7 @@ func TestFill(t *testing.T) {
 	assert.Equal(t, device.Waypoints, newWaypoints)
 }
 
-func TestFillFailsOnAlreadyFilled(t *testing.T) {
+func TestFillSucceedsOnAlreadyFilled(t *testing.T) {
 	codegenerator := &generator.FakeGenerator{}
 	devices := storage.CreateInternalStorage[model.DeviceCode, *model.DeviceInstance]()
 	repo := &devicerepository.DeviceRepository{
@@ -124,7 +124,7 @@ func TestFillFailsOnAlreadyFilled(t *testing.T) {
 
 	ok := repo.Fill(code, []model.Waypoint{})
 
-	assert.False(t, ok)
+	assert.True(t, ok)
 }
 
 func TestFillFailsOnUnknownCode(t *testing.T) {
@@ -140,64 +140,6 @@ func TestFillFailsOnUnknownCode(t *testing.T) {
 	ok := repo.Fill(code, []model.Waypoint{})
 
 	assert.False(t, ok)
-}
-
-func TestGetWaypoints(t *testing.T) {
-	codegenerator := &generator.FakeGenerator{}
-	devices := storage.CreateInternalStorage[model.DeviceCode, *model.DeviceInstance]()
-	repo := &devicerepository.DeviceRepository{
-		Storage:   devices,
-		Generator: codegenerator,
-	}
-
-	code := model.DeviceCode("1234")
-	newWaypoints := []model.Waypoint{
-		{Latitide: 52.31485032979573, Longitude: 5.162200927734376},
-		{Latitide: 52.31306532681562, Longitude: 5.201854705810548},
-		{Latitide: 52.33427070823140, Longitude: 5.206317901611328},
-	}
-
-	device := &model.DeviceInstance{
-		Code:      code,
-		Waypoints: newWaypoints,
-		Filled:    true,
-		CreatedAt: time.Now(),
-	}
-	devices.Set(code, device)
-
-	waypoints, ok := repo.GetWaypoints(code)
-
-	assert.True(t, ok)
-	assert.Equal(t, newWaypoints, waypoints)
-}
-
-func TestGetWaypointsFailsForNotFilledDevices(t *testing.T) {
-	codegenerator := &generator.FakeGenerator{}
-	devices := storage.CreateInternalStorage[model.DeviceCode, *model.DeviceInstance]()
-	repo := &devicerepository.DeviceRepository{
-		Storage:   devices,
-		Generator: codegenerator,
-	}
-
-	code := model.DeviceCode("1234")
-	newWaypoints := []model.Waypoint{
-		{Latitide: 52.31485032979573, Longitude: 5.162200927734376},
-		{Latitide: 52.31306532681562, Longitude: 5.201854705810548},
-		{Latitide: 52.33427070823140, Longitude: 5.206317901611328},
-	}
-
-	device := &model.DeviceInstance{
-		Code:      code,
-		Waypoints: newWaypoints,
-		Filled:    false,
-		CreatedAt: time.Now(),
-	}
-	devices.Set(code, device)
-
-	waypoints, ok := repo.GetWaypoints(code)
-
-	assert.False(t, ok)
-	assert.Equal(t, []model.Waypoint{}, waypoints)
 }
 
 func TestCleanup(t *testing.T) {

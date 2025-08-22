@@ -17,6 +17,7 @@ class WayfinderApp extends Application.AppBase {
     public var viewController as ViewController;
     public var updateTimer as AppTimer;
     public var sampleTimer as AppTimer;
+    public var waypointRetriever as WaypointServerRetriever;
 
     function initialize() {
         AppBase.initialize();
@@ -28,6 +29,9 @@ class WayfinderApp extends Application.AppBase {
         self.unitConverter = new SettingsBoundUnitConverter(self.settings);
 
         self.sensor = new SensorProvider();
+        self.waypointRetriever = new WaypointServerRetriever(
+            new WaypointServerClient()
+        );
         self.averageSpeeds = new AverageSpeedsProvider(self.sensor, new Timer.Timer());
         self.maxAverageSpeeds = new MaxAverageSpeedsProvider(self.averageSpeeds);
         self.location = new LocationProvider();
@@ -52,7 +56,8 @@ class WayfinderApp extends Application.AppBase {
             self.averageSpeeds,
             self.maxAverageSpeeds, 
             self.unitConverter,
-            self.settings
+            self.settings,
+            self.waypointRetriever
         );
 
         var delegate = new WayfinderDelegate(

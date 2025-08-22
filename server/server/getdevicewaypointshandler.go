@@ -19,15 +19,22 @@ func (s *Server) getDeviceWaypointsHandler(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	waypoints, ok := s.devices.GetWaypoints(model.DeviceCode(code))
+	device, ok := s.devices.Get(model.CreateDeviceCode(code))
 
-	if !ok {
+	println(device)
+	println(ok)
+
+	if !ok || !device.Filled {
+		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusNotFound)
+		json.NewEncoder(w).Encode(waypointDeviceResponse{
+			Waypoints: []deviceWaypoint{},
+		})
 		return
 	}
 
-	responseWaypoints := make([]deviceWaypoint, 0, len(waypoints))
-	for _, waypoint := range waypoints {
+	responseWaypoints := make([]deviceWaypoint, 0, len(device.Waypoints))
+	for _, waypoint := range device.Waypoints {
 		responseWaypoints = append(responseWaypoints, deviceWaypoint{
 			Latitude:  waypoint.Latitide,
 			Longitude: waypoint.Longitude,

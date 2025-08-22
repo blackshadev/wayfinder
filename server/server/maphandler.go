@@ -8,6 +8,10 @@ import (
 
 var codeValidator = regexp.MustCompile("^[0-9a-zA-Z]{4}$")
 
+type mapParameters struct {
+	Code string
+}
+
 func (s *Server) mapHandler(w http.ResponseWriter, r *http.Request) {
 	code := r.PathValue("code")
 
@@ -16,5 +20,5 @@ func (s *Server) mapHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	s.ServeTemplate(w, "map.html", nil)
+	s.ServeTemplate(w, "map.html", mapParameters{Code: code})
 }

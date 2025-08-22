@@ -8,7 +8,7 @@ import (
 
 type DeviceCodeGenerator struct{}
 
-const device_code_alphabeth = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+const device_code_alphabeth = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
 const device_code_length = 4
 
 var alphabeth_size = len(device_code_alphabeth)
@@ -21,5 +21,5 @@ func (dcg *DeviceCodeGenerator) Generate() model.DeviceCode {
 		code[i] = device_code_alphabeth[number]
 	}
 
-	return model.DeviceCode(code)
+	return model.CreateDeviceCode(string(code))
 }

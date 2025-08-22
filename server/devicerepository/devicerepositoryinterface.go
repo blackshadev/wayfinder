@@ -6,6 +6,5 @@ type DeviceRepositoryInterface interface {
 	New() (*model.DeviceInstance, error)
 	Cleanup()
 	Fill(code model.DeviceCode, waypoints []model.Waypoint) bool
-	GetWaypoints(code model.DeviceCode) ([]model.Waypoint, bool)
 	Get(code model.DeviceCode) (*model.DeviceInstance, bool)
 }

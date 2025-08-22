@@ -53,21 +53,13 @@ func (ds *DeviceRepository) New() (*model.DeviceInstance, error) {
 }
 
 func (ds *DeviceRepository) Fill(code model.DeviceCode, waypoints []model.Waypoint) bool {
-	if device, ok := ds.Storage.Get(code); ok && !device.Filled {
+	if device, ok := ds.Storage.Get(code); ok {
 		device.Waypoints = waypoints
 		device.Filled = true
 		return true
 	}
 
 	return false
-}
-
-func (ds *DeviceRepository) GetWaypoints(code model.DeviceCode) ([]model.Waypoint, bool) {
-	if device, ok := ds.Get(code); ok && device.Filled {
-		return device.Waypoints, true
-	}
-
-	return []model.Waypoint{}, false
 }
 
 func (ds *DeviceRepository) Get(code model.DeviceCode) (*model.DeviceInstance, bool) {

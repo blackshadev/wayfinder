@@ -40,7 +40,7 @@ func (s *Server) fillDeviceHandler(w http.ResponseWriter, r *http.Request) {
 		})
 	}
 
-	found := s.devices.Fill(model.DeviceCode(code), waypoints)
+	found := s.devices.Fill(model.CreateDeviceCode(code), waypoints)
 
 	if !found {
 		w.WriteHeader(http.StatusNotFound)

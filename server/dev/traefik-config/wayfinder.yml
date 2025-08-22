@@ -1,4 +1,4 @@
 tls:
   certificates:
-    - certFile: /var/certs/wayfinder.local.pem
-      keyFile: /var/certs/wayfinder.local-key.pem
+    - certFile: /var/certs/wayfinder.littledev.dev.pem
+      keyFile: /var/certs/wayfinder.littledev.dev-key.pem

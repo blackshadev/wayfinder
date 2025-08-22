@@ -56,6 +56,11 @@ function task:restart { ## Restart the local project
 	proxy:connect
 }
 
+function task:ngrok { ## Start ngrok proxy because Garmin doesn't do local DNS resolution
+	title "Start ngrok proxy to the server"
+	ngrok http http://localhost:8080 
+}
+
 # =========================================================
 ## Docker
 # =========================================================
@@ -64,6 +69,7 @@ function task:build { ## Build all docker compose containers
 	title "Building docker compose project"
 	dockercompose build
 }
+
 
 function task:shell { ## open a shell in the docker container
 	title "Opening shell in docker container"
@@ -156,7 +162,7 @@ function task:certificates { ## Generate the SSL certificates
     mkdir -p ~/.development-proxy/config
     (
         cd ~/.development-proxy/certs && \
-        mkcert wayfinder.local \
+        mkcert wayfinder.littledev.dev \
     )
     echo "Done."
     echo -e "\n=== Copying dev proxy config ===\n"
