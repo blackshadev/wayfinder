@@ -1,3 +1,11 @@
+## v0.8.2
+
+- Fix time format being swapped
+
+## v0.8.1
+
+- Add fitFields for Gp3s projects like gps-speedsurfing
+
 ## v0.7.0
 
 Features
