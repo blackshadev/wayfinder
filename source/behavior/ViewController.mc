@@ -8,9 +8,8 @@ class ViewController {
     private const VIEW_AVG_SPEED = 1;
     private const VIEW_MAX_AVG_SPEED = 2;
     private const VIEW_MAP = 3;
-    private const VIEW_CODE = 4;
 
-    private var views as Array<Number> = [VIEW_CODE, VIEW_MAIN, VIEW_AVG_SPEED, VIEW_MAX_AVG_SPEED];
+    private var views as Array<Number> = [VIEW_MAIN, VIEW_AVG_SPEED, VIEW_MAX_AVG_SPEED];
     private var iX as Number = 0;
     private var dir as Number = 0;
     private var activity as ActivityController;
@@ -20,7 +19,6 @@ class ViewController {
     private var maxAverageSpeeds as MaxAverageSpeedsProvider;
     private var unitConverter as SettingsBoundUnitConverter;
     private var settings as SettingsController;
-    private var waypointServer as WaypointServerRetriever;
 
     private var delegate as WayfinderDelegate? = null;
 
@@ -31,8 +29,7 @@ class ViewController {
         averageSpeeds as AverageSpeedsProvider, 
         maxAverageSpeeds as MaxAverageSpeedsProvider, 
         unitConverter as SettingsBoundUnitConverter,
-        settings as SettingsController,
-        waypointServer as WaypointServerRetriever
+        settings as SettingsController
     ) {
         self.activity = activity;
         self.waypoint = waypoint;
@@ -41,7 +38,6 @@ class ViewController {
         self.maxAverageSpeeds = maxAverageSpeeds;
         self.unitConverter = unitConverter;
         self.settings = settings;
-        self.waypointServer = waypointServer;
 
         if (WatchUi has :MapTrackView) {
             self.views.add(VIEW_MAP);
@@ -137,8 +133,6 @@ class ViewController {
                 return new MaxAverageSpeedView(self.waypoint, self.activityInfo, self.maxAverageSpeeds, self.unitConverter);
             case VIEW_MAP:
                 return new MapView(self.waypoint, self.settings);
-            case VIEW_CODE:
-                return new ReceiveWaypointsView(self.waypointServer);
             case VIEW_MAIN: 
             default:
                 return new MainView(self.waypoint, self.activityInfo, self.unitConverter);

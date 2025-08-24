@@ -8,8 +8,8 @@ class WaypointController {
     private var sensor as SensorProvider;
 
     private var lastPosition as Position.Location? = null;
-    private var waypoint as Position.Location? = null;
-    private var shouldSet as Boolean = false;
+    private var returnWaypoint as Position.Location? = null;
+    private var shouldSetReturn as Boolean = false;
     private var waypointAngle as Number? = null;
     private var headingAngle as Number? = null;
     private var relativeWaypointAngle as Number? = null;
@@ -25,11 +25,11 @@ class WaypointController {
 
     public function update() as Void {
         self.lastPosition = self.location.getLastPosition();
-        if (self.shouldSet) {
-            self.set();
+        if (self.shouldSetReturn) {
+            self.setReturn();
         }
 
-        if (self.lastPosition == null || self.waypoint == null) {
+        if (self.lastPosition == null || self.returnWaypoint == null) {
             return;
         }
 
@@ -42,8 +42,8 @@ class WaypointController {
         return self.lastPosition;
     }
 
-    public function waypointLocation() as Position.Location? {
-        return self.waypoint;
+    public function returnLocation() as Position.Location? {
+        return self.returnWaypoint;
     }
 
     public function angle() as Number? {
@@ -55,11 +55,11 @@ class WaypointController {
     }
 
     private function calculateWaypointAngle() as Number? {
-        if (self.lastPosition == null || self.waypoint == null) {
+        if (self.lastPosition == null || self.returnWaypoint == null) {
             return null;
         }
 
-        var waypointPos = self.waypoint.toDegrees();
+        var waypointPos = self.returnWaypoint.toDegrees();
         var currentPos = self.lastPosition.toDegrees();
 
         var absoluteAngleInRads = Math.atan2(waypointPos[1] - currentPos[1], waypointPos[0] - currentPos[0]);
@@ -72,7 +72,7 @@ class WaypointController {
     }
 
     public function isSet() as Boolean {
-        return self.waypoint != null;
+        return self.returnWaypoint != null;
     }
 
     public function isSettable() as Boolean {
@@ -84,17 +84,30 @@ class WaypointController {
             return;
         }
 
-        if (self.isSettable()) {
-            self.set();
+        if (!self.isSettable()) {
+            self.shouldSetReturn = true;
             return;
         }
 
-        self.shouldSet = true;
+        self.setReturn();
     }
 
-    public function set() as Void {
-        self.shouldSet = false;
-        self.waypoint = self.lastPosition;
+    public function setWaypoint() as Void {
+        // Placeholder for setting the waypoint
+    }
+
+
+    public function setReturn() as Void {
+        self.shouldSetReturn = false;
+        self.returnWaypoint = self.lastPosition;
+    }
+
+    public function clear() as Void {
+        self.shouldSetReturn = false;
+        self.returnWaypoint = null;
+        self.waypointAngle = null;
+        self.headingAngle = null;
+        self.relativeWaypointAngle = null;
     }
 }
 

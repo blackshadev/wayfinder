@@ -56,15 +56,15 @@ class WayfinderApp extends Application.AppBase {
             self.averageSpeeds,
             self.maxAverageSpeeds, 
             self.unitConverter,
-            self.settings,
-            self.waypointRetriever
+            self.settings
         );
 
         var delegate = new WayfinderDelegate(
             self.viewController,
             self.waypoint,
             self.activity,
-            self.settings
+            self.settings,
+            self.waypointRetriever
         );
 
         self.viewController.setDelegate(delegate);

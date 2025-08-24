@@ -56,7 +56,7 @@ class MapView extends WatchUi.MapTrackView {
         }
 
         if (self.waypointIsStale()) {
-            var waypoint = self.waypoint.waypointLocation();
+            var waypoint = self.waypoint.returnLocation();
             self.currentWaypoint = waypoint;
 
             self.updateMapMarker();
@@ -87,7 +87,7 @@ class MapView extends WatchUi.MapTrackView {
     }
 
     private function waypointIsStale() as Boolean {
-        var waypoint = self.waypoint.waypointLocation();
+        var waypoint = self.waypoint.returnLocation();
 
         return waypoint != null && (
             self.currentWaypoint == null || 

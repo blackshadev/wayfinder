@@ -33,7 +33,11 @@
     <string id="labelDistance">Distance</string>
 
     <string id="menuTitle">Wayfinder</string>
+    <string id="menuOpenWaypoints">Waypoints...</string>
+    <string id="menuClearWaypoints">Clear</string>
+    <string id="menuReceiveWaypoints">Receive...</string>
     <string id="menuSetWaypoint">Set waypoint</string>
+    <string id="menuSetReturnWaypoint">Set return</string>
     <string id="menuSetWaypointNoLocation">(No Location)</string>
     <string id="menuOpenSettings">Settings...</string>
     <string id="menuOpenAbout">About...</string>
