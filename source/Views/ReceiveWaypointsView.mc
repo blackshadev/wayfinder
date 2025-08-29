@@ -55,16 +55,7 @@ class ReceiveWaypointsView extends WatchUi.View {
 
     function onShow() as Void {
         self.server.start();
-        
         self.updateTimerSubscription.start();
-    }
-
-    function retrieveWaypoint() as Void {
-        if (self.server.stage() != WaypointServerRetriever.AwaitingWaypoints) {
-            return;
-        }
-
-        self.server.retrieveWaypoints();
     }
 
     function onHide() as Void {

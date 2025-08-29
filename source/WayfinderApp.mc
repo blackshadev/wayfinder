@@ -29,13 +29,14 @@ class WayfinderApp extends Application.AppBase {
         self.unitConverter = new SettingsBoundUnitConverter(self.settings);
 
         self.sensor = new SensorProvider();
-        self.waypointRetriever = new WaypointServerRetriever(
-            new WaypointServerClient()
-        );
         self.averageSpeeds = new AverageSpeedsProvider(self.sensor, new Timer.Timer());
         self.maxAverageSpeeds = new MaxAverageSpeedsProvider(self.averageSpeeds);
         self.location = new LocationProvider();
         self.waypoint = new WaypointsController(self.location, self.sensor);
+        self.waypointRetriever = new WaypointServerRetriever(
+            new WaypointServerClient(),
+            self.waypoint
+        );
         self.activity = new ActivityController(
             self.settings,
             self.sampleTimer,

@@ -6,6 +6,23 @@ class Waypoint {
     private var _absoluteAngle as Number? = null;
     private var _relativeAngle as Number? = null;
 
+    public static function isValidArray(data as Array<Double>) as Boolean {
+        return data instanceof Array 
+            && data.size() == 2 
+            && data[0] instanceof Double 
+            && data[1] instanceof Double;
+    }
+
+    public static function fromArray(data as Array<Double>) as Waypoint {
+        var location = new Position.Location({
+            :latitude => data[0],
+            :longitude => data[1],
+            :format => :degrees
+        });
+
+        return new Waypoint(location);
+    }
+
     function initialize(location as Position.Location) {
         self._location = location;
     }
@@ -28,6 +45,15 @@ class Waypoint {
         if (currentHeading != null) {
             self._relativeAngle = self.calculateRelativeWaypointAngle(currentLocation, currentHeading);
         }
+    }
+
+    public function toArray() as Array<Double> {
+        var degs = self._location.toDegrees();
+
+        return [
+            degs[0],
+            degs[1],
+        ];
     }
 
     private function calculateAbsoluteWaypointAngle(currentLocation as Position.Location) as Number {

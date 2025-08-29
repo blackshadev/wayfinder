@@ -52,6 +52,7 @@ class WaypointsMenuDelegate extends WatchUi.Menu2InputDelegate {
 		// Close the menu, then switch to the ReceiveWaypoints view via ViewController
 		self.backToMainView();
 
+		self.receiver.reset();
         var view = new ReceiveWaypointsView(self.receiver);
         WatchUi.pushView(view, new WaypointViewDelegate(), WatchUi.SLIDE_LEFT);
 	}

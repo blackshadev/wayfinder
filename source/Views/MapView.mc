@@ -10,7 +10,7 @@ class MapView extends WatchUi.MapTrackView {
     
     private var noLocationText as Text;
     private var arrow as Arrow;
-    private var currentWaypoint as Location? = null;
+    private var returnWaypoint as Location? = null;
 
     function initialize(
         waypoint as WaypointsController,
@@ -57,7 +57,7 @@ class MapView extends WatchUi.MapTrackView {
 
         if (self.waypointIsStale()) {
             var waypoint = self.waypoint.returnLocation();
-            self.currentWaypoint = waypoint;
+            self.returnWaypoint = waypoint;
 
             self.updateMapMarker();
         }
@@ -67,12 +67,12 @@ class MapView extends WatchUi.MapTrackView {
     }
 
     private function updateMapMarker() as Void { 
-        if (self.currentWaypoint == null) {
+        if (self.returnWaypoint == null) {
             return;
         }
 
         self.clear();
-        self.setMapMarker(new MapMarker(self.currentWaypoint));
+        self.setMapMarker(new MapMarker(self.returnWaypoint));
     }
 
     function onShow() as Void {
@@ -90,8 +90,8 @@ class MapView extends WatchUi.MapTrackView {
         var waypoint = self.waypoint.returnLocation();
 
         return waypoint != null && (
-            self.currentWaypoint == null || 
-            !waypoint.toGeoString(Position.GEO_DM).equals(self.currentWaypoint.toGeoString(Position.GEO_DM))
+            self.returnWaypoint == null || 
+            !waypoint.toGeoString(Position.GEO_DM).equals(self.returnWaypoint.toGeoString(Position.GEO_DM))
         );
     }
 }
