@@ -6,7 +6,7 @@ import Toybox.System;
 import Toybox.Timer;
 
 class MainView extends WatchUi.View {
-    private var waypoint as WaypointController;
+    private var waypoint as WaypointsController;
     private var activityInfo as ActivityInfoProvider;
 
     private var arrow as Arrow;
@@ -20,7 +20,7 @@ class MainView extends WatchUi.View {
     private var timerSubscription as TimerSubscription;
 
     function initialize(
-        waypoint as WaypointController,
+        waypoint as WaypointsController,
         activityInfo as ActivityInfoProvider,
         unitConverter as SettingsBoundUnitConverter
     ) {

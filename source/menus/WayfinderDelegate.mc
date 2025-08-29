@@ -3,7 +3,7 @@ import Toybox.WatchUi;
 import Toybox.System;
 
 class WayfinderDelegate extends WatchUi.BehaviorDelegate {
-    private var waypoint as WaypointController;
+    private var waypoint as WaypointsController;
     private var activity as ActivityController;
     private var settings as SettingsController;
     private var waypointRetriever as WaypointServerRetriever;
@@ -11,7 +11,7 @@ class WayfinderDelegate extends WatchUi.BehaviorDelegate {
 
     function initialize(
         viewController as ViewController,
-        waypoint as WaypointController,
+        waypoint as WaypointsController,
         activity as ActivityController,
         settings as SettingsController,
         waypointRetriever as WaypointServerRetriever

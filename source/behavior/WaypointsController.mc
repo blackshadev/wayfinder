@@ -3,16 +3,13 @@ import Toybox.Position;
 import Toybox.System;
 import Toybox.Lang;
 
-class WaypointController {
+class WaypointsController {
     private var location as LocationProvider;
     private var sensor as SensorProvider;
 
     private var lastPosition as Position.Location? = null;
-    private var returnWaypoint as Position.Location? = null;
     private var shouldSetReturn as Boolean = false;
-    private var waypointAngle as Number? = null;
-    private var headingAngle as Number? = null;
-    private var relativeWaypointAngle as Number? = null;
+    private var returnWaypoint as Waypoint? = null;
     private var updateTimer as TimerSubscription;
 
     function initialize(location as LocationProvider, sensor as SensorProvider) {
@@ -33,9 +30,7 @@ class WaypointController {
             return;
         }
 
-        self.waypointAngle = self.calculateWaypointAngle();
-        self.headingAngle = self.calculateHeadingAngle();
-        self.relativeWaypointAngle = ((self.waypointAngle - self.headingAngle) + 360) % 360;
+        self.returnWaypoint.update(self.lastPosition, self.sensor.heading());
     }
 
     public function currentLocation() as Position.Location? {
@@ -44,31 +39,6 @@ class WaypointController {
 
     public function returnLocation() as Position.Location? {
         return self.returnWaypoint;
-    }
-
-    public function angle() as Number? {
-        return self.relativeWaypointAngle;
-    }
-
-    public function absoluteAngle() as Number? {
-        return self.waypointAngle;
-    }
-
-    private function calculateWaypointAngle() as Number? {
-        if (self.lastPosition == null || self.returnWaypoint == null) {
-            return null;
-        }
-
-        var waypointPos = self.returnWaypoint.toDegrees();
-        var currentPos = self.lastPosition.toDegrees();
-
-        var absoluteAngleInRads = Math.atan2(waypointPos[1] - currentPos[1], waypointPos[0] - currentPos[0]);
-        
-        return (Math.toDegrees(absoluteAngleInRads).toNumber() + 360) % 360;
-    }
-
-    private function calculateHeadingAngle() as Number? {
-        return (Math.toDegrees(self.sensor.heading()).toNumber() + 360) % 360;
     }
 
     public function isSet() as Boolean {
@@ -92,10 +62,25 @@ class WaypointController {
         self.setReturn();
     }
 
+    public function angle() as Number? {
+        if (self.returnWaypoint == null) {
+            return null;
+        }
+        
+        return self.returnWaypoint.angle();
+    }
+
+    public function absoluteAngle() as Number? {
+        if (self.returnWaypoint == null) {
+            return null;
+        }
+   
+        return self.returnWaypoint.absoluteAngle();
+    }
+
     public function setWaypoint() as Void {
         // Placeholder for setting the waypoint
     }
-
 
     public function setReturn() as Void {
         self.shouldSetReturn = false;
@@ -105,9 +90,6 @@ class WaypointController {
     public function clear() as Void {
         self.shouldSetReturn = false;
         self.returnWaypoint = null;
-        self.waypointAngle = null;
-        self.headingAngle = null;
-        self.relativeWaypointAngle = null;
     }
 }
 

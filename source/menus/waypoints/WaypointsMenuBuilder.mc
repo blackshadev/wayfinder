@@ -2,9 +2,9 @@ import Toybox.WatchUi;
 import Toybox.Lang;
 
 class WaypointsMenuBuilder {
-	private var waypoint as WaypointController;
+	private var waypoint as WaypointsController;
 
-	function initialize(waypoint as WaypointController) {
+	function initialize(waypoint as WaypointsController) {
 		self.waypoint = waypoint;
 	}
 

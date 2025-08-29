@@ -5,7 +5,7 @@ import Toybox.Timer;
 
 class WayfinderApp extends Application.AppBase {
 
-    public var waypoint as WaypointController;
+    public var waypoint as WaypointsController;
     public var unitConverter as SettingsBoundUnitConverter;
     public var activity as ActivityController;
     public var activityInfo as ActivityInfoProvider;
@@ -35,7 +35,7 @@ class WayfinderApp extends Application.AppBase {
         self.averageSpeeds = new AverageSpeedsProvider(self.sensor, new Timer.Timer());
         self.maxAverageSpeeds = new MaxAverageSpeedsProvider(self.averageSpeeds);
         self.location = new LocationProvider();
-        self.waypoint = new WaypointController(self.location, self.sensor);
+        self.waypoint = new WaypointsController(self.location, self.sensor);
         self.activity = new ActivityController(
             self.settings,
             self.sampleTimer,

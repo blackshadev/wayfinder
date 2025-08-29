@@ -13,7 +13,7 @@ class ViewController {
     private var iX as Number = 0;
     private var dir as Number = 0;
     private var activity as ActivityController;
-    private var waypoint as WaypointController;
+    private var waypoint as WaypointsController;
     private var activityInfo as ActivityInfoProvider;
     private var averageSpeeds as AverageSpeedsProvider;
     private var maxAverageSpeeds as MaxAverageSpeedsProvider;
@@ -24,7 +24,7 @@ class ViewController {
 
     function initialize(
         activity as ActivityController,
-        waypoint as WaypointController,
+        waypoint as WaypointsController,
         activityInfo as ActivityInfoProvider,
         averageSpeeds as AverageSpeedsProvider, 
         maxAverageSpeeds as MaxAverageSpeedsProvider, 

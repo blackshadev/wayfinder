@@ -7,12 +7,12 @@ class MainMenuDelegate extends WatchUi.Menu2InputDelegate {
     public static const SETTINGS_OPEN_ID = "settings_open";
     public static const ABOUT_OPEN_ID = "about_open";
 
-    private var waypoint as WaypointController;
+    private var waypoint as WaypointsController;
     private var settings as SettingsController;
     private var waypointRetriever as WaypointServerRetriever;
 
     function initialize(
-        waypoint as WaypointController,
+        waypoint as WaypointsController,
         settings as SettingsController,
         waypointRetriever as WaypointServerRetriever
     ) {

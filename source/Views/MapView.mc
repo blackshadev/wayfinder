@@ -5,7 +5,7 @@ import Toybox.Lang;
 import Toybox.Position;
 
 class MapView extends WatchUi.MapTrackView {
-    private var waypoint as WaypointController;
+    private var waypoint as WaypointsController;
     private var settings as SettingsController;
     
     private var noLocationText as Text;
@@ -13,7 +13,7 @@ class MapView extends WatchUi.MapTrackView {
     private var currentWaypoint as Location? = null;
 
     function initialize(
-        waypoint as WaypointController,
+        waypoint as WaypointsController,
         settings as SettingsController
     ) {
         MapTrackView.initialize();

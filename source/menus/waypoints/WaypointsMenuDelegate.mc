@@ -8,15 +8,15 @@ class WaypointsMenuDelegate extends WatchUi.Menu2InputDelegate {
 	public static const WAYPOINT_SET_RETURN = "waypoint_set_return";
 	public static const WAYPOINTS_CLEAR = "waypoints_clear";
 
-	private var waypoint as WaypointController;
+	private var waypoints as WaypointsController;
 	private var receiver as WaypointServerRetriever;
 
 	function initialize(
-        waypoint as WaypointController,
+        waypoints as WaypointsController,
         receiver as WaypointServerRetriever
     ) {
 		Menu2InputDelegate.initialize();
-		self.waypoint = waypoint;
+		self.waypoints = waypoints;
 		self.receiver = receiver;
 	}
 
@@ -57,21 +57,21 @@ class WaypointsMenuDelegate extends WatchUi.Menu2InputDelegate {
 	}
 
 	private function setWaypoint() as Void {
-		if (!self.waypoint.isSettable()) {
+		if (!self.waypoints.isSettable()) {
 			return;
 		}
-		self.waypoint.setWaypoint();
+		self.waypoints.setWaypoint();
 	}
 
 	private function setReturnWaypoint() as Void {
-		if (!self.waypoint.isSettable()) {
+		if (!self.waypoints.isSettable()) {
 			return;
 		}
-		self.waypoint.setReturn();
+		self.waypoints.setReturn();
 	}
 
 	private function clearWaypoints() as Void {
-		self.waypoint.clear();
+		self.waypoints.clear();
 	}
 
 	private function backToMainView() as Void {
