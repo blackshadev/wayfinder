@@ -1,3 +1,8 @@
+## v0.8.3
+
+- Fix a memory leak on views due to update timers not releasing their subscribee
+- Update version number because I forgot since v0.7.0... oops.
+
 ## v0.8.2
 
 - Fix time format being swapped

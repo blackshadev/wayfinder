@@ -18,7 +18,7 @@ class GpsInformationField extends ActivityField {
         ActivityField.initialize();
 
         self.location = location;
-        self.updateTimer = AppTimer.subscribeOnUpdate(method(:updateValues));
+        self.updateTimer = AppTimer.onUpdate();
 
         self.gnsConfigField = session.createField(
             WatchUi.loadResource(Rez.Strings.fieldLabelGnssConfig),
@@ -40,7 +40,7 @@ class GpsInformationField extends ActivityField {
     }
 
     public function start() as Void {
-        self.updateTimer.start();
+        self.updateTimer.start(method(:updateValues));
     }
 
     public function stop() as Void {

@@ -25,7 +25,7 @@ class MaxAverageSpeedActivityField extends ActivityField {
         self.maxAverageSpeeds = maxAverageSpeeds;
 
         self.converter = new UnitConverter();
-        self.updateTimer = AppTimer.subscribeOnUpdate(method(:updateValues));
+        self.updateTimer = AppTimer.onUpdate();
 
         var fieldConfig = { 
             :mesgType => FitContributor.MESG_TYPE_SESSION, 
@@ -62,7 +62,7 @@ class MaxAverageSpeedActivityField extends ActivityField {
     }
 
     public function start() as Void {
-        self.updateTimer.start();
+        self.updateTimer.start(method(:updateValues));
     }
 
     public function reset() as Void {

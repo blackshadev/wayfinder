@@ -36,11 +36,11 @@ class AppTimer extends AppTimerInterface {
         }
     }
 
-    public static function subscribeOnUpdate(callback as Method) as TimerSubscription {
-        return new TimerSubscription(callback, getApp().updateTimer);
+    public static function onUpdate() as TimerSubscription {
+        return new TimerSubscription(getApp().updateTimer);
     }
 
-    public static function subscribeOnSample(callback as Method) as TimerSubscription {
-        return new TimerSubscription(callback, getApp().sampleTimer);
+    public static function onSample() as TimerSubscription {
+        return new TimerSubscription(getApp().sampleTimer);
     }
 }

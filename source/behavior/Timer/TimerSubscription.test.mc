@@ -10,11 +10,11 @@ module WayfinderTests {
             var stubTimer = new WayfinderTests.StubAppTimer();
 
             var method = new Method(stubCallback, :call);
-            var sub = new TimerSubscription(method, stubTimer);
+            var sub = new TimerSubscription(stubTimer);
 
             Assert.isEqual(false, stubTimer.contains(method));
 
-            sub.start();
+            sub.start(method);
             Assert.isEqual(true, stubTimer.contains(method));
 
             sub.stop();

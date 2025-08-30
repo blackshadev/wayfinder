@@ -23,7 +23,7 @@ class AverageSpeedsProvider extends AverageSpeedsProviderInterface {
         AverageSpeedsProviderInterface.initialize();
         
         self.sensor = sensor;
-        self.updateTimer = getApp().sampleTimer.subscribeOnSample(method(:sample));
+        self.updateTimer = getApp().sampleTimer.onSample();
 
         var sampleTime = getApp().sampleTimer.time;
         self.speeds = new AverageValueList([
@@ -37,7 +37,7 @@ class AverageSpeedsProvider extends AverageSpeedsProviderInterface {
     }
 
     public function start() as Void {
-        self.updateTimer.start();
+        self.updateTimer.start(method(:sample));
         self.isStarted = true;
     }
 

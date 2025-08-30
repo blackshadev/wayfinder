@@ -19,8 +19,8 @@ class WaypointController {
         self.location = location;
         self.sensor = sensor;
 
-        self.updateTimer = AppTimer.subscribeOnUpdate(method(:update));
-        self.updateTimer.start();
+        self.updateTimer = AppTimer.onUpdate();
+        self.updateTimer.start(method(:update));
     }
 
     public function update() as Void {

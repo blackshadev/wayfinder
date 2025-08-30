@@ -9,11 +9,11 @@ class MaxAverageSpeedsProvider {
         self.averageSpeeds = averageSpeeds;
         self.maxAvgSpeed = MaxAverageSpeedValues.empty();
 
-        self.timer = AppTimer.subscribeOnSample(method(:update));
+        self.timer = AppTimer.onSample();
     }
 
     public function start() as Void {
-        self.timer.start();
+        self.timer.start(method(:update));
     }
 
     public function pause() as Void {

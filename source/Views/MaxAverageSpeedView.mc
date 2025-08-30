@@ -46,7 +46,7 @@ class MaxAverageSpeedView extends WatchUi.View {
             self.maxSpeeds
         );
 
-        self.timerSubscription = AppTimer.subscribeOnUpdate(method(:forceUpdate));
+        self.timerSubscription = AppTimer.onUpdate();
     }
 
     function onLayout(dc as Dc) as Void {
@@ -77,7 +77,7 @@ class MaxAverageSpeedView extends WatchUi.View {
 
     function onShow() as Void {
         self.updateValues();
-        self.timerSubscription.start();
+        self.timerSubscription.start(method(:forceUpdate));
     }
 
     function onHide() as Void {

@@ -23,7 +23,7 @@ class AverageSpeedActivityField extends ActivityField {
         ActivityField.initialize();
 
         self.averageSpeeds = averageSpeeds;
-        self.updateTimer = AppTimer.subscribeOnUpdate(method(:updateValues));
+        self.updateTimer = AppTimer.onUpdate();
 
         self.converter = new UnitConverter();
 
@@ -62,7 +62,7 @@ class AverageSpeedActivityField extends ActivityField {
     }
 
     public function start() as Void {
-        self.updateTimer.start();
+        self.updateTimer.start(method(:updateValues));
     }
 
     public function stop() as Void {
