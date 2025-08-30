@@ -24,7 +24,8 @@ class AverageSpeedView extends WatchUi.View {
         waypoint as WaypointsController,
         activityInfo as ActivityInfoProvider,
         averageSpeeds as AverageSpeedsProvider,
-        unitConverter as SettingsBoundUnitConverter
+        unitConverter as SettingsBoundUnitConverter,
+        settings as SettingsController
     ) {
         View.initialize();
 
@@ -32,7 +33,7 @@ class AverageSpeedView extends WatchUi.View {
         self.averageSpeeds = averageSpeeds;
         self.waypoint = waypoint;
 
-        self.arrow = new Arrow(Utils.Sizing.arrow);
+        self.arrow = new Arrow(settings.arrowSizeValue());
         
         self.time = new Time(new TimeProvider(), [0, 0]);
         self.currentSpeed = new CurrentSpeed(unitConverter, [0, 0]);
@@ -61,7 +62,9 @@ class AverageSpeedView extends WatchUi.View {
     }
 
     function updateValues() as Void {
-        self.arrow.setAngle(self.waypoint.angle());
+        var waypoint = self.waypoint.returnWaypoint();
+        self.arrow.setAngle(waypoint != null ? waypoint.absoluteAngle() : null);
+
         self.currentSpeed.setValue(self.activityInfo.speed());
         self.avgSpeeds.setValue(self.averageSpeeds.value());
         self.avgSpeeds2.setAvgSpeeds(self.averageSpeeds.value());

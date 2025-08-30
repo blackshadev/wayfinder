@@ -31,7 +31,7 @@ class WaypointServerRetriever {
         self._client = client;
         self._waypointsController = waypointsController;
 
-        self._tickerTimerSubscription = AppTimer.subscribeOnUpdate(method(:tick));
+        self._tickerTimerSubscription = AppTimer.onUpdate();
     }
 
     public function stop() as Void {
@@ -40,7 +40,7 @@ class WaypointServerRetriever {
     }
 
     public function start() as Void {
-        self._tickerTimerSubscription.start();
+        self._tickerTimerSubscription.start(method(:tick));
         self._ticker = 0;
     }
 

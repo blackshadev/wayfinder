@@ -19,7 +19,7 @@ class ReceiveWaypointsView extends WatchUi.View {
 
         self.server = server;
 
-        self.updateTimerSubscription = AppTimer.subscribeOnUpdate(method(:forceUpdate));
+        self.updateTimerSubscription = AppTimer.onUpdate();
 
         self.retrievalStatus = new WaypointRetrievalStatus([0, 0]);
         self.retrievalDone = new WaypointRetrievalDone([0, 0]);
@@ -55,7 +55,7 @@ class ReceiveWaypointsView extends WatchUi.View {
 
     function onShow() as Void {
         self.server.start();
-        self.updateTimerSubscription.start();
+        self.updateTimerSubscription.start(method(:forceUpdate));
     }
 
     function onHide() as Void {

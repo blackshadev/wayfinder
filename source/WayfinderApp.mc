@@ -32,7 +32,11 @@ class WayfinderApp extends Application.AppBase {
         self.averageSpeeds = new AverageSpeedsProvider(self.sensor, new Timer.Timer());
         self.maxAverageSpeeds = new MaxAverageSpeedsProvider(self.averageSpeeds);
         self.location = new LocationProvider();
-        self.waypoint = new WaypointsController(self.location, self.sensor);
+        self.waypoint = new WaypointsController(
+            self.location, 
+            self.sensor, 
+            new WaypointStorage()
+        );
         self.waypointRetriever = new WaypointServerRetriever(
             new WaypointServerClient(),
             self.waypoint

@@ -17,7 +17,7 @@ class Arrow extends Component {
 
     function initialize(size as Number) {
         Component.initialize();
-        
+
         self.size = size;
         self.radius = radius;
 

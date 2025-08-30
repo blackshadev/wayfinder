@@ -24,7 +24,8 @@ class MaxAverageSpeedView extends WatchUi.View {
         waypoint as WaypointsController,
         activityInfo as ActivityInfoProvider,
         maxAvgSpeed as MaxAverageSpeedsProvider,
-        unitConverter as SettingsBoundUnitConverter
+        unitConverter as SettingsBoundUnitConverter,
+        settings as SettingsController
     ) {
         View.initialize();
 
@@ -32,7 +33,7 @@ class MaxAverageSpeedView extends WatchUi.View {
         self.maxAvgSpeed = maxAvgSpeed;
         self.waypoint = waypoint;
 
-        self.arrow = new Arrow(Utils.Sizing.arrow);
+        self.arrow = new Arrow(settings.arrowSizeValue());
         
         self.time = new Time(new TimeProvider(), [0, 0]);
         self.maxSpeed = new MaxSpeed(unitConverter, [0, 0]);
@@ -61,7 +62,9 @@ class MaxAverageSpeedView extends WatchUi.View {
     }
 
     function updateValues() as Void {
-        self.arrow.setAngle(self.waypoint.angle());
+        var waypoint = self.waypoint.returnWaypoint();
+        self.arrow.setAngle(waypoint != null ? waypoint.absoluteAngle() : null);
+
         self.maxSpeed.setValue(self.activityInfo.speed());
         self.maxSpeeds.setMaxAvgSpeeds(self.maxAvgSpeed.value());
         self.maxSpeeds2.setMaxAvgSpeeds(self.maxAvgSpeed.value());

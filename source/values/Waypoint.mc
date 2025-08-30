@@ -24,10 +24,13 @@ class Waypoint {
     }
 
     function initialize(location as Position.Location) {
+        if (location == null) {
+            throw new Exception("Location cannot be null");
+        }
         self._location = location;
     }
 
-    function getLocation() as Position.Location {
+    function location() as Position.Location {
         return self._location;
     }
 

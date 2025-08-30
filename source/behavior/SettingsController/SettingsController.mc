@@ -277,4 +277,23 @@ class SettingsController extends SettingsControllerInterface {
                 return Rez.Strings.settingsArrowSizeNormal;
         }
     }
+
+    public function arrowSizeValue() as Number {
+
+        switch (self.arrowSize()) {
+            case SettingsControllerInterface.ARROW_SIZE_NONE: 
+                return 0;
+            case SettingsControllerInterface.ARROW_SIZE_SMALL: 
+                return 20;
+            case SettingsControllerInterface.ARROW_SIZE_NORMAL: 
+                return 30;
+            case SettingsControllerInterface.ARROW_SIZE_LARGE: 
+                return 45;
+            case SettingsControllerInterface.ARROW_SIZE_EXTRA_LARGE: 
+                return 60;
+
+            default: 
+                return 30;
+        }
+    }
 }

@@ -22,14 +22,15 @@ class MainView extends WatchUi.View {
     function initialize(
         waypoint as WaypointsController,
         activityInfo as ActivityInfoProvider,
-        unitConverter as SettingsBoundUnitConverter
+        unitConverter as SettingsBoundUnitConverter,
+        settings as SettingsController
     ) {
         View.initialize();
 
         self.waypoint = waypoint;
         self.activityInfo = activityInfo;
 
-        self.arrow = new Arrow(Utils.Sizing.arrow);
+        self.arrow = new Arrow(settings.arrowSizeValue());
 
         self.time = new Time(new TimeProvider(), [0, 0]);
         self.duration = new Duration([0, 0]);
@@ -61,7 +62,9 @@ class MainView extends WatchUi.View {
     }
 
     function updateValues() as Void {
-        self.arrow.setAngle(self.waypoint.angle());      
+        var waypoint = self.waypoint.returnWaypoint();
+        self.arrow.setAngle(waypoint != null ? waypoint.absoluteAngle() : null);
+
         self.duration.setValue(self.activityInfo.duration());
         self.speed.setValue(self.activityInfo.speed());
         self.distance.setValue(self.activityInfo.distance());

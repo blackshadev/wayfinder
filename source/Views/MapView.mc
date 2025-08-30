@@ -10,7 +10,7 @@ class MapView extends WatchUi.MapTrackView {
     
     private var noLocationText as Text;
     private var arrow as Arrow;
-    private var returnWaypoint as Location? = null;
+    private var returnWaypoint as Waypoint? = null;
 
     function initialize(
         waypoint as WaypointsController,
@@ -29,7 +29,7 @@ class MapView extends WatchUi.MapTrackView {
             :text => Rez.Strings.mapNoLocation
         });
 
-        self.arrow = new Arrow(Utils.Sizing.arrow);
+        self.arrow = new Arrow(settings.arrowSizeValue());
 
         self.setMapMode(WatchUi.MAP_MODE_PREVIEW);
     }
@@ -56,13 +56,12 @@ class MapView extends WatchUi.MapTrackView {
         }
 
         if (self.waypointIsStale()) {
-            var waypoint = self.waypoint.returnLocation();
-            self.returnWaypoint = waypoint;
+            self.returnWaypoint = self.waypoint.returnWaypoint();
 
             self.updateMapMarker();
         }
 
-        self.arrow.setAngle(self.waypoint.absoluteAngle());
+        self.arrow.setAngle(self.returnWaypoint.absoluteAngle());
         self.arrow.draw(dc);
     }
 
@@ -72,7 +71,7 @@ class MapView extends WatchUi.MapTrackView {
         }
 
         self.clear();
-        self.setMapMarker(new MapMarker(self.returnWaypoint));
+        self.setMapMarker(new MapMarker(self.returnWaypoint.location()));
     }
 
     function onShow() as Void {
@@ -87,11 +86,13 @@ class MapView extends WatchUi.MapTrackView {
     }
 
     private function waypointIsStale() as Boolean {
-        var waypoint = self.waypoint.returnLocation();
+        var waypoint = self.waypoint.returnWaypoint();
 
         return waypoint != null && (
             self.returnWaypoint == null || 
-            !waypoint.toGeoString(Position.GEO_DM).equals(self.returnWaypoint.toGeoString(Position.GEO_DM))
+            !waypoint.location().toGeoString(Position.GEO_DM).equals(
+                self.returnWaypoint.location().toGeoString(Position.GEO_DM)
+            )
         );
     }
 }
