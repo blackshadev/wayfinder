@@ -1,3 +1,8 @@
+## v0.9.0
+
+- Add ability to receive external waypoints
+- Fix changing arrow size
+
 ## v0.8.3
 
 - Fix a memory leak on views due to update timers not releasing their subscribee

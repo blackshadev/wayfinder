@@ -3,6 +3,7 @@ import Toybox.Lang;
 
 class Waypoint {
     private var _location as Position.Location;
+    private var _distance as Float? = null;
     private var _absoluteAngle as Number? = null;
     private var _relativeAngle as Number? = null;
 
@@ -24,25 +25,27 @@ class Waypoint {
     }
 
     function initialize(location as Position.Location) {
-        if (location == null) {
-            throw new Exception("Location cannot be null");
-        }
         self._location = location;
     }
 
-    function location() as Position.Location {
+    public function location() as Position.Location {
         return self._location;
     }
 
-    function angle() as Number? {
+    public function angle() as Number? {
         return self._relativeAngle;
     }
 
-    function absoluteAngle() as Number? {
+    public function absoluteAngle() as Number? {
         return self._absoluteAngle;
     }
 
-    function update(currentLocation as Position.Location, currentHeading as Float?) as Void {
+    public function distance() as Float? {
+        return self._distance;
+    }
+
+    public function update(currentLocation as Position.Location, currentHeading as Float?) as Void {
+        self._distance = Utils.Distance.betweenApprox(currentLocation, self._location);
         self._absoluteAngle = self.calculateAbsoluteWaypointAngle(currentLocation);
         
         if (currentHeading != null) {

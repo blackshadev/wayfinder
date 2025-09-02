@@ -38,6 +38,7 @@ class SettingsMenuBuilder {
             )
         );
 
+
         menu.addItem(
             new MenuItem(
                 Rez.Strings.settingsBackground,
@@ -49,12 +50,41 @@ class SettingsMenuBuilder {
 
         menu.addItem(
             new MenuItem(
-                Rez.Strings.settingsMapZoomDistance,
-                self.settings.mapZoomDistanceRes(),
-                SettingsMenuDelegate.MAP_ZOOM_DISTANCE_UPDATE,
+                Rez.Strings.settingsDistanceToWaypoint,
+                self.settings.distanceToWaypointRes(),
+                SettingsMenuDelegate.DISTANCE_TO_WAYPOINT_UPDATE,
                 {}
             )
         );
+
+        menu.addItem(
+            new MenuItem(
+                Rez.Strings.settingsArrowSize,
+                self.settings.arrowSizeRes(),
+                SettingsMenuDelegate.ARROW_SIZE_UPDATE,
+                {}
+            )
+        );
+
+        menu.addItem(
+            new MenuItem(
+                Rez.Strings.settingsReturnWaypointVisibility,
+                self.settings.returnWaypointVisibilityRes(),
+                SettingsMenuDelegate.RETURN_WAYPOINT_VISIBILITY_UPDATE,
+                {}
+            )
+        );
+
+        if (WatchUi has :MapTrackView) {
+            menu.addItem(
+                new MenuItem(
+                    Rez.Strings.settingsMapZoomDistance,
+                    self.settings.mapZoomDistanceRes(),
+                    SettingsMenuDelegate.MAP_ZOOM_DISTANCE_UPDATE,
+                    {}
+                )
+            );
+        }
 
         return menu;
     }

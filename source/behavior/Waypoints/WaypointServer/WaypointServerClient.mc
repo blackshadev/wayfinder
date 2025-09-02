@@ -3,7 +3,7 @@ import Toybox.Communications;
 
 class WaypointServerClient {
     
-    const BASE_URL = "https://fe45af61d9c2.ngrok-free.app";
+    const BASE_URL = "https://1fcf6ce5f386.ngrok-free.app";
 
     public function target() as String {
         return BASE_URL.substring("https://".length(), null);

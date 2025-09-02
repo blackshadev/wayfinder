@@ -29,7 +29,10 @@ class MapView extends WatchUi.MapTrackView {
             :text => Rez.Strings.mapNoLocation
         });
 
-        self.arrow = new Arrow(settings.arrowSizeValue());
+        self.arrow = new Arrow({
+            :size => settings.arrowSizeValue(),
+            :color => Graphics.COLOR_DK_BLUE
+        });
 
         self.setMapMode(WatchUi.MAP_MODE_PREVIEW);
     }

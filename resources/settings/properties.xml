@@ -5,4 +5,6 @@
     <property id="background" type="number">9</property>
     <property id="mapZoomDistance" type="number">2000</property>
     <property id="arrowSize" type="number">2</property>
+    <property id="distanceToWaypoint" type="number">25</property>
+    <property id="returnWaypointVisibility" type="number">0</property>
 </properties>

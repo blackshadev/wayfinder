@@ -65,6 +65,25 @@ class SettingsControllerInterface {
     public static const ARROW_SIZE_EXTRA_LARGE = ExtraLarge;
     public static const ARROW_SIZE_DONOTUSE_UPPER_LIMIT = 5;
 
+    private enum ReturnWaypointVisibility {
+        AfterLast = 0,
+        Always = 1,
+        Never = 2,
+    }
+
+    public static const RETURN_WAYPOINT_ALWAYS = Always;
+    public static const RETURN_WAYPOINT_AFTER_LAST = AfterLast;
+    public static const RETURN_WAYPOINT_NEVER = Never;
+    public static const RETURN_WAYPOINT_DONOTUSE_UPPER_LIMIT = 3;
+
+    public function mapZoomDistance() as Number {
+        throw new NotImplemented();
+    }
+
+    public function distanceToWaypoint() as Number {
+        throw new NotImplemented();
+    }
+
     public function distance() as DistanceUnit {
         throw new NotImplemented();
     }
@@ -74,6 +93,10 @@ class SettingsControllerInterface {
     }
 
     public function arrowSize() as ArrowSize {
+        throw new NotImplemented();
+    }
+
+    public function returnWaypointVisibility() as ReturnWaypointVisibility {
         throw new NotImplemented();
     }
 }

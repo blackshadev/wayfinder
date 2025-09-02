@@ -35,7 +35,8 @@ class WayfinderApp extends Application.AppBase {
         self.waypoint = new WaypointsController(
             self.location, 
             self.sensor, 
-            new WaypointStorage()
+            new WaypointStorage(),
+            self.settings
         );
         self.waypointRetriever = new WaypointServerRetriever(
             new WaypointServerClient(),

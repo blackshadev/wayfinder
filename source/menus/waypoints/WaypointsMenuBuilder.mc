@@ -9,12 +9,12 @@ class WaypointsMenuBuilder {
 	}
 
 	public function build() as WatchUi.Menu2 {
-		var menu = new WatchUi.Menu2({ :title => Rez.Strings.menuOpenWaypoints });
+		var menu = new WatchUi.Menu2({ :title => Rez.Strings.menuWaypointsTitle });
 
 		menu.addItem(
 			new MenuItem(
 				Rez.Strings.menuReceiveWaypoints,
-				null,
+				Rez.Strings.menuReceiveWaypointsInfo,
 				WaypointsMenuDelegate.WAYPOINTS_RECEIVE,
 				{}
 			)
@@ -25,28 +25,25 @@ class WaypointsMenuBuilder {
 		if (!self.waypoint.isSettable()) {
 			noLocationLabel = Rez.Strings.menuSetWaypointNoLocation;
 		}
-		menu.addItem(
-			new MenuItem(
-				Rez.Strings.menuSetWaypoint,
-				noLocationLabel,
-				WaypointsMenuDelegate.WAYPOINT_SET,
-				{}
-			)
-		);
 
 		menu.addItem(
 			new MenuItem(
 				Rez.Strings.menuSetReturnWaypoint,
-				null,
+				noLocationLabel,
 				WaypointsMenuDelegate.WAYPOINT_SET_RETURN,
 				{}
 			)
 		);
 
+		var waypointCountLabel = null as String?;
+		if (!self.waypoint.isSettable()) {
+			waypointCountLabel = Lang.format("$1$ waypoints", [self.waypoint.count()]);
+		}
+
 		menu.addItem(
 			new MenuItem(
 				Rez.Strings.menuClearWaypoints,
-				null,
+				waypointCountLabel,
 				WaypointsMenuDelegate.WAYPOINTS_CLEAR,
 				{}
 			)

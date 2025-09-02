@@ -52,4 +52,21 @@
             <listEntry value="4">@Strings.settingsArrowSizeExtraLarge</listEntry>
         </settingConfig>
     </setting>
+
+    <setting propertyKey="@Properties.distanceToWaypoint" title="@Strings.settingsDistanceToWaypoint">
+        <settingConfig type="list">
+            <listEntry value="10">@Strings.settingsDistanceToWaypoint10m</listEntry>
+            <listEntry value="25">@Strings.settingsDistanceToWaypoint25m</listEntry>
+            <listEntry value="50">@Strings.settingsDistanceToWaypoint50m</listEntry>
+            <listEntry value="100">@Strings.settingsDistanceToWaypoint100m</listEntry>
+        </settingConfig>
+    </setting>
+    
+    <setting propertyKey="@Properties.returnWaypointVisibility" title="@Strings.settingsReturnWaypointVisibility">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.settingsReturnWaypointAfterLast</listEntry>
+            <listEntry value="1">@Strings.settingsReturnWaypointAlways</listEntry>
+            <listEntry value="2">@Strings.settingsReturnWaypointNever</listEntry>
+        </settingConfig>
+    </setting>
 </settings>

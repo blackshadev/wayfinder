@@ -4,7 +4,6 @@ import Toybox.WatchUi;
 
 class WaypointsMenuDelegate extends WatchUi.Menu2InputDelegate {
 	public static const WAYPOINTS_RECEIVE = "waypoints_receive";
-	public static const WAYPOINT_SET = "waypoint_set";
 	public static const WAYPOINT_SET_RETURN = "waypoint_set_return";
 	public static const WAYPOINTS_CLEAR = "waypoints_clear";
 
@@ -27,16 +26,12 @@ class WaypointsMenuDelegate extends WatchUi.Menu2InputDelegate {
 			case WAYPOINTS_RECEIVE:
 				self.openReceiveWaypoints();
 				return;
-			case WAYPOINT_SET:
-				self.setWaypoint();
-				self.backToMainView();
-				return;
 			case WAYPOINT_SET_RETURN:
 				self.setReturnWaypoint();
 				self.backToMainView();
 				return;
 			case WAYPOINTS_CLEAR:
-				self.clearWaypoints();
+				self.waypoints.clearWaypoints();
 				self.backToMainView();
 				return;
 			default:
@@ -70,11 +65,6 @@ class WaypointsMenuDelegate extends WatchUi.Menu2InputDelegate {
 		}
 		self.waypoints.setReturn();
 	}
-
-	private function clearWaypoints() as Void {
-		self.waypoints.clear();
-	}
-
 	private function backToMainView() as Void {
 		WatchUi.popView(WatchUi.SLIDE_RIGHT);
 		WatchUi.popView(WatchUi.SLIDE_RIGHT);

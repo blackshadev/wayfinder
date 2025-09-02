@@ -2,67 +2,74 @@ import Toybox.Lang;
 import Toybox.WatchUi;
 import Toybox.Graphics;
 
+
+typedef ArrowOptions as {
+    :size as Number,
+    :color as ColorType
+};
+
 class Arrow extends Component {
-    private var size as Number;
+    private var _size as Number;
+    private var _color as ColorType;
 
-    private var radius as Number = 0;
-    private var angle as Number? = null;
-    private var center as Graphics.Point2D = [0, 0];
-    private var basePoints as Array<Graphics.Point2D> = [[0.0, 0.0], [0.0, 0.0], [0.0, 0.0]];
+    private var _radius as Number = 0;
+    private var _angle as Number? = null;
+    private var _center as Graphics.Point2D = [0, 0];
+    private var _basePoints as Array<Graphics.Point2D> = [[0.0, 0.0], [0.0, 0.0], [0.0, 0.0]];
 
-    private var halfHeight as Float;
-    private var halfSize as Float;
+    private var _halfHeight as Float;
+    private var _halfSize as Float;
 
-    private var points as Array<Graphics.Point2D> = [[0.0, 0.0], [0.0, 0.0], [0.0, 0.0]];
+    private var _points as Array<Graphics.Point2D> = [[0.0, 0.0], [0.0, 0.0], [0.0, 0.0]];
 
-    function initialize(size as Number) {
+    function initialize(options as ArrowOptions) {
         Component.initialize();
 
-        self.size = size;
-        self.radius = radius;
+        self._size = options[:size];
+        self._color = options[:color];
 
-        self.halfSize = size / 2.0;
-        self.halfHeight = self.size * Math.sqrt(3) / 4.0;
+        self._halfSize = self._size / 2.0;
+        self._halfHeight = self._size * Math.sqrt(3) / 4.0;
     }
 
     function layout(dc as Dc) as Void {
         var w = dc.getWidth();
         var h = dc.getHeight();
 
-        self.center = [w / 2, h / 2];
-        self.radius = w / 2 - self.size;
+        self._center = [w / 2, h / 2];
+        self._radius = w / 2 - self._size;
 
-        self.basePoints = [
-            [0.0, -self.halfHeight],              // Top vertex (points perfectly north)
-            [-self.halfSize, self.halfHeight],  // Bottom-left vertex
-            [self.halfSize, self.halfHeight]    // Bottom-right vertex
+        self._basePoints = [
+            [0.0, -self._halfHeight],              // Top vertex (points perfectly north)
+            [-self._halfSize, self._halfHeight],  // Bottom-left vertex
+            [self._halfSize, self._halfHeight]    // Bottom-right vertex
         ];
     }
 
     function draw(dc as Dc) as Void {
-        if (self.angle == null) {
+        if (self._angle == null) {
             return;
         }
 
-        dc.setColor(Graphics.COLOR_DK_BLUE, Graphics.COLOR_TRANSPARENT);
-        dc.fillPolygon(self.points);
+        dc.setColor(self._color, Graphics.COLOR_TRANSPARENT);
+        dc.fillPolygon(self._points);
     }
 
     private function getPoints() as Array<Graphics.Point2D> {
         // Triangle's center point on the circular path
-        var correctedAngleInRads = Math.toRadians(angle - 90);
+        var correctedAngleInRads = Math.toRadians(_angle - 90);
         var triangleCenter = [
-            self.center[0] + self.radius * Math.cos(correctedAngleInRads),
-            self.center[1] + self.radius * Math.sin(correctedAngleInRads)
+            self._center[0] + self._radius * Math.cos(correctedAngleInRads),
+            self._center[1] + self._radius * Math.sin(correctedAngleInRads)
         ];
 
         var points = [
-            self.basePoints[0],
-            self.basePoints[1],
-            self.basePoints[2],
+            self._basePoints[0],
+            self._basePoints[1],
+            self._basePoints[2],
         ];
 
-        var angleInRads = Math.toRadians(angle);
+        var angleInRads = Math.toRadians(_angle);
         // Rotate and translate the triangle vertices
         for (var i = 0; i < points.size(); i++) {
             var x = points[i][0];
@@ -83,12 +90,12 @@ class Arrow extends Component {
     }
 
     function setAngle(angle as Number?) as Void {
-        self.angle = angle;
+        self._angle = angle;
 
         if (angle == null) {
             return;
         }
 
-        self.points = getPoints();
+        self._points = getPoints();
     }
 }

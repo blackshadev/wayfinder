@@ -9,6 +9,11 @@ class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
     public static const BACKGROUND_UPDATE = "background_update";
     public static const MAP_ZOOM_DISTANCE_UPDATE = "map_zoom_distance_update";
 
+    public static const DISTANCE_TO_WAYPOINT_UPDATE = "distance_to_waypoint_update";
+    public static const ARROW_SIZE_UPDATE = "arrow_size_update";
+
+    public static const RETURN_WAYPOINT_VISIBILITY_UPDATE = "return_waypoint_visibility_update";
+
     private var settings as SettingsController;
 
     function initialize(settings as SettingsController) {
@@ -40,6 +45,18 @@ class SettingsMenuDelegate extends WatchUi.Menu2InputDelegate {
             case MAP_ZOOM_DISTANCE_UPDATE:
                 self.settings.toggleMapZoomDistance();
                 item.setSubLabel(self.settings.mapZoomDistanceRes());
+                return;
+            case DISTANCE_TO_WAYPOINT_UPDATE:
+                self.settings.toggleDistanceToWaypoint();
+                item.setSubLabel(self.settings.distanceToWaypointRes());
+                return;
+            case ARROW_SIZE_UPDATE:
+                self.settings.toggleArrowSize();
+                item.setSubLabel(self.settings.arrowSizeRes());
+                return;
+            case RETURN_WAYPOINT_VISIBILITY_UPDATE:
+                self.settings.toggleReturnWaypointVisibility();
+                item.setSubLabel(self.settings.returnWaypointVisibilityRes());
                 return;
         }
     }
