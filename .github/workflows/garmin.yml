@@ -1,12 +1,30 @@
-name: Release
-run-name: ${{ github.actor }} is releasing wayfinder 🚀
-on: 
-  push:
-    tags:
-      - '*'
+name: Garmin CI
+on: push
 
 jobs:
-  Create-Release:
+  test:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Decrypt developer key
+        run: ./.github/scripts/decrypt_secret.sh
+        env:
+          INPUT: ./developer_key.gpg
+          OUTPUT: ./developer_key
+          PASSPHRASE: ${{ secrets.DEVELOPER_KEY_PASSPHRASE }}
+      - name: Build
+        uses: blackshadev/garmin-connectiq-build-action@8.2.3-2
+        with:
+          projectJungle: ./monkey.jungle
+          developerKey: ./developer_key
+          outputPath: out/app.prg
+          device: fr165
+          typeCheck: '1'
+  release:
+    needs: test
+    if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     environment: production
     steps:
@@ -29,4 +47,5 @@ jobs:
         with:
           name: wayfinder-${{ github.ref_name }}
           path: out/wayfinder.iq
+
 

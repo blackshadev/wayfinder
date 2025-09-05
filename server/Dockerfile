@@ -9,9 +9,10 @@ COPY . .
 
 RUN go build -v -o /app/bin/wayfinder-server .
 
-FROM alpine
+FROM scratch
 
 WORKDIR /app
+
 COPY --from=base /app/bin/wayfinder-server /app/
 COPY --from=base /app/views/ /app/views/
 COPY --from=base /app/public/ /app/public/
