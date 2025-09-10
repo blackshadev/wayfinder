@@ -62,4 +62,15 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-        
+      - name: Update server image
+        id: updateServer
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: ${{ secrets.PORTAINER_WEB_HOOK }}
+          method: POST
+      - name: Show Response
+        run: |
+          echo ${{ steps.updateServer.outputs.response }}
+          echo ${{ steps.updateServer.outputs.headers }}
+          echo ${{ steps.updateServer.outputs.status }}
+          echo ${{ fromJson(steps.updateServer.outputs.response) }}
