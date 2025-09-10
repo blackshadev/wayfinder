@@ -20,6 +20,10 @@ func Create(interval time.Duration, function func()) *Scheduler {
 	}
 }
 
+func (sch *Scheduler) SetFunction(function func()) {
+	sch.function = function
+}
+
 func (sch *Scheduler) Start() {
 	go sch.run()
 }
@@ -35,7 +39,9 @@ func (sch *Scheduler) run() {
 		case <-sch.done:
 			return
 		case <-sch.ticker.C:
-			sch.function()
+			if sch.function != nil {
+				sch.function()
+			}
 		}
 	}
 }

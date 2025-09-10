@@ -4,18 +4,21 @@ import (
 	"errors"
 	"log"
 	"net/http"
+	"time"
 
 	"wayfinder.littledev.nl/server/devicerepository"
 	"wayfinder.littledev.nl/server/generator"
 	"wayfinder.littledev.nl/server/model"
+	"wayfinder.littledev.nl/server/scheduler"
 	"wayfinder.littledev.nl/server/storage"
 )
 
-func CreateServer(addr string) *Server {
+func CreateServer(addr string, duration time.Duration) *Server {
 
 	router := http.NewServeMux()
 
 	server := &Server{
+
 		server: &http.Server{
 			Addr:    addr,
 			Handler: router,
@@ -25,6 +28,7 @@ func CreateServer(addr string) *Server {
 			Storage:   storage.CreateInternalStorage[model.DeviceCode, *model.DeviceInstance](),
 			Generator: &generator.DeviceCodeGenerator{},
 		},
+		scheduler: scheduler.Create(duration, nil),
 	}
 
 	server.initRoutes()

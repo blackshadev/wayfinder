@@ -2,14 +2,13 @@ package server
 
 import (
 	"log"
-	"time"
-
-	"wayfinder.littledev.nl/server/scheduler"
 )
 
 func (server *Server) initScheduler() {
-	server.scheduler = scheduler.Create(10*time.Second, func() {
-		log.Println("Running cleanup...")
+	server.scheduler.SetFunction(func() {
+		oldSize := server.devices.Count()
 		server.devices.Cleanup()
+		newSize := server.devices.Count()
+		log.Printf("Removed %d devices during cleanup. %d devices remaining\n", oldSize-newSize, newSize)
 	})
 }

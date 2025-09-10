@@ -77,3 +77,7 @@ func (ds *DeviceRepository) Cleanup() {
 		}
 	}
 }
+
+func (ds *DeviceRepository) Count() int {
+	return ds.Storage.Count()
+}

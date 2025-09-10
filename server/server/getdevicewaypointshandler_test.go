@@ -5,13 +5,14 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	"wayfinder.littledev.nl/server/model"
 )
 
 func TestGetDeviceWaypointsHandlerNotFoundForNonExistingDevice(t *testing.T) {
-	server := CreateServer("")
+	server := CreateServer("", 5*time.Minute)
 	request := httptest.NewRequest("POST", "/", nil)
 	request.SetPathValue("code", "1234")
 	response := httptest.NewRecorder()
@@ -22,7 +23,7 @@ func TestGetDeviceWaypointsHandlerNotFoundForNonExistingDevice(t *testing.T) {
 }
 
 func TestGetDeviceWaypointsHandlerNotFoundForNotFilledDevice(t *testing.T) {
-	server := CreateServer("")
+	server := CreateServer("", 5*time.Minute)
 	device, _ := server.devices.New()
 
 	request := httptest.NewRequest("POST", "/", nil)
@@ -35,7 +36,7 @@ func TestGetDeviceWaypointsHandlerNotFoundForNotFilledDevice(t *testing.T) {
 }
 
 func TestGetDeviceWaypointsHandlerInvalidData(t *testing.T) {
-	server := CreateServer("")
+	server := CreateServer("", 5*time.Minute)
 	request := httptest.NewRequest("POST", "/", nil)
 	response := httptest.NewRecorder()
 
@@ -45,7 +46,7 @@ func TestGetDeviceWaypointsHandlerInvalidData(t *testing.T) {
 }
 
 func TestGetDeviceWaypointsHandler(t *testing.T) {
-	server := CreateServer("")
+	server := CreateServer("", 5*time.Minute)
 	device, _ := server.devices.New()
 	server.devices.Fill(device.Code, []model.Waypoint{
 		{

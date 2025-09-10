@@ -5,6 +5,7 @@ import (
 	"net/http/httptest"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -15,7 +16,7 @@ func TestFillDeviceHandlerReturns400OnInvalidData(t *testing.T) {
 		request.SetPathValue("code", "1234")
 		response := httptest.NewRecorder()
 
-		server := CreateServer("")
+		server := CreateServer("", 5*time.Minute)
 		server.fillDeviceHandler(response, request)
 
 		assert.Equal(t, http.StatusBadRequest, response.Result().StatusCode)
@@ -26,7 +27,7 @@ func TestFillDeviceHandlerReturns400OnInvalidData(t *testing.T) {
 		request := httptest.NewRequest("POST", "/", strings.NewReader(`{"waypoints":[]}`))
 		response := httptest.NewRecorder()
 
-		server := CreateServer("")
+		server := CreateServer("", 5*time.Minute)
 		server.fillDeviceHandler(response, request)
 
 		assert.Equal(t, http.StatusBadRequest, response.Result().StatusCode)
@@ -35,7 +36,7 @@ func TestFillDeviceHandlerReturns400OnInvalidData(t *testing.T) {
 
 func TestFillDeviceHandlerForNonExistingDevice(t *testing.T) {
 
-	server := CreateServer("")
+	server := CreateServer("", 5*time.Minute)
 	server.devices.New()
 
 	request := httptest.NewRequest("POST", "/", strings.NewReader(`{"waypoints":[{"latitude":12,"longitude":21}]}`))
@@ -49,7 +50,7 @@ func TestFillDeviceHandlerForNonExistingDevice(t *testing.T) {
 
 func TestFillDeviceHandler(t *testing.T) {
 
-	server := CreateServer("")
+	server := CreateServer("", 5*time.Minute)
 	device, _ := server.devices.New()
 
 	request := httptest.NewRequest("POST", "/", strings.NewReader(`{"waypoints":[{"latitude":12,"longitude":21}]}`))

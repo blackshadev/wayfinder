@@ -6,4 +6,5 @@ type Storage[K comparable, T any] interface {
 	Get(key K) (T, bool)
 	Values() []T
 	Delete(key K)
+	Count() int
 }

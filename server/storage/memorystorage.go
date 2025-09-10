@@ -41,3 +41,7 @@ func (s *internalMemoryStorage[K, T]) Values() []T {
 
 	return values
 }
+
+func (s *internalMemoryStorage[K, T]) Count() int {
+	return len(s.records)
+}

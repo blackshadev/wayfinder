@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	"wayfinder.littledev.nl/server/model"
@@ -12,7 +13,7 @@ import (
 
 func TestNewDeviceHandler(t *testing.T) {
 
-	server := CreateServer("")
+	server := CreateServer("", 5*time.Minute)
 	request := httptest.NewRequest("POST", "/", nil)
 	response := httptest.NewRecorder()
 
