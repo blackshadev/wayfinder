@@ -15,7 +15,6 @@ class LocationProvider {
     private var lastPosition as Position.Info? = null;
     protected var _configuration as Position.Configuration? = null;
     
-
     public function start() as Void {
         self._configuration = self.getLocationConfiguration();
         var options = self.getLocationsEventsOptions();

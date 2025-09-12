@@ -12,4 +12,16 @@ class AppTimerInterface {
     public function call() as Void {
         throw new NotImplemented();
     }
+
+    public function start() as Void {
+        throw new NotImplemented();
+    }
+
+    public function stop() as Void {
+        throw new NotImplemented();
+    }
+
+    public function time() as Number {
+        throw new NotImplemented();
+    }
 }
