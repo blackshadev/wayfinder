@@ -70,5 +70,27 @@ module WayfinderTests {
 
             return true;
         }
+
+        (:test)
+        function testSettingsSmallDistanceFromMetersToMeters(logger as Logger) as Boolean {
+            var converter = new SettingsBoundUnitConverter(new SettingsControllerFake(SettingsControllerInterface.DISTANCE_METERS, SettingsControllerInterface.SPEED_KNOTS));
+
+            Assert.isEqual(null, converter.smallDistanceFromMeters(null));
+            Assert.isEqual(0.0, converter.smallDistanceFromMeters(0.0));
+            Assert.isEqual(1000000.0, converter.smallDistanceFromMeters(1000000.0));
+
+            return true;
+        }
+
+        (:test)
+        function testSettingsSmallDistanceFromMetersToMiles(logger as Logger) as Boolean {
+            var converter = new SettingsBoundUnitConverter(new SettingsControllerFake(SettingsControllerInterface.DISTANCE_MILES, SettingsControllerInterface.SPEED_KNOTS));
+
+            Assert.isEqual(null, converter.smallDistanceFromMeters(null));
+            Assert.isEqual(0.0, converter.smallDistanceFromMeters(0.0));
+            Assert.isEqual(914399.99861011, converter.smallDistanceFromMeters(1000000.0));
+
+            return true;
+        }
     }
 }

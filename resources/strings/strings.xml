@@ -94,10 +94,10 @@
     <string id="settingsArrowSizeExtraLarge">Extra Large</string>
 
     <string id="settingsDistanceToWaypoint">Waypoint Reached</string>
-    <string id="settingsDistanceToWaypoint10m">10 m</string>
-    <string id="settingsDistanceToWaypoint25m">25 m</string>
-    <string id="settingsDistanceToWaypoint50m">50 m</string>
-    <string id="settingsDistanceToWaypoint100m">100 m</string>
+    <string id="settingsDistanceToWaypoint10m">10 m / yd</string>
+    <string id="settingsDistanceToWaypoint25m">25 m / yd</string>
+    <string id="settingsDistanceToWaypoint50m">50 m / yd</string>
+    <string id="settingsDistanceToWaypoint100m">100 m / yd</string>
 
     <string id="settingsReturnWaypointVisibility">Return Waypoint</string>
     <string id="settingsReturnWaypointAlways">Always</string>

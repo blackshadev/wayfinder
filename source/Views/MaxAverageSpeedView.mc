@@ -33,9 +33,7 @@ class MaxAverageSpeedView extends WatchUi.View {
         self.maxAvgSpeed = maxAvgSpeed;
         self.waypoint = waypoint;
 
-    self.arrows = new WaypointArrows(settings, waypoint);
-        
-        self.arrows = new WaypointArrows(settings, waypoint);
+        self.arrows = new WaypointArrows(settings, waypoint, false);
         self.time = new Time(new TimeProvider(), [0, 0]);
         self.maxSpeed = new MaxSpeed(unitConverter, [0, 0]);
         self.maxSpeeds = new MaxAverageSpeeds(unitConverter, [0, 0]);

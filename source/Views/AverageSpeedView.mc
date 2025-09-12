@@ -33,7 +33,7 @@ class AverageSpeedView extends WatchUi.View {
         self.averageSpeeds = averageSpeeds;
         self.waypoint = waypoint;
 
-        self.arrows = new WaypointArrows(settings, waypoint);
+        self.arrows = new WaypointArrows(settings, waypoint, false);
         
         self.time = new Time(new TimeProvider(), [0, 0]);
         self.currentSpeed = new CurrentSpeed(unitConverter, [0, 0]);

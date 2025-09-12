@@ -9,6 +9,7 @@ class WaypointsController {
     private var _sensor as SensorProvider;
     private var _waypointStorage as WaypointStorage;
     private var _settings as SettingsController;
+    private var _unitConverter as SettingsBoundUnitConverter;
 
     private var _lastPosition as Position.Location? = null;
     private var _shouldSetReturn as Boolean = false;
@@ -22,12 +23,14 @@ class WaypointsController {
         location as LocationProvider, 
         sensor as SensorProvider,
         waypointStorage as WaypointStorage,
-        settings as SettingsController
+        settings as SettingsController,
+        unitConverter as SettingsBoundUnitConverter
     ) {
         self._location = location;
         self._sensor = sensor;
         self._waypointStorage = waypointStorage;
         self._settings = settings;
+        self._unitConverter = unitConverter;
 
         self._waypoints = self._waypointStorage.loadWaypoints();
 
@@ -145,7 +148,7 @@ class WaypointsController {
 
         self._currentWaypoint.update(self._lastPosition, self._sensor.heading());
 
-        while (self._currentWaypoint.distance() <= self._settings.distanceToWaypoint()) {
+        while (self._unitConverter.smallDistanceFromMeters(self._currentWaypoint.distance()) <= self._settings.distanceToWaypoint()) {
             self.setNextWaypoint();
 
             if (self._currentWaypoint == null) {

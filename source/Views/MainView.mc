@@ -30,7 +30,7 @@ class MainView extends WatchUi.View {
         self.waypoint = waypoint;
         self.activityInfo = activityInfo;
 
-        self.arrows = new WaypointArrows(settings, waypoint);
+        self.arrows = new WaypointArrows(settings, waypoint, false);
 
         self.time = new Time(new TimeProvider(), [0, 0]);
         self.duration = new Duration([0, 0]);

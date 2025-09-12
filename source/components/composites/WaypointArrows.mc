@@ -1,18 +1,22 @@
 import Toybox.Graphics;
+import Toybox.Lang;
 
 class WaypointArrows extends RelativeComponent {
-    private var waypoints as WaypointsController;
+    private var _waypoints as WaypointsController;
 
     private var _currentWaypoint as Arrow;
     private var _returnArrow as Arrow;
+    private var _isAbsolute as Boolean;
 
     function initialize(
         settings as SettingsController,
-        waypoints as WaypointsController
+        waypoints as WaypointsController,
+        isAbsolute as Boolean
     ) {
         RelativeComponent.initialize();
 
-        self.waypoints = waypoints;
+        self._waypoints = waypoints;
+        self._isAbsolute = isAbsolute == true;
 
         self._currentWaypoint = new Arrow({
             :size => settings.arrowSizeValue(),
@@ -25,14 +29,14 @@ class WaypointArrows extends RelativeComponent {
     }
 
     public function update() as Void {
-        var currentWaypoint = self.waypoints.currentWaypoint();
-        if (currentWaypoint != null && self.waypoints.shouldShowCurrentWaypoint()) {
-            self._currentWaypoint.setAngle(currentWaypoint.angle());
+        var currentWaypoint = self._waypoints.currentWaypoint();
+        if (currentWaypoint != null && self._waypoints.shouldShowCurrentWaypoint()) {
+            self._currentWaypoint.setAngle(self._isAbsolute ? currentWaypoint.absoluteAngle() : currentWaypoint.angle());
         }
 
-        var returnWaypoint = self.waypoints.returnWaypoint();
-        if (returnWaypoint != null && self.waypoints.shouldShowReturnWaypoint()) {
-            self._returnArrow.setAngle(returnWaypoint.angle());
+        var returnWaypoint = self._waypoints.returnWaypoint();
+        if (returnWaypoint != null && self._waypoints.shouldShowReturnWaypoint()) {
+            self._returnArrow.setAngle(self._isAbsolute ? returnWaypoint.absoluteAngle() : returnWaypoint.angle());
         }
     }
 
@@ -42,11 +46,11 @@ class WaypointArrows extends RelativeComponent {
     }
 
     public function draw(dc as Dc) as Void {
-        if (self.waypoints.shouldShowCurrentWaypoint()) {
+        if (self._waypoints.shouldShowCurrentWaypoint()) {
             self._currentWaypoint.draw(dc);
         }
 
-        if (self.waypoints.shouldShowReturnWaypoint()) {
+        if (self._waypoints.shouldShowReturnWaypoint()) {
             self._returnArrow.draw(dc);
         }
     }
