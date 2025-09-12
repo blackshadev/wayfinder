@@ -81,10 +81,10 @@
     <string id="settingsBackgroundWhite">White</string>
 
     <string id="settingsMapZoomDistance">Map Zoom</string>
-    <string id="settings1000m">1.0km</string>
-    <string id="settings1500m">1.5km</string>
-    <string id="settings2km">2.0km</string>
-    <string id="settings5km">5.0km</string>
+    <string id="settings1000m">Closer</string>
+    <string id="settings1500m">Close</string>
+    <string id="settings2km">Normal</string>
+    <string id="settings5km">Far</string>
 
     <string id="settingsArrowSize">Arrow size</string>
     <string id="settingsArrowSizeNone">No arrow</string>
