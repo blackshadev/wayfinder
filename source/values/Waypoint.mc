@@ -14,7 +14,7 @@ class Waypoint {
             && data[1] instanceof Double;
     }
 
-    public static function fromArray(data as Array<Double>) as Waypoint {
+    public static function fromArray(data as Array<Double or Float>) as Waypoint {
         var location = new Position.Location({
             :latitude => data[0],
             :longitude => data[1],

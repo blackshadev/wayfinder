@@ -1,8 +1,12 @@
 import Toybox.Lang;
 import Toybox.Application.Storage;
 
-class WaypointStorage {
+class WaypointStorage extends WaypointStorageInterface {
     private const STORAGE_KEY = "wayfinder_waypoints";
+
+    public function initialize() {
+        WaypointStorageInterface.initialize();
+    }
 
     public function loadWaypoints() as Array<Waypoint> {
         var storedWaypoints = Storage.getValue(STORAGE_KEY) as Array<Array<Double>>?;

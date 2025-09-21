@@ -1,5 +1,5 @@
 (:debug)
-class AverageSpeedsProviderFake extends AverageSpeedsProviderInterface {
+class StubAverageSpeedsProvider extends AverageSpeedsProviderInterface {
     private var _value as AverageSpeedValues? = null;
 
     function initialize() {

@@ -6,7 +6,7 @@ module WayfinderTests {
     class MaxAverageSpeedsProviderTest {
         (:test)
         public function testMaxAverageSpeedsProviderInitialState(logger as Logger) as Boolean {
-            var averageSpeeds = new AverageSpeedsProviderFake();
+            var averageSpeeds = new StubAverageSpeedsProvider();
             averageSpeeds.setValue(null);
 
             var maxAverageSpeedsProvider = new MaxAverageSpeedsProvider(averageSpeeds);
@@ -25,7 +25,7 @@ module WayfinderTests {
 
         (:test)
         public function testSkipsIncompleteAverageValues(logger as Logger) as Boolean {
-            var averageSpeeds = new AverageSpeedsProviderFake();
+            var averageSpeeds = new StubAverageSpeedsProvider();
             var maxAverageSpeedsProvider = new MaxAverageSpeedsProvider(averageSpeeds);
 
             averageSpeeds.setValue(new AverageSpeedValues(
@@ -44,7 +44,7 @@ module WayfinderTests {
 
         (:test)
         public function testMaximizingAverageValues(logger as Logger) as Boolean {
-            var averageSpeeds = new AverageSpeedsProviderFake();
+            var averageSpeeds = new StubAverageSpeedsProvider();
             var maxAverageSpeedsProvider = new MaxAverageSpeedsProvider(averageSpeeds);
 
             averageSpeeds.setValue(new AverageSpeedValues(

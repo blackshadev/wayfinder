@@ -7,7 +7,9 @@ module WayfinderTests {
     class SettingsBoundUnitConverterTest { 
         (:test)
         function testSettingsSpeedFromMStoMS(logger as Logger) as Boolean {
-            var converter = new SettingsBoundUnitConverter(new SettingsControllerFake(SettingsControllerInterface.DISTANCE_METERS, SettingsControllerInterface.SPEED_MS));
+            var settings = new WayfinderTests.StubSettingsController();
+            settings.setUnitsSpeed(SettingsControllerInterface.SPEED_MS);
+            var converter = new SettingsBoundUnitConverter(settings);
 
             Assert.isEqual(null, converter.speedFromMS(null));
             Assert.isEqual(0.0, converter.speedFromMS(0.0));
@@ -18,7 +20,9 @@ module WayfinderTests {
 
         (:test)
         function testSettingsSpeedFromMStoKMH(logger as Logger) as Boolean {
-            var converter = new SettingsBoundUnitConverter(new SettingsControllerFake(SettingsControllerInterface.DISTANCE_METERS, SettingsControllerInterface.SPEED_KMH));
+            var settings = new WayfinderTests.StubSettingsController();
+            settings.setUnitsSpeed(SettingsControllerInterface.SPEED_KMH);
+            var converter = new SettingsBoundUnitConverter(settings);
 
             Assert.isEqual(null, converter.speedFromMS(null));
             Assert.isEqual(0.0, converter.speedFromMS(0.0));
@@ -29,7 +33,9 @@ module WayfinderTests {
 
         (:test)
         function testSettingsSpeedFromMStoMPS(logger as Logger) as Boolean {
-            var converter = new SettingsBoundUnitConverter(new SettingsControllerFake(SettingsControllerInterface.DISTANCE_METERS, SettingsControllerInterface.SPEED_MPH));
+            var settings = new WayfinderTests.StubSettingsController();
+            settings.setUnitsSpeed(SettingsControllerInterface.SPEED_MPH);
+            var converter = new SettingsBoundUnitConverter(settings);
 
             Assert.isEqual(null, converter.speedFromMS(null));
             Assert.isEqual(0.0, converter.speedFromMS(0.0));
@@ -40,7 +46,9 @@ module WayfinderTests {
 
         (:test)
         function testSettingsSpeedFromMStoKnots(logger as Logger) as Boolean {
-            var converter = new SettingsBoundUnitConverter(new SettingsControllerFake(SettingsControllerInterface.DISTANCE_METERS, SettingsControllerInterface.SPEED_KNOTS));
+            var settings = new WayfinderTests.StubSettingsController();
+            settings.setUnitsSpeed(SettingsControllerInterface.SPEED_KNOTS);
+            var converter = new SettingsBoundUnitConverter(settings);
 
             Assert.isEqual(null, converter.speedFromMS(null));
             Assert.isEqual(0.0, converter.speedFromMS(0.0));
@@ -51,7 +59,9 @@ module WayfinderTests {
 
         (:test)
         function testSettingsDistanceFromMetersToKM(logger as Logger) as Boolean {
-            var converter = new SettingsBoundUnitConverter(new SettingsControllerFake(SettingsControllerInterface.DISTANCE_METERS, SettingsControllerInterface.SPEED_KNOTS));
+            var settings = new WayfinderTests.StubSettingsController();
+            settings.setDistance(SettingsControllerInterface.DISTANCE_METERS);
+            var converter = new SettingsBoundUnitConverter(settings);
 
             Assert.isEqual(converter.distanceFromMeters(null), null);
             Assert.isEqual(converter.distanceFromMeters(0.0), 0.0);
@@ -62,7 +72,9 @@ module WayfinderTests {
 
         (:test)
         function testSettingsDistanceFromMetersToMiles(logger as Logger) as Boolean {
-            var converter = new SettingsBoundUnitConverter(new SettingsControllerFake(SettingsControllerInterface.DISTANCE_MILES, SettingsControllerInterface.SPEED_KNOTS));
+            var settings = new WayfinderTests.StubSettingsController();
+            settings.setDistance(SettingsControllerInterface.DISTANCE_MILES);
+            var converter = new SettingsBoundUnitConverter(settings);
 
             Assert.isEqual(null, converter.distanceFromMeters(null));
             Assert.isEqual(0.0, converter.distanceFromMeters(0.0));
@@ -73,7 +85,9 @@ module WayfinderTests {
 
         (:test)
         function testSettingsSmallDistanceFromMetersToMeters(logger as Logger) as Boolean {
-            var converter = new SettingsBoundUnitConverter(new SettingsControllerFake(SettingsControllerInterface.DISTANCE_METERS, SettingsControllerInterface.SPEED_KNOTS));
+            var settings = new WayfinderTests.StubSettingsController();
+            settings.setDistance(SettingsControllerInterface.DISTANCE_METERS);
+            var converter = new SettingsBoundUnitConverter(settings);
 
             Assert.isEqual(null, converter.smallDistanceFromMeters(null));
             Assert.isEqual(0.0, converter.smallDistanceFromMeters(0.0));
@@ -84,7 +98,9 @@ module WayfinderTests {
 
         (:test)
         function testSettingsSmallDistanceFromMetersToMiles(logger as Logger) as Boolean {
-            var converter = new SettingsBoundUnitConverter(new SettingsControllerFake(SettingsControllerInterface.DISTANCE_MILES, SettingsControllerInterface.SPEED_KNOTS));
+            var settings = new WayfinderTests.StubSettingsController();
+            settings.setDistance(SettingsControllerInterface.DISTANCE_MILES);
+            var converter = new SettingsBoundUnitConverter(settings);
 
             Assert.isEqual(null, converter.smallDistanceFromMeters(null));
             Assert.isEqual(0.0, converter.smallDistanceFromMeters(0.0));

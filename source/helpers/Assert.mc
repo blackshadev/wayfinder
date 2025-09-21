@@ -39,6 +39,17 @@ module Assert {
         Test.assertMessage(isSame, "Failed asserting that " + expected + " is equal to " + actual);
     }
 
+    public function isTrue(actual as Boolean) as Void {
+        if (!actual) {
+            Test.assertMessage(false, "Expected true while given false");
+        }
+    }
+
+    public function isFalse(actual as Boolean) as Void {
+        if (actual) {
+            Test.assertMessage(false, "Expected false while given true");
+        }
+    }
 
     public function isNull(actual) as Void {
         if (actual != null) {

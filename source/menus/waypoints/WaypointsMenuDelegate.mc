@@ -52,13 +52,6 @@ class WaypointsMenuDelegate extends WatchUi.Menu2InputDelegate {
         WatchUi.pushView(view, new WaypointViewDelegate(), WatchUi.SLIDE_LEFT);
 	}
 
-	private function setWaypoint() as Void {
-		if (!self.waypoints.isSettable()) {
-			return;
-		}
-		self.waypoints.setWaypoint();
-	}
-
 	private function setReturnWaypoint() as Void {
 		if (!self.waypoints.isSettable()) {
 			return;

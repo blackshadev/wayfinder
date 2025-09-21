@@ -1,14 +1,17 @@
+
+
 import Toybox.WatchUi;
 import Toybox.Position;
 import Toybox.System;
 import Toybox.Lang;
 import Toybox.Attention;
 
+
 class WaypointsController {
-    private var _location as LocationProvider;
-    private var _sensor as SensorProvider;
-    private var _waypointStorage as WaypointStorage;
-    private var _settings as SettingsController;
+    private var _location as LocationProviderInterface;
+    private var _sensor as SensorProviderInterface;
+    private var _waypointStorage as WaypointStorageInterface;
+    private var _settings as SettingsControllerInterface;
     private var _unitConverter as SettingsBoundUnitConverter;
 
     private var _lastPosition as Position.Location? = null;
@@ -20,10 +23,10 @@ class WaypointsController {
     private var _updateTimer as TimerSubscription;
 
     function initialize(
-        location as LocationProvider, 
-        sensor as SensorProvider,
-        waypointStorage as WaypointStorage,
-        settings as SettingsController,
+        location as LocationProviderInterface, 
+        sensor as SensorProviderInterface,
+        waypointStorage as WaypointStorageInterface,
+        settings as SettingsControllerInterface,
         unitConverter as SettingsBoundUnitConverter
     ) {
         self._location = location;
@@ -107,14 +110,6 @@ class WaypointsController {
         if (waypoints.size() > 0) {
             self._currentWaypoint = waypoints[0];
         }
-    }
-
-    public function setWaypoint() as Void {
-        if (!self.isSettable()) {
-            return;
-        }
-    
-        self.setWaypoints([new Waypoint(self._lastPosition)]);
     }
 
     public function count() as Number {
