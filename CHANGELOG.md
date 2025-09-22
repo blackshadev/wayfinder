@@ -1,7 +1,9 @@
 ## v0.9.0
 
+- Fix changing arrow sizes settings
 - Add ability to receive external waypoints
-- Fix changing arrow size
+- Add ability to see the direction to a waypoint
+- Add setting to configure when a waypoint is reached and the next waypoint will be used
 
 ## v0.8.3
 
