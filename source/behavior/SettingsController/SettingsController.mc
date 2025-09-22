@@ -246,12 +246,18 @@ class SettingsController extends SettingsControllerInterface {
         var value = Application.Properties.getValue("arrowSize");
 
         switch (value) {
-            case 0: return SettingsControllerInterface.ARROW_SIZE_NONE;
-            case 1: return SettingsControllerInterface.ARROW_SIZE_SMALL;
-            case 2: return SettingsControllerInterface.ARROW_SIZE_NORMAL;
-            case 3: return SettingsControllerInterface.ARROW_SIZE_LARGE;
-            case 4: return SettingsControllerInterface.ARROW_SIZE_EXTRA_LARGE;
-            default: return SettingsControllerInterface.ARROW_SIZE_NORMAL;
+            case SettingsControllerInterface.ARROW_SIZE_NONE: 
+                return SettingsControllerInterface.ARROW_SIZE_NONE;
+            case SettingsControllerInterface.ARROW_SIZE_SMALL: 
+                return SettingsControllerInterface.ARROW_SIZE_SMALL;
+            case SettingsControllerInterface.ARROW_SIZE_NORMAL: 
+                return SettingsControllerInterface.ARROW_SIZE_NORMAL;
+            case SettingsControllerInterface.ARROW_SIZE_LARGE: 
+                return SettingsControllerInterface.ARROW_SIZE_LARGE;
+            case SettingsControllerInterface.ARROW_SIZE_EXTRA_LARGE: 
+                return SettingsControllerInterface.ARROW_SIZE_EXTRA_LARGE;
+            default: 
+                return SettingsControllerInterface.ARROW_SIZE_NORMAL;
         }
     }
 
@@ -310,7 +316,7 @@ class SettingsController extends SettingsControllerInterface {
             case 100:
                 return 100;
             default:
-                return 25;
+                return 50;
         }
     }
 

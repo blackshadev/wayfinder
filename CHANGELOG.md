@@ -1,4 +1,11 @@
+## v0.9.1
+
+- Fix default arrow size being the normal size, instead of none
+- Increase waypoint reached default to 50
+
 ## v0.9.0
+
+Feature: Waypoints!
 
 - Fix changing arrow sizes settings
 - Add ability to receive external waypoints

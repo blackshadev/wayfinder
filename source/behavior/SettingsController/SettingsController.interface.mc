@@ -51,11 +51,11 @@ class SettingsControllerInterface {
     public static const BACKGROUND_DONOTUSE_UPPER_LIMIT = 2;
 
     private enum ArrowSize {
-        None = 0,
-        Small = 1,
-        Normal = 2,
-        Large = 3,
-        ExtraLarge = 4,
+        Normal = 0,
+        Large = 1,
+        ExtraLarge = 2,
+        None = 3,
+        Small = 4,
     }
 
     public static const ARROW_SIZE_NONE = None;
