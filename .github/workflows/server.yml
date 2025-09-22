@@ -4,11 +4,7 @@ permissions:
   contents: read
   packages: write
 
-on: 
-  push:
-    branches:
-      - main
-      - feature/waypoint-server
+on: push
 
 env:
   REGISTRY: ghcr.io
