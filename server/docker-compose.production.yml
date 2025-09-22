@@ -1,6 +1,6 @@
 services:
   wayfinder:
-    image: ghcr.io/blackshadev/wayfinder/server:feature-waypoint-server
+    image: ghcr.io/blackshadev/wayfinder/server:latest
     restart: always
     environment:
       PORT: 8080
