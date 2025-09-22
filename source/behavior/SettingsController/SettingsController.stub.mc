@@ -6,6 +6,7 @@ module WayfinderTests {
         private var _distance as SettingsControllerInterface.DistanceUnit = SettingsControllerInterface.DISTANCE_METERS;
         private var _unitsSpeed as SettingsControllerInterface.SpeedUnit = SettingsControllerInterface.SPEED_KMH;
         private var _returnWaypointVisibility as SettingsControllerInterface.ReturnWaypointVisibility = SettingsControllerInterface.RETURN_WAYPOINT_NEVER;
+        private var _distanceToWaypoint as Number = 100;
 
         function initialize() {
             SettingsControllerInterface.initialize();
@@ -33,6 +34,14 @@ module WayfinderTests {
 
         public function returnWaypointVisibility() as SettingsControllerInterface.ReturnWaypointVisibility {
             return self._returnWaypointVisibility;
+        }
+
+        public function setDistanceToWaypoint(distance as Number) as Void {
+            self._distanceToWaypoint = distance;
+        }
+
+        public function distanceToWaypoint() as Number {
+            return self._distanceToWaypoint;
         }
     }
 }

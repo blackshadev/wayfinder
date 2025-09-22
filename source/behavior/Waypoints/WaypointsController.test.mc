@@ -160,5 +160,93 @@ module WayfinderTests {
 
             return true;
         }
+
+        (:test)
+        public function testWaypointsControllerUpdateWaypoints(logger as Logger) as Boolean {
+            var location = new WayfinderTests.StubLocationProvider();
+            var sensor = new WayfinderTests.StubSensorProvider();
+            var settings = new WayfinderTests.StubSettingsController();
+
+            var controller = new WaypointsController(
+                location,
+                sensor,
+                new WayfinderTests.MockWaypointStorage(),
+                settings,
+                new SettingsBoundUnitConverter(settings)
+            );
+
+            var startPosition = new Position.Location({
+                :latitude => 52.52437,
+                :longitude => 13.41053,
+                :format => :degrees
+            });
+
+            var northWaypoint = new Waypoint(startPosition.getProjectedLocation(0, 200));
+
+            location.setLastPosition(startPosition);
+
+            controller.setWaypoints([northWaypoint]);
+
+            controller.update();
+
+            Assert.isEqual(northWaypoint, controller.currentWaypoint());
+            Assert.isEqual(0, northWaypoint.absoluteAngle());
+            Assert.isEqual(0, northWaypoint.angle());
+
+            sensor.setHeading(Math.PI / 2);
+            controller.update();
+
+            Assert.isEqual(0, northWaypoint.absoluteAngle());
+            Assert.isEqual(270, northWaypoint.angle());
+
+            return true;
+        }
+
+        (:test)
+        public function testWaypointsControllerSetsNextWaypoints(logger as Logger) as Boolean {
+            var location = new WayfinderTests.StubLocationProvider();
+            var sensor = new WayfinderTests.StubSensorProvider();
+            var settings = new WayfinderTests.StubSettingsController();
+
+            var controller = new WaypointsController(
+                location,
+                sensor,
+                new WayfinderTests.MockWaypointStorage(),
+                settings,
+                new SettingsBoundUnitConverter(settings)
+            );
+
+            var startPosition = new Position.Location({
+                :latitude => 52.52437,
+                :longitude => 13.41053,
+                :format => :degrees
+            });
+
+            settings.setDistanceToWaypoint(50);
+
+            var northWaypoint = new Waypoint(startPosition.getProjectedLocation(0, 200));
+            var southWaypoint = new Waypoint(startPosition.getProjectedLocation(Math.PI, 300));
+
+            location.setLastPosition(startPosition);
+
+            controller.setWaypoints([northWaypoint, southWaypoint]);
+
+            controller.autoSet();
+            controller.update();
+
+            Assert.isEqual(northWaypoint, controller.currentWaypoint());
+            
+            location.setLastPosition(startPosition.getProjectedLocation(0, 151));
+            controller.update();
+
+            Assert.isEqual(southWaypoint, controller.currentWaypoint());
+
+            location.setLastPosition(southWaypoint.location());
+            controller.update();
+
+            Assert.isEqual(startPosition, controller.returnWaypoint().location());
+
+            return true;
+        }
     }
 }
