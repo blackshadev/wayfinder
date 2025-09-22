@@ -52,7 +52,7 @@ module Layout {
 
             var h = 0;
             for (var i = 0; i < self.components.size(); i++) {
-                h = Utils.max(h, self.components[i].height());
+                h = Utils.Math.max(h, self.components[i].height());
             }
 
             self._height = h;

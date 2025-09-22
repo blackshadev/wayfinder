@@ -1,6 +1,7 @@
 import Toybox.Lang;
 import Toybox.System;
 import Toybox.Application;
+import Toybox.WatchUi;
 
 class SettingsController extends SettingsControllerInterface {
 
@@ -275,6 +276,98 @@ class SettingsController extends SettingsControllerInterface {
                 
             default: 
                 return Rez.Strings.settingsArrowSizeNormal;
+        }
+    }
+
+    public function arrowSizeValue() as Number {
+
+        switch (self.arrowSize()) {
+            case SettingsControllerInterface.ARROW_SIZE_NONE: 
+                return 0;
+            case SettingsControllerInterface.ARROW_SIZE_SMALL: 
+                return 20;
+            case SettingsControllerInterface.ARROW_SIZE_NORMAL: 
+                return 30;
+            case SettingsControllerInterface.ARROW_SIZE_LARGE: 
+                return 45;
+            case SettingsControllerInterface.ARROW_SIZE_EXTRA_LARGE: 
+                return 60;
+
+            default: 
+                return 30;
+        }
+    }
+
+    public function distanceToWaypoint() as Number {
+        var value = Application.Properties.getValue("distanceToWaypoint");
+        switch (value) {
+            case 10:
+                return 10;
+            case 25:
+                return 25;
+            case 50:
+                return 50;
+            case 100:
+                return 100;
+            default:
+                return 25;
+        }
+    }
+
+    public function toggleDistanceToWaypoint() as Void {
+        var values = [10, 25, 50, 100];
+
+        var curValue = self.distanceToWaypoint();
+        var nextIndex = (values.indexOf(curValue) + 1) % values.size();
+        Application.Properties.setValue("distanceToWaypoint", values[nextIndex]);
+    }
+
+    public function distanceToWaypointRes() as ResourceId {
+        switch (self.distanceToWaypoint()) {
+            case 10:
+                return Rez.Strings.settingsDistanceToWaypoint10m;
+            case 25:
+                return Rez.Strings.settingsDistanceToWaypoint25m;
+            case 50:
+                return Rez.Strings.settingsDistanceToWaypoint50m;
+            case 100:
+                return Rez.Strings.settingsDistanceToWaypoint100m;
+            default:
+                return Rez.Strings.settingsDistanceToWaypoint25m;
+        }
+    }
+    
+    public function returnWaypointVisibility() as SettingsControllerInterface.ReturnWaypointVisibility {
+        var value = Application.Properties.getValue("returnWaypointVisibility");
+        
+        switch (value) {
+            case SettingsControllerInterface.RETURN_WAYPOINT_ALWAYS:
+                return SettingsControllerInterface.RETURN_WAYPOINT_ALWAYS;
+            case SettingsControllerInterface.RETURN_WAYPOINT_AFTER_LAST:
+                return SettingsControllerInterface.RETURN_WAYPOINT_AFTER_LAST;
+            case SettingsControllerInterface.RETURN_WAYPOINT_NEVER:
+                return SettingsControllerInterface.RETURN_WAYPOINT_NEVER;
+            default:
+                return SettingsControllerInterface.RETURN_WAYPOINT_ALWAYS;
+        }
+    }
+
+    public function toggleReturnWaypointVisibility() as Void {
+        var curValue = self.returnWaypointVisibility();
+        var nextValue = (curValue + 1) % SettingsControllerInterface.RETURN_WAYPOINT_DONOTUSE_UPPER_LIMIT;
+        Application.Properties.setValue("returnWaypointVisibility", nextValue);
+    }
+
+    public function returnWaypointVisibilityRes() as ResourceId {
+        switch (self.returnWaypointVisibility()) {
+            case SettingsControllerInterface.RETURN_WAYPOINT_ALWAYS:
+                return Rez.Strings.settingsReturnWaypointAlways;
+            case SettingsControllerInterface.RETURN_WAYPOINT_AFTER_LAST:
+                return Rez.Strings.settingsReturnWaypointAfterLast;
+            case SettingsControllerInterface.RETURN_WAYPOINT_NEVER:
+                return Rez.Strings.settingsReturnWaypointNever;
+            default:
+                return Rez.Strings.settingsReturnWaypointAlways;
         }
     }
 }

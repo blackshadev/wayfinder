@@ -1,0 +1,218 @@
+#!/bin/bash
+# =========================================================
+# Taskfile gives you a set of quick tasks for your project
+# More info: https://github.com/Enrise/Taskfile
+# =========================================================
+
+DIR=$(dirname "$0")
+
+function banner {
+	echo -e "${BLUE}\n"\
+	"██╗    ██╗ █████╗ ██╗   ██╗███████╗██╗███╗   ██╗██████╗ ███████╗██████╗ \n"\
+	"██║    ██║██╔══██╗╚██╗ ██╔╝██╔════╝██║████╗  ██║██╔══██╗██╔════╝██╔══██╗\n"\
+	"██║ █╗ ██║███████║ ╚████╔╝ █████╗  ██║██╔██╗ ██║██║  ██║█████╗  ██████╔╝\n"\
+	"██║███╗██║██╔══██║  ╚██╔╝  ██╔══╝  ██║██║╚██╗██║██║  ██║██╔══╝  ██╔══██╗\n"\
+	"╚███╔███╔╝██║  ██║   ██║   ██║     ██║██║ ╚████║██████╔╝███████╗██║  ██║\n"\
+	" ╚══╝╚══╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝     ╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝╚═╝  ╚═╝${RESET}"
+}
+
+# =========================================================
+## Project
+# =========================================================
+
+function task:init { ## Initialise the project for local development
+	task:build
+	task:start
+	project:update
+    task:certificates
+	# Finalize setting up the project
+	task:help
+}
+
+function task:start { ## Start the project in development mode
+	proxy:start
+	docker:start
+	proxy:connect
+}
+
+function task:update { ## Update all dependencies and files
+	project:update
+}
+
+function project:update {
+	title "Run project updates"
+}
+
+function task:stop { ## Stop the local project
+	proxy:disconnect
+	docker:stop
+}
+
+function task:restart { ## Restart the local project
+	proxy:disconnect
+	docker:stop
+	proxy:start
+	docker:start
+	proxy:connect
+}
+
+function task:ngrok { ## Start ngrok proxy because Garmin doesn't do local DNS resolution
+	title "Start ngrok proxy to the server"
+	ngrok http http://localhost:8080 
+}
+
+# =========================================================
+## Docker
+# =========================================================
+
+function task:build { ## Build all docker compose containers
+	title "Building docker compose project"
+	dockercompose build
+}
+
+
+function task:shell { ## open a shell in the docker container
+	title "Opening shell in docker container"
+	dockercompose exec  wayfinder-server /bin/sh
+}
+function docker:start {
+	title "Starting docker compose project"
+	dockercompose up --detach
+}
+
+function docker:stop {
+	title "Stopping docker compose project"
+	dockercompose down -v
+}
+
+function task:logs { ## Show the docker compose logs
+	title "Following local logs"
+	dockercompose logs --tail="20" --follow
+}
+
+function task:dc { ## Run docker compose command <command>
+	title "Docker compose $@"
+	dockercompose "$@"
+}
+
+function docker:assert-running {
+	if [ -z "$(dockercompose ps -q)" ]; then
+		echo -e "${RED}Oh noes, docker was not running yet, starting...${RESET}"
+		task:start
+		title "Resuming task"
+	fi
+}
+
+function dockercompose {
+	USERID=$USERID GROUPID=$GROUPID docker compose --file $DIR/server/dev/docker-compose.yml --project-name wayfinder "$@"
+}
+
+# =========================================================
+# Development proxy
+# https://github.com/Enrise/DevelopmentProxy
+# =========================================================
+
+function proxy:start {
+	title "Starting development proxy"
+    curl --silent --location https://enri.se/development-proxy-start | sh
+}
+
+function proxy:connect {
+	title "Connecting development proxy nextwork"
+    docker network connect $NETWORK development-proxy || true
+    echo "Connected docker network."
+}
+
+function proxy:disconnect {
+	title "Disconnecting development proxy nextwork"
+    docker network disconnect $NETWORK development-proxy || true
+    echo "Disconnected docker network."
+}
+
+# =========================================================
+## Host configuration
+# =========================================================
+
+function task:setup-hosts {
+    echo -e "\n=== Adding local Dayes hosts ===\n"
+    (
+        cat /etc/hosts | grep -q dayes.local \
+        && echo 'No changes: dayes.local already available in the hosts file.'
+    ) || (
+        uname=$(uname)
+        if [ "$uname" == "Darwin" ]; then
+            echo -e "\033[1;31mOSX detected, hostnames cannot automatically be added to /etc/hosts!"
+            echo -e "\nMake sure to manually copy the following to your /etc/hosts file:\n"
+            cat $(pwd)/dev/hostnames.txt
+            echo -en "\033[0"
+        elif [ "$uname" == "Linux" ]; then
+            docker run --rm \
+            -v /etc/hosts:/etc/hosts \
+            -v $(pwd)/dev/hostnames.txt:/dev/hostnames.txt \
+            alpine:latest \
+            sh -c 'cat /dev/hostnames.txt >> /etc/hosts'
+            echo "Hosts successfully added "
+        fi
+    )
+}
+
+function task:certificates { ## Generate the SSL certificates
+    echo -e "\n=== Creating certificates ==="
+    mkdir -p ~/.development-proxy/certs
+    mkdir -p ~/.development-proxy/config
+    (
+        cd ~/.development-proxy/certs && \
+        mkcert wayfinder.littledev.dev \
+    )
+    echo "Done."
+    echo -e "\n=== Copying dev proxy config ===\n"
+    cp $DIR/server/dev/traefik-config/*.yml ~/.development-proxy/config/
+    echo "Done."
+}
+
+
+# =========================================================
+## Taskfile
+# =========================================================
+
+set -eo pipefail
+
+BLUE=$(printf '\033[36m')
+YELLOW=$(printf '\033[33m')
+RED=$(printf '\033[31m')
+GREEN=$(printf '\033[32m')
+RESET=$(printf '\033[0m')
+
+USERID=$(id -u)
+GROUPID=$(id -g)
+NETWORK="wayfinder_wayfinder-network"
+
+function title {
+	echo -e "\n${BLUE}=>${RESET} $1\n"
+}
+
+function task:help { ## Show all available tasks
+	title "Available tasks"
+	awk 'BEGIN {FS = " { [#][#][ ]?"} /^([a-zA-Z_-]*:?.*)(\{ )?[#][#][ ]?/ \
+		{printf "\033[33m%-34s\033[0m %s\n", $1, $2}' $0 |\
+		sed -E "s/[#]{2,}[ ]*/${RESET}/g" |\
+		sed -E "s/function task:*/  /g"
+	echo -e "\n${BLUE}Usage:${RESET} ./Taskfile ${YELLOW}<task>${RESET} <args>"
+}
+
+function task:shorthand { ## Create CLI shorthand task instead of ./Taskfile
+	title "Creating task shorthand"
+	echo -e "You're about to create ${YELLOW}/usr/local/bin/task${RESET} that requires ${RED}root${RESET} permission..."
+	sudo curl --location --silent --output /usr/local/bin/task https://enri.se/taskfile-bin
+	sudo chmod +x /usr/local/bin/task
+	echo -e "${BLUE}You can now use:${RESET} task ${YELLOW}<task>${RESET} <args>"
+}
+
+banner
+if [[ ! "$(declare -F task:${@-help})" ]]; then
+	title "Task not found"
+	echo -e "Task ${RED}$1${RESET} doesn't exist."
+	task:help
+	exit 1
+fi
+task:${@-help}

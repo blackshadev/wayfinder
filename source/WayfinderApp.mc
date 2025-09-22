@@ -5,24 +5,27 @@ import Toybox.Timer;
 
 class WayfinderApp extends Application.AppBase {
 
-    public var waypoint as WaypointController;
-    public var unitConverter as SettingsBoundUnitConverter;
-    public var activity as ActivityController;
-    public var activityInfo as ActivityInfoProvider;
-    public var sensor as SensorProvider;
-    public var location as LocationProvider;
-    public var settings as SettingsController;
-    public var averageSpeeds as AverageSpeedsProvider;
-    public var maxAverageSpeeds as MaxAverageSpeedsProvider;
-    public var viewController as ViewController;
-    public var updateTimer as AppTimer;
-    public var sampleTimer as AppTimer;
+    private var waypoint as WaypointsController;
+    private var unitConverter as SettingsBoundUnitConverter;
+    private var activity as ActivityController;
+    private var activityInfo as ActivityInfoProvider;
+    private var sensor as SensorProvider;
+    private var location as LocationProvider;
+    private var settings as SettingsController;
+    private var averageSpeeds as AverageSpeedsProvider;
+    private var maxAverageSpeeds as MaxAverageSpeedsProvider;
+    private var viewController as ViewController;
+    private var updateTimer as AppTimer;
+    private var sampleTimer as AppTimer;
+    private var waypointRetriever as WaypointServerRetriever;
 
     function initialize() {
         AppBase.initialize();
 
         self.updateTimer = new AppTimer(1000, new Timer.Timer());
         self.sampleTimer = new AppTimer(500, new Timer.Timer());
+
+        AppTimer.setTimers(self.updateTimer, self.sampleTimer);
 
         self.settings = new SettingsController();
         self.unitConverter = new SettingsBoundUnitConverter(self.settings);
@@ -31,7 +34,17 @@ class WayfinderApp extends Application.AppBase {
         self.averageSpeeds = new AverageSpeedsProvider(self.sensor, new Timer.Timer());
         self.maxAverageSpeeds = new MaxAverageSpeedsProvider(self.averageSpeeds);
         self.location = new LocationProvider();
-        self.waypoint = new WaypointController(self.location, self.sensor);
+        self.waypoint = new WaypointsController(
+            self.location, 
+            self.sensor, 
+            new WaypointStorage(),
+            self.settings,
+            self.unitConverter
+        );
+        self.waypointRetriever = new WaypointServerRetriever(
+            new WaypointServerClient(),
+            self.waypoint
+        );
         self.activity = new ActivityController(
             self.settings,
             self.sampleTimer,
@@ -59,7 +72,8 @@ class WayfinderApp extends Application.AppBase {
             self.viewController,
             self.waypoint,
             self.activity,
-            self.settings
+            self.settings,
+            self.waypointRetriever
         );
 
         self.viewController.setDelegate(delegate);

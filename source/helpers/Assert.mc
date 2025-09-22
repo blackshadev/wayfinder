@@ -1,5 +1,6 @@
 import Toybox.Test;
 import Toybox.Lang;
+import Toybox.Math;
 
 module Assert {
     public function isEqual(expected as Object?, actual as Object?) as Void {
@@ -38,6 +39,17 @@ module Assert {
         Test.assertMessage(isSame, "Failed asserting that " + expected + " is equal to " + actual);
     }
 
+    public function isTrue(actual as Boolean) as Void {
+        if (!actual) {
+            Test.assertMessage(false, "Expected true while given false");
+        }
+    }
+
+    public function isFalse(actual as Boolean) as Void {
+        if (actual) {
+            Test.assertMessage(false, "Expected false while given true");
+        }
+    }
 
     public function isNull(actual) as Void {
         if (actual != null) {
@@ -54,6 +66,16 @@ module Assert {
     public function exception(expectedCls, actual) as Void {
         if (!(actual instanceof expectedCls)) {
             Test.assertMessage(false, "Failed asserting exception instanceof of "  + expectedCls + " got " + actual);
+        }
+    }
+
+    public function isApproxEqual(
+        expected as Double or Float or Number,
+        actual as Double or Float or Number,
+        tolerance as Double or Float or Number
+    ) as Void {
+        if (Utils.Math.abs(expected - actual) > tolerance) {
+            Test.assertMessage(false, "Failed asserting that " + expected + " is approximately equal to " + actual);
         }
     }
 }

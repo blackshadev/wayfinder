@@ -23,9 +23,9 @@ class AverageSpeedsProvider extends AverageSpeedsProviderInterface {
         AverageSpeedsProviderInterface.initialize();
         
         self.sensor = sensor;
-        self.updateTimer = getApp().sampleTimer.onSample();
+        self.updateTimer = AppTimer.onSample();
 
-        var sampleTime = getApp().sampleTimer.time;
+        var sampleTime = AppTimer.sampleTimer.time();
         self.speeds = new AverageValueList([
             SEC_2 / sampleTime,
             SEC_10 / sampleTime,

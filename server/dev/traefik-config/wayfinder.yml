@@ -1,0 +1,4 @@
+tls:
+  certificates:
+    - certFile: /var/certs/wayfinder.littledev.dev.pem
+      keyFile: /var/certs/wayfinder.littledev.dev-key.pem

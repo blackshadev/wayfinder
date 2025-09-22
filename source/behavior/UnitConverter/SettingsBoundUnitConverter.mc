@@ -21,5 +21,9 @@ class SettingsBoundUnitConverter extends BoundUnitConverterInterface {
     public function distanceFromMeters(meters as Float?) as Float? {
         return self._converter.distanceFromMeters(meters, self._settings.distance());
     }
+    
+    public function smallDistanceFromMeters(meters as Float?) as Float? {
+        return self._converter.smallDistanceFromMeters(meters, self._settings.distance());
+    }
 }
 

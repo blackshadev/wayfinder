@@ -10,10 +10,11 @@ class ViewController {
     private const VIEW_MAP = 3;
 
     private var views as Array<Number> = [VIEW_MAIN, VIEW_AVG_SPEED, VIEW_MAX_AVG_SPEED];
+    private var viewCache as Array<WatchUi.Views?> = [null, null, null, null];
     private var iX as Number = 0;
     private var dir as Number = 0;
     private var activity as ActivityController;
-    private var waypoint as WaypointController;
+    private var waypoint as WaypointsController;
     private var activityInfo as ActivityInfoProvider;
     private var averageSpeeds as AverageSpeedsProvider;
     private var maxAverageSpeeds as MaxAverageSpeedsProvider;
@@ -24,7 +25,7 @@ class ViewController {
 
     function initialize(
         activity as ActivityController,
-        waypoint as WaypointController,
+        waypoint as WaypointsController,
         activityInfo as ActivityInfoProvider,
         averageSpeeds as AverageSpeedsProvider, 
         maxAverageSpeeds as MaxAverageSpeedsProvider, 
@@ -108,6 +109,8 @@ class ViewController {
     }
 
     public function resetView() as Void {
+        self.viewCache = [null, null, null, null];
+
         WatchUi.switchToView(
             self.getView(),
             self.getDelegate(),
@@ -126,16 +129,26 @@ class ViewController {
     }
 
     function getView() as WatchUi.Views {
-        switch (self.iX) {
+        if (self.viewCache[self.iX] != null) {
+            return self.viewCache[self.iX];
+        }
+
+        var view = self.createView();
+        // self.viewCache[self.iX] = view;
+        return view;
+    }
+
+    private function createView() as WatchUi.Views {
+        switch (self.views[self.iX]) {
             case VIEW_AVG_SPEED:
-                return new AverageSpeedView(self.waypoint, self.activityInfo, self.averageSpeeds, self.unitConverter);
+                return new AverageSpeedView(self.waypoint, self.activityInfo, self.averageSpeeds, self.unitConverter, self.settings);
             case VIEW_MAX_AVG_SPEED:
-                return new MaxAverageSpeedView(self.waypoint, self.activityInfo, self.maxAverageSpeeds, self.unitConverter);
+                return new MaxAverageSpeedView(self.waypoint, self.activityInfo, self.maxAverageSpeeds, self.unitConverter, self.settings);
             case VIEW_MAP:
                 return new MapView(self.waypoint, self.settings);
             case VIEW_MAIN: 
             default:
-                return new MainView(self.waypoint, self.activityInfo, self.unitConverter);
+                return new MainView(self.waypoint, self.activityInfo, self.unitConverter, self.settings);
         }
     }
 

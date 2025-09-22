@@ -6,7 +6,8 @@ typedef TextOptions as {
     :font as FontType,
     :color as ColorType,
     :justification as TextJustification or Number,
-    :text as String or ResourceId or Null
+    :text as String or ResourceId or Null,
+    :fitTextToArea as Boolean or Null
 };
 
 class Text extends RelativeComponent {
@@ -15,6 +16,7 @@ class Text extends RelativeComponent {
     private var _justification as TextJustification or Number;
     private var _color as ColorType;
     private var _font as FontType;
+    private var _fitTextToArea as Boolean = false;
 
     function initialize(options as TextOptions) {
         RelativeComponent.initialize();
@@ -23,6 +25,7 @@ class Text extends RelativeComponent {
         self._font = options[:font];
         self._color = options[:color];
         self._justification = options[:justification];
+        self._fitTextToArea = options[:fitTextToArea];
 
         if (options[:text] != null) {
             self.setText(options[:text]);
@@ -33,6 +36,7 @@ class Text extends RelativeComponent {
         if (text instanceof ResourceId) {
             text = WatchUi.loadResource(text);
         }
+
         self._text = text;
     }
 
@@ -48,11 +52,17 @@ class Text extends RelativeComponent {
             centerX + self._offset[0],
             centerY + self._offset[1]
         ];
+
     }
 
     function draw(dc as Dc) as Void {
+        var text = self._text;
+        if (self._fitTextToArea) {
+            text = Graphics.fitTextToArea(self._text, self._font, dc.getWidth(), dc.getHeight(), false);
+        }
+        
         dc.setColor(self._color, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(self._position[0], self._position[1], self._font, self._text, self._justification);
+        dc.drawText(self._position[0], self._position[1], self._font, text, self._justification);
     }
 
     function height() as Number {

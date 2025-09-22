@@ -8,9 +8,9 @@ import Toybox.Timer;
 class MaxAverageSpeedView extends WatchUi.View {
     private var activityInfo as ActivityInfoProvider;
     private var maxAvgSpeed as MaxAverageSpeedsProvider;
-    private var waypoint as WaypointController;
+    private var waypoint as WaypointsController;
 
-    private var arrow as Arrow;
+    private var arrows as WaypointArrows;
     private var time as Time;
     private var maxSpeed as MaxSpeed;
     private var maxSpeeds as MaxAverageSpeeds;
@@ -21,10 +21,11 @@ class MaxAverageSpeedView extends WatchUi.View {
     private var timerSubscription as TimerSubscription;
 
     function initialize(
-        waypoint as WaypointController,
+        waypoint as WaypointsController,
         activityInfo as ActivityInfoProvider,
         maxAvgSpeed as MaxAverageSpeedsProvider,
-        unitConverter as SettingsBoundUnitConverter
+        unitConverter as SettingsBoundUnitConverter,
+        settings as SettingsController
     ) {
         View.initialize();
 
@@ -32,8 +33,7 @@ class MaxAverageSpeedView extends WatchUi.View {
         self.maxAvgSpeed = maxAvgSpeed;
         self.waypoint = waypoint;
 
-        self.arrow = new Arrow(Utils.Sizing.arrow);
-        
+        self.arrows = new WaypointArrows(settings, waypoint, false);
         self.time = new Time(new TimeProvider(), [0, 0]);
         self.maxSpeed = new MaxSpeed(unitConverter, [0, 0]);
         self.maxSpeeds = new MaxAverageSpeeds(unitConverter, [0, 0]);
@@ -50,7 +50,7 @@ class MaxAverageSpeedView extends WatchUi.View {
     }
 
     function onLayout(dc as Dc) as Void {
-        self.arrow.layout(dc);
+        self.arrows.layout(dc);
         self.quarterLayout.layout(dc);
     }
 
@@ -61,7 +61,7 @@ class MaxAverageSpeedView extends WatchUi.View {
     }
 
     function updateValues() as Void {
-        self.arrow.setAngle(self.waypoint.angle());
+        self.arrows.update();
         self.maxSpeed.setValue(self.activityInfo.speed());
         self.maxSpeeds.setMaxAvgSpeeds(self.maxAvgSpeed.value());
         self.maxSpeeds2.setMaxAvgSpeeds(self.maxAvgSpeed.value());
@@ -71,7 +71,7 @@ class MaxAverageSpeedView extends WatchUi.View {
         dc.setColor(Utils.Colors.background, Utils.Colors.background);
         dc.clear();
 
-        self.arrow.draw(dc);
+        self.arrows.draw(dc);
         self.quarterLayout.draw(dc);
     }
 

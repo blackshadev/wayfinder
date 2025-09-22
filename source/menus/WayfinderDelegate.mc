@@ -3,16 +3,18 @@ import Toybox.WatchUi;
 import Toybox.System;
 
 class WayfinderDelegate extends WatchUi.BehaviorDelegate {
-    private var waypoint as WaypointController;
+    private var waypoint as WaypointsController;
     private var activity as ActivityController;
     private var settings as SettingsController;
+    private var waypointRetriever as WaypointServerRetriever;
     private var viewController as ViewController;
 
     function initialize(
         viewController as ViewController,
-        waypoint as WaypointController,
+        waypoint as WaypointsController,
         activity as ActivityController,
-        settings as SettingsController
+        settings as SettingsController,
+        waypointRetriever as WaypointServerRetriever
     ) {
         BehaviorDelegate.initialize();
 
@@ -20,6 +22,7 @@ class WayfinderDelegate extends WatchUi.BehaviorDelegate {
         self.waypoint = waypoint;
         self.activity = activity;
         self.settings = settings;
+        self.waypointRetriever = waypointRetriever;
     }
 
     function onKey(keyEvent) {
@@ -31,11 +34,11 @@ class WayfinderDelegate extends WatchUi.BehaviorDelegate {
     }
 
     function onMenu() as Boolean {
-        var menuBuilder = new MainMenuBuilder(self.waypoint);
+        var menuBuilder = new MainMenuBuilder();
 
         WatchUi.pushView(
             menuBuilder.build(),
-            new MainMenuDelegate(self.waypoint, self.settings),
+            new MainMenuDelegate(self.waypoint, self.settings, self.waypointRetriever),
             WatchUi.SLIDE_LEFT
         );
 

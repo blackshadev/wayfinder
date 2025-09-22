@@ -1,0 +1,9 @@
+services:
+  wayfinder:
+    image: ghcr.io/blackshadev/wayfinder/server:feature-waypoint-server
+    restart: always
+    environment:
+      PORT: 8080
+      CLEANUP: 1h
+    ports:
+      - 9020:8080

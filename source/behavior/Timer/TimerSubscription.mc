@@ -19,6 +19,13 @@ class TimerSubscription {
     }
 
     public function start(method as Method) as Void {
+        if (self._method == method) {
+            return;
+        }
+        if (self._method != null) {
+            self.stop();
+        }
+
         self._method = method;
         self._timer.add(self._method);
     }

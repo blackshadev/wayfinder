@@ -12,7 +12,6 @@ module Utils {
 
         public var spacing as Number;
         public var spacingL as Number;
-        public var arrow as Number;
 
         public var size as Size; 
 
@@ -24,14 +23,11 @@ module Utils {
                 self.size = Small;
                 self.spacing = 0;
                 self.spacingL = 5;
-                self.arrow = 20;
             } else {
                 self.size = Normal;
                 self.spacing = 5;
                 self.spacingL = 10;
-                self.arrow = 30;
             }
-
         }
     }
 }

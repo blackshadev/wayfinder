@@ -1,0 +1,51 @@
+name: Garmin CI
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Decrypt developer key
+        run: ./.github/scripts/decrypt_secret.sh
+        env:
+          INPUT: ./developer_key.gpg
+          OUTPUT: ./developer_key
+          PASSPHRASE: ${{ secrets.DEVELOPER_KEY_PASSPHRASE }}
+      - name: Build
+        uses: blackshadev/garmin-connectiq-build-action@8.2.3-2
+        with:
+          projectJungle: ./monkey.jungle
+          developerKey: ./developer_key
+          outputPath: out/app.prg
+          device: fr165
+          typeCheck: '1'
+  release:
+    needs: test
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Decrypt developer key
+        run: ./.github/scripts/decrypt_secret.sh
+        env:
+          INPUT: ./developer_key.gpg
+          OUTPUT: ./developer_key
+          PASSPHRASE: ${{ secrets.DEVELOPER_KEY_PASSPHRASE }}
+      - name: Create release
+        uses: blackshadev/garmin-connectiq-release-action@8.2.3-2
+        with:
+          projectJungle: ./monkey.jungle
+          developerKey: ./developer_key
+          outputPath: out/wayfinder.iq
+      - name: Upload release artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: wayfinder-${{ github.ref_name }}
+          path: out/wayfinder.iq
+
+

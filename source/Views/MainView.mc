@@ -6,10 +6,10 @@ import Toybox.System;
 import Toybox.Timer;
 
 class MainView extends WatchUi.View {
-    private var waypoint as WaypointController;
+    private var waypoint as WaypointsController;
     private var activityInfo as ActivityInfoProvider;
 
-    private var arrow as Arrow;
+    private var arrows as WaypointArrows;
 
     private var time as Time;
     private var duration as Duration;
@@ -20,16 +20,17 @@ class MainView extends WatchUi.View {
     private var timerSubscription as TimerSubscription;
 
     function initialize(
-        waypoint as WaypointController,
+        waypoint as WaypointsController,
         activityInfo as ActivityInfoProvider,
-        unitConverter as SettingsBoundUnitConverter
+        unitConverter as SettingsBoundUnitConverter,
+        settings as SettingsController
     ) {
         View.initialize();
 
         self.waypoint = waypoint;
         self.activityInfo = activityInfo;
 
-        self.arrow = new Arrow(Utils.Sizing.arrow);
+        self.arrows = new WaypointArrows(settings, waypoint, false);
 
         self.time = new Time(new TimeProvider(), [0, 0]);
         self.duration = new Duration([0, 0]);
@@ -47,7 +48,7 @@ class MainView extends WatchUi.View {
     }
 
     function onLayout(dc as Dc) as Void {
-        self.arrow.layout(dc);
+        self.arrows.layout(dc);
         self.quarterLayout.layout(dc);
     }
 
@@ -61,7 +62,7 @@ class MainView extends WatchUi.View {
     }
 
     function updateValues() as Void {
-        self.arrow.setAngle(self.waypoint.angle());      
+        self.arrows.update();
         self.duration.setValue(self.activityInfo.duration());
         self.speed.setValue(self.activityInfo.speed());
         self.distance.setValue(self.activityInfo.distance());
@@ -72,7 +73,7 @@ class MainView extends WatchUi.View {
         dc.setColor(color, color);
         dc.clear();
 
-        self.arrow.draw(dc);
+        self.arrows.draw(dc);
         self.quarterLayout.draw(dc);
     }
 

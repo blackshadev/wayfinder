@@ -11,11 +11,14 @@ typedef LocationEventsOptions as Position.LocationAcquisitionType
                                 :wut as String
                               };
 
-class LocationProvider {
-    private var lastPosition as Position.Info? = null;
+class LocationProvider extends LocationProviderInterface {
+    private var _lastPosition as Position.Info? = null;
     protected var _configuration as Position.Configuration? = null;
-    
 
+    public function initialize() {
+        LocationProviderInterface.initialize();
+    }
+    
     public function start() as Void {
         self._configuration = self.getLocationConfiguration();
         var options = self.getLocationsEventsOptions();
@@ -28,7 +31,7 @@ class LocationProvider {
     }
 
     public function onPosition(info as Position.Info) as Void {
-        self.lastPosition = info;   
+        self._lastPosition = info;   
     }
 
     public function getConfiguration() as Position.Configuration? {
@@ -36,15 +39,15 @@ class LocationProvider {
     }
 
     public function getLastPositionInfo() as Position.Info? {
-        return self.lastPosition;
+        return self._lastPosition;
     }
 
     public function getLastPosition() as Position.Location? {
-        if (self.lastPosition == null) {
+        if (self._lastPosition == null) {
             return null;
         }
 
-        return self.lastPosition.position;
+        return self._lastPosition.position;
     }
 
     private function getLocationConfiguration() as Position.Configuration? {

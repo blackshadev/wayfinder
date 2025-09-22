@@ -8,9 +8,9 @@ import Toybox.Timer;
 class AverageSpeedView extends WatchUi.View {
     private var activityInfo as ActivityInfoProvider;
     private var averageSpeeds as AverageSpeedsProvider;
-    private var waypoint as WaypointController;
+    private var waypoint as WaypointsController;
 
-    private var arrow as Arrow;
+    private var arrows as WaypointArrows;
     private var time as Time;
     private var currentSpeed as CurrentSpeed;
     private var avgSpeeds as AverageSpeeds;
@@ -21,10 +21,11 @@ class AverageSpeedView extends WatchUi.View {
     private var timerSubscription as TimerSubscription;
 
     function initialize(
-        waypoint as WaypointController,
+        waypoint as WaypointsController,
         activityInfo as ActivityInfoProvider,
         averageSpeeds as AverageSpeedsProvider,
-        unitConverter as SettingsBoundUnitConverter
+        unitConverter as SettingsBoundUnitConverter,
+        settings as SettingsController
     ) {
         View.initialize();
 
@@ -32,7 +33,7 @@ class AverageSpeedView extends WatchUi.View {
         self.averageSpeeds = averageSpeeds;
         self.waypoint = waypoint;
 
-        self.arrow = new Arrow(Utils.Sizing.arrow);
+        self.arrows = new WaypointArrows(settings, waypoint, false);
         
         self.time = new Time(new TimeProvider(), [0, 0]);
         self.currentSpeed = new CurrentSpeed(unitConverter, [0, 0]);
@@ -50,7 +51,7 @@ class AverageSpeedView extends WatchUi.View {
     }
 
     function onLayout(dc as Dc) as Void {
-        self.arrow.layout(dc);
+        self.arrows.layout(dc);
         self.quarterLayout.layout(dc);
     }
 
@@ -61,7 +62,7 @@ class AverageSpeedView extends WatchUi.View {
     }
 
     function updateValues() as Void {
-        self.arrow.setAngle(self.waypoint.angle());
+        self.arrows.update();
         self.currentSpeed.setValue(self.activityInfo.speed());
         self.avgSpeeds.setValue(self.averageSpeeds.value());
         self.avgSpeeds2.setAvgSpeeds(self.averageSpeeds.value());
@@ -71,7 +72,7 @@ class AverageSpeedView extends WatchUi.View {
         dc.setColor(Utils.Colors.background, Utils.Colors.background);
         dc.clear();
 
-        self.arrow.draw(dc);
+        self.arrows.draw(dc);
         self.quarterLayout.draw(dc);
     }
 

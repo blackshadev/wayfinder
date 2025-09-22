@@ -3,25 +3,30 @@ import Toybox.System;
 import Toybox.WatchUi;
 
 class MainMenuDelegate extends WatchUi.Menu2InputDelegate {
-    public static const WAYPOINT_SET_ID = "waypoint_set";
+    public static const WAYPOINTS_OPEN_ID = "waypoints_open";
     public static const SETTINGS_OPEN_ID = "settings_open";
     public static const ABOUT_OPEN_ID = "about_open";
 
-    private var waypoint as WaypointController;
+    private var waypoint as WaypointsController;
     private var settings as SettingsController;
+    private var waypointRetriever as WaypointServerRetriever;
 
-    function initialize(waypoint as WaypointController, settings as SettingsController) {
+    function initialize(
+        waypoint as WaypointsController,
+        settings as SettingsController,
+        waypointRetriever as WaypointServerRetriever
+    ) {
         Menu2InputDelegate.initialize();
         self.waypoint = waypoint;
         self.settings = settings;
+        self.waypointRetriever = waypointRetriever;
     }
 
     function onSelect(item as MenuItem) as Void {
         var id = item.getId() as String; 
         switch (id) {
-            case WAYPOINT_SET_ID:
-                self.setWaypoint();
-                WatchUi.popView(WatchUi.SLIDE_RIGHT);
+            case WAYPOINTS_OPEN_ID:
+                self.openWaypointsMenu();
                 break;
             case SETTINGS_OPEN_ID:
                 self.openSettingsMenu();
@@ -34,20 +39,22 @@ class MainMenuDelegate extends WatchUi.Menu2InputDelegate {
         }
     }
 
-    private function setWaypoint() as Void {
-        if (!self.waypoint.isSettable()) {
-            return;
-        }
-
-        self.waypoint.set();
-    }
-
     private function openSettingsMenu() as Void {
         var menuBuilder = new SettingsMenuBuilder(self.settings);
 
         WatchUi.pushView(
             menuBuilder.build(),
             new SettingsMenuDelegate(self.settings),
+            WatchUi.SLIDE_LEFT
+        );
+    }
+
+    private function openWaypointsMenu() as Void {
+        var menuBuilder = new WaypointsMenuBuilder(self.waypoint);
+
+        WatchUi.pushView(
+            menuBuilder.build(),
+            new WaypointsMenuDelegate(self.waypoint, self.waypointRetriever),
             WatchUi.SLIDE_LEFT
         );
     }

@@ -122,8 +122,8 @@ module WayfinderTests {
             for (var iX = 0; iX < expected.size(); iX++) {
                 Assert.isEqual(expected[iX][:value], settings.background());
                 Assert.isEqual(expected[iX][:res], settings.backgroundRes());
-                Assert.isEqual(expected[iX][:bg], Utils.Colors.background);
-                Assert.isEqual(expected[iX][:fg], Utils.Colors.foreground);
+                Assert.isEqual(expected[iX][:bg], $.Utils.Colors.background);
+                Assert.isEqual(expected[iX][:fg], $.Utils.Colors.foreground);
 
                 settings.toggleBackground();
             }

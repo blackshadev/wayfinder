@@ -1,0 +1,182 @@
+{{ template "_layout.html" . }}
+
+{{ define "head" }}
+<style>
+    html,
+    body {
+        --red-50: oklch(97.1% 0.013 17.38);
+        --red-700: oklch(50.5% 0.213 27.518);
+        --slate-600: oklch(44.6% 0.043 257.281);
+        --slate-800: oklch(27.9% 0.041 260.031);
+        --primary-color: #109AD7;
+        --daker-color: #0d7dae;
+        height: 100%;
+        font-size: 16px;
+        font-family: Arial, Helvetica, sans-serif;
+        color: var(--slate-800);
+    }
+
+    .wrapper {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .container {
+        border: 1px solid var(--primary-color);
+        border-radius: 0.5rem;
+    }
+
+    .container-body {
+        padding: 1rem 3rem 3rem 3rem;
+    }
+
+    .container-header {
+        padding: 1rem 2rem;
+        border-bottom: 1px solid var(--primary-color);
+    }
+
+    header {
+        display: flex;
+        align-items: end;
+        flex-direction: column;
+    }
+
+    .header-line {
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+        color: var(--primary-color);
+    }
+
+    h2 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        color: var(--daker-color);
+    }
+
+    header {
+        margin-bottom: 1rem;
+    }
+
+    form {
+        display: flex;
+        gap: 1rem;
+        flex-direction: column;
+    }
+
+    button {
+        background: var(--primary-color);
+        color: white;
+        padding: 0.5rem;
+        border: 0;
+        border-radius: 0.3rem;
+    }
+
+    .form-input label {
+        color: var(--slate-800);
+    }
+
+    .form-input {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    input[type=text] {
+        border: 0;
+        color: var(--slate-800);
+        padding: 0.3rem 0.1rem;
+        border-bottom: 1px solid var(--slate-800);
+    }
+
+    input[type=text]:not(:placeholder-shown):invalid, input[type=text].dirty:invalid {
+        background: var(--red-50);
+        border-color: var(--red-700);
+    }
+
+    input[type=text]:focus {
+        outline: 0;
+        border-color: var(--primary-color);
+    }
+
+    .logo {
+        width: 32px;
+        height: 32px;
+    }
+
+    .error {
+        color: var(--red-700);
+    }
+
+    .explanation {
+        color: var(--slate-600);
+        margin-bottom: 1rem;
+        font-size: 1rem;
+    }
+
+    p {
+        margin-bottom: 0.5rem;
+    }
+</style>
+{{ end }}
+
+{{ define "body" }}
+<div class="wrapper">
+    <main class="container">
+        <header class="container-header">
+            <div class="header-line">
+                <img src="./public/wayfinder.svg" alt="Wayfinder logo" class="logo" />
+
+                <h1>Wayfinder</h1>
+            </div>
+            <h2>Waypoints</h2>
+        </header>
+
+        <div class="container-body">
+            <div class="explanation">
+                <p>Using the wayfinder Garmin app one will never be lost again!</p>
+                <p>Easily add waypoints using this tool</p>
+            </div>
+
+            <form onsubmit="doSubmit(event)">
+                <div class="form-input">
+                    <label>
+                        Code
+                    </label>
+                    <input name="code" type="text" pattern="[0-9a-zA-Z]{4}" onblur="markDirty(event)" required placeholder="1234" />
+                </div>
+
+                <div id="error" class="error">
+                    {{ .Error }}
+                </div>
+
+                <button>
+                    Go
+                </button>
+            </form>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    function markDirty(e) {
+        e.target.classList.toggle('dirty', true);
+    }
+
+    function doSubmit(e) {
+        e.preventDefault();
+
+        const data = new FormData(e.target);
+        const code = data.get('code');
+        
+        window.location.href = `/${code}`;
+    }
+</script>
+{{ end }}

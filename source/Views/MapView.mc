@@ -5,15 +5,17 @@ import Toybox.Lang;
 import Toybox.Position;
 
 class MapView extends WatchUi.MapTrackView {
-    private var waypoint as WaypointController;
+    private var waypoint as WaypointsController;
     private var settings as SettingsController;
     
     private var noLocationText as Text;
-    private var arrow as Arrow;
-    private var currentWaypoint as Location? = null;
+    private var arrows as WaypointArrows;
+
+    private var returnWaypoint as Waypoint? = null;
+    private var currentWaypoint as Waypoint? = null;
 
     function initialize(
-        waypoint as WaypointController,
+        waypoint as WaypointsController,
         settings as SettingsController
     ) {
         MapTrackView.initialize();
@@ -29,7 +31,7 @@ class MapView extends WatchUi.MapTrackView {
             :text => Rez.Strings.mapNoLocation
         });
 
-        self.arrow = new Arrow(Utils.Sizing.arrow);
+        self.arrows = new WaypointArrows(settings, waypoint, true);
 
         self.setMapMode(WatchUi.MAP_MODE_PREVIEW);
     }
@@ -37,7 +39,7 @@ class MapView extends WatchUi.MapTrackView {
     function onLayout(dc as Dc) as Void {
         MapTrackView.onLayout(dc);
 
-        self.arrow.layout(dc);
+        self.arrows.layout(dc);
         self.noLocationText.layout(dc);
 
         self.setScreenVisibleArea(0, 0, dc.getWidth(), dc.getHeight());
@@ -45,7 +47,7 @@ class MapView extends WatchUi.MapTrackView {
 
     function onUpdate(dc as Dc) as Void {
 
-        if (!self.waypoint.isSet()) {
+        if (!self.waypoint.isSettable()) {
             var color = Utils.Colors.background;
             dc.setColor(color, color);
             dc.clear();
@@ -55,24 +57,32 @@ class MapView extends WatchUi.MapTrackView {
             return;
         }
 
-        if (self.waypointIsStale()) {
-            var waypoint = self.waypoint.waypointLocation();
-            self.currentWaypoint = waypoint;
+        if (self.staleWaypoints()) {
+            self.currentWaypoint = self.waypoint.currentWaypoint();
+            self.returnWaypoint = self.waypoint.returnWaypoint();
 
             self.updateMapMarker();
         }
 
-        self.arrow.setAngle(self.waypoint.absoluteAngle());
-        self.arrow.draw(dc);
+        self.arrows.update();
+        self.arrows.draw(dc);
     }
 
     private function updateMapMarker() as Void { 
-        if (self.currentWaypoint == null) {
-            return;
+        self.clear();
+
+        var markers = [] as Array<MapMarker>;
+        if (self.currentWaypoint != null && self.waypoint.shouldShowCurrentWaypoint()) {
+            markers.add(new MapMarker(self.currentWaypoint.location()));
         }
 
-        self.clear();
-        self.setMapMarker(new MapMarker(self.currentWaypoint));
+        if (self.returnWaypoint != null && self.waypoint.shouldShowReturnWaypoint()) {
+            markers.add(new MapMarker(self.returnWaypoint.location()));
+        }
+
+        if (markers.size() > 0) {
+            self.setMapMarker(markers);
+        }
     }
 
     function onShow() as Void {
@@ -86,12 +96,13 @@ class MapView extends WatchUi.MapTrackView {
         self.updateMapMarker();
     }
 
-    private function waypointIsStale() as Boolean {
-        var waypoint = self.waypoint.waypointLocation();
+    private function staleWaypoints() as Boolean {
+        var returnWaypoint = self.waypoint.returnWaypoint();
+        var currentWaypoint = self.waypoint.currentWaypoint();
 
-        return waypoint != null && (
-            self.currentWaypoint == null || 
-            !waypoint.toGeoString(Position.GEO_DM).equals(self.currentWaypoint.toGeoString(Position.GEO_DM))
-        );
+        var returnWaypointChanged = self.returnWaypoint != returnWaypoint;
+        var currentWaypointChanged = self.currentWaypoint != currentWaypoint;
+
+        return returnWaypointChanged || currentWaypointChanged;
     }
 }

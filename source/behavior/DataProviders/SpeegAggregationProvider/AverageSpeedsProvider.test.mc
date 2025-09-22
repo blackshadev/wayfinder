@@ -6,7 +6,7 @@ module WayfinderTests {
     class AverageSpeedsProviderTest {
         (:test)
         public function testItReturnsNullWhenNotStarted(logger as Logger) as Boolean {
-            var aggregator = new AverageSpeedsProvider(new SensorProviderFake(), new WayfinderTests.StubTimer());
+            var aggregator = new AverageSpeedsProvider(new WayfinderTests.StubSensorProvider(), new WayfinderTests.StubTimer());
             Assert.isNull(aggregator.value());
 
             return true;
@@ -14,7 +14,7 @@ module WayfinderTests {
 
         (:test)
         public function testItReturnsZeroByDefault(logger as Logger) as Boolean {
-            var aggregator = new AverageSpeedsProvider(new SensorProviderFake(), new WayfinderTests.StubTimer());
+            var aggregator = new AverageSpeedsProvider(new WayfinderTests.StubSensorProvider(), new WayfinderTests.StubTimer());
             aggregator.start();
 
             var value = aggregator.value();
@@ -33,24 +33,24 @@ module WayfinderTests {
 
         (:test)
         public function testItMaxesOverTime(logger as Logger) as Boolean {
-            var fakeSensor = new SensorProviderFake();
-            var aggregator = new AverageSpeedsProvider(fakeSensor, new WayfinderTests.StubTimer());
+            var stubSensor = new WayfinderTests.StubSensorProvider();
+            var aggregator = new AverageSpeedsProvider(stubSensor, new WayfinderTests.StubTimer());
             aggregator.start();
 
-            fakeSensor.setSpeed(110.0);
+            stubSensor.setSpeed(110.0);
             SpeedAggregatorHelper.sampleTime(aggregator, 7200);
 
-            fakeSensor.setSpeed(100.0);
+            stubSensor.setSpeed(100.0);
             SpeedAggregatorHelper.sampleTime(aggregator, 1000);
 
 
-            fakeSensor.setSpeed(95.0);
+            stubSensor.setSpeed(95.0);
             SpeedAggregatorHelper.sampleTime(aggregator, 30);
 
-            fakeSensor.setSpeed(90.0);
+            stubSensor.setSpeed(90.0);
             SpeedAggregatorHelper.sampleTime(aggregator, 2);
 
-            fakeSensor.setSpeed(80.0);
+            stubSensor.setSpeed(80.0);
             SpeedAggregatorHelper.sampleTime(aggregator, 8);
 
             var value = aggregator.value();
@@ -69,7 +69,7 @@ module WayfinderTests {
 
         (:test)
         public function testItClearsOnReset(logger as Logger) as Boolean {
-            var fakeSensor = new SensorProviderFake();
+            var fakeSensor = new WayfinderTests.StubSensorProvider();
             var aggregator = new AverageSpeedsProvider(fakeSensor, new WayfinderTests.StubTimer());
             aggregator.start();
 
@@ -95,7 +95,7 @@ module WayfinderTests {
 
         (:test)
         public function testItReturnsNullOnPause(logger as Logger) as Boolean {
-            var fakeSensor = new SensorProviderFake();
+            var fakeSensor = new WayfinderTests.StubSensorProvider();
             var aggregator = new AverageSpeedsProvider(fakeSensor, new WayfinderTests.StubTimer());
             aggregator.start();
 

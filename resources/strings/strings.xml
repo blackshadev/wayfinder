@@ -1,7 +1,7 @@
+
 <strings>
     <string id="AppName">Wayfinder</string>
     <string id="AppVersion">0.8.3</string>
-
 
     <string id="fieldTitleMaxAvgSpeed2s">Max. Avg. speed (2s)</string>
     <string id="fieldTitleMaxAvgSpeed10s">Max. Avg. speed (10s)</string>
@@ -33,7 +33,12 @@
     <string id="labelDistance">Distance</string>
 
     <string id="menuTitle">Wayfinder</string>
-    <string id="menuSetWaypoint">Set waypoint</string>
+    <string id="menuWaypointsTitle">Waypoints</string>
+    <string id="menuOpenWaypoints">Waypoints...</string>
+    <string id="menuClearWaypoints">Clear</string>
+    <string id="menuReceiveWaypoints">Receive...</string>
+    <string id="menuReceiveWaypointsInfo">New waypoints</string>
+    <string id="menuSetReturnWaypoint">Set return</string>
     <string id="menuSetWaypointNoLocation">(No Location)</string>
     <string id="menuOpenSettings">Settings...</string>
     <string id="menuOpenAbout">About...</string>
@@ -54,32 +59,32 @@
 
     <string id="settingsTitle">Settings</string>
 
-    <string id="settingsActivityType">Activity Type</string>
+    <string id="settingsActivityType">Activity</string>
     <string id="settingsActivityTypeWindsurfing">Wind surfing</string>
     <string id="settingsActivityTypeKitesurfing">Kite surfing</string>
     <string id="settingsActivityTypeSurfing">Surfing</string>
     <string id="settingsActivityTypeOpenwaterSwimming">Openwater swimming</string>
     <string id="settingsActivityTypeOther">Other</string>
 
-    <string id="settingsUnitsSpeed">Speed Units</string>
+    <string id="settingsUnitsSpeed">Speed</string>
     <string id="settingsUnitsSpeedms">m/s</string>
     <string id="settingsUnitsSpeedkms">km/s</string>
     <string id="settingsUnitsSpeedmph">mph</string>
     <string id="settingsUnitsSpeedknots">knots</string>
 
-    <string id="settingsUnitsDistance">Distance Units</string>
+    <string id="settingsUnitsDistance">Distance</string>
     <string id="settingsUnitsDistanceMeters">Meters</string>
     <string id="settingsUnitsDistanceMiles">Miles</string>
 
-    <string id="settingsBackground">Background Color</string>
+    <string id="settingsBackground">Background</string>
     <string id="settingsBackgroundBlack">Black</string>
     <string id="settingsBackgroundWhite">White</string>
 
-    <string id="settingsMapZoomDistance">Map Zoom Level</string>
-    <string id="settings1000m">1.0km</string>
-    <string id="settings1500m">1.5km</string>
-    <string id="settings2km">2.0km</string>
-    <string id="settings5km">5.0km</string>
+    <string id="settingsMapZoomDistance">Map Zoom</string>
+    <string id="settings1000m">Closer</string>
+    <string id="settings1500m">Close</string>
+    <string id="settings2km">Normal</string>
+    <string id="settings5km">Far</string>
 
     <string id="settingsArrowSize">Arrow size</string>
     <string id="settingsArrowSizeNone">No arrow</string>
@@ -87,6 +92,17 @@
     <string id="settingsArrowSizeNormal">Normal</string>
     <string id="settingsArrowSizeLarge">Large</string>
     <string id="settingsArrowSizeExtraLarge">Extra Large</string>
+
+    <string id="settingsDistanceToWaypoint">Waypoint Reached</string>
+    <string id="settingsDistanceToWaypoint10m">10 m / yd</string>
+    <string id="settingsDistanceToWaypoint25m">25 m / yd</string>
+    <string id="settingsDistanceToWaypoint50m">50 m / yd</string>
+    <string id="settingsDistanceToWaypoint100m">100 m / yd</string>
+
+    <string id="settingsReturnWaypointVisibility">Return Waypoint</string>
+    <string id="settingsReturnWaypointAlways">Always</string>
+    <string id="settingsReturnWaypointAfterLast">After Last</string>
+    <string id="settingsReturnWaypointNever">Never</string>
 
     <string id="aboutMenuTitle">About</string>
     <string id="aboutMenuAppName">App Name</string>
@@ -97,5 +113,9 @@
     <string id="fieldLabelGnssConfig">GNSS Config</string>
     <string id="fieldLabelFixQuality">Fix Quality</string>
     <string id="fieldUnitNone">none</string>
+
+    <string id="waypointsDeviceCode">Device Code</string>
+    <string id="waypointsRetrieved">Retrieved</string>
+    <string id="waypointsResume">Go back, to continue</string>
 
 </strings>
