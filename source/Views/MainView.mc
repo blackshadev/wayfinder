@@ -6,7 +6,6 @@ import Toybox.System;
 import Toybox.Timer;
 
 class MainView extends WatchUi.View {
-    private var waypoint as WaypointsController;
     private var activityInfo as ActivityInfoProvider;
 
     private var arrows as WaypointArrows;
@@ -27,7 +26,6 @@ class MainView extends WatchUi.View {
     ) {
         View.initialize();
 
-        self.waypoint = waypoint;
         self.activityInfo = activityInfo;
 
         self.arrows = new WaypointArrows(settings, waypoint, false);

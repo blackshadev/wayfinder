@@ -8,7 +8,6 @@ import Toybox.Timer;
 class MaxAverageSpeedView extends WatchUi.View {
     private var activityInfo as ActivityInfoProvider;
     private var maxAvgSpeed as MaxAverageSpeedsProvider;
-    private var waypoint as WaypointsController;
 
     private var arrows as WaypointArrows;
     private var time as Time;
@@ -31,7 +30,6 @@ class MaxAverageSpeedView extends WatchUi.View {
 
         self.activityInfo = activityInfo;
         self.maxAvgSpeed = maxAvgSpeed;
-        self.waypoint = waypoint;
 
         self.arrows = new WaypointArrows(settings, waypoint, false);
         self.time = new Time(new TimeProvider(), [0, 0]);
