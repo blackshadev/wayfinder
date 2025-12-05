@@ -6,20 +6,24 @@ class MainMenuDelegate extends WatchUi.Menu2InputDelegate {
     public static const WAYPOINTS_OPEN_ID = "waypoints_open";
     public static const SETTINGS_OPEN_ID = "settings_open";
     public static const ABOUT_OPEN_ID = "about_open";
+    public static const WINDDIRECTION_OPEN_ID = "winddirection_open";
 
     private var waypoint as WaypointsController;
     private var settings as SettingsController;
     private var waypointRetriever as WaypointServerRetriever;
+    private var windDirectionController as WindDirectionControllerInterface;
 
     function initialize(
         waypoint as WaypointsController,
         settings as SettingsController,
-        waypointRetriever as WaypointServerRetriever
+        waypointRetriever as WaypointServerRetriever,
+        windDirectionController as WindDirectionControllerInterface
     ) {
         Menu2InputDelegate.initialize();
         self.waypoint = waypoint;
         self.settings = settings;
         self.waypointRetriever = waypointRetriever;
+        self.windDirectionController = windDirectionController;
     }
 
     function onSelect(item as MenuItem) as Void {
@@ -34,9 +38,22 @@ class MainMenuDelegate extends WatchUi.Menu2InputDelegate {
             case ABOUT_OPEN_ID:
                 self.openAboutMenu();
                 break;
+            case WINDDIRECTION_OPEN_ID:
+                self.openWindDirectionMenu();
+                break;
             default:
                 System.println("No action for id " + id);
         }
+    }
+
+    private function openWindDirectionMenu() as Void {
+        var menuBuilder = new WindDirectionMenuBuilder();
+        
+        WatchUi.pushView(
+            menuBuilder.build(),
+            new WindDirectionMenuDelegate(self.windDirectionController),
+            WatchUi.SLIDE_LEFT
+        );
     }
 
     private function openSettingsMenu() as Void {

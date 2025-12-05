@@ -4,8 +4,9 @@ import Toybox.Lang;
 class WaypointArrows extends RelativeComponent {
     private var _waypoints as WaypointsController;
 
-    private var _currentWaypoint as Arrow;
-    private var _returnArrow as Arrow;
+    private var _currentWaypoint as FilledArrow;
+    private var _line as RadialLine;
+    private var _returnArrow as HollowArrow;
     private var _isAbsolute as Boolean;
 
     function initialize(
@@ -18,13 +19,18 @@ class WaypointArrows extends RelativeComponent {
         self._waypoints = waypoints;
         self._isAbsolute = isAbsolute == true;
 
-        self._currentWaypoint = new Arrow({
+        self._currentWaypoint = new FilledArrow({
             :size => settings.arrowSizeValue(),
             :color => Graphics.COLOR_GREEN
         });
-        self._returnArrow = new Arrow({
+        self._returnArrow = new HollowArrow({
             :size => settings.arrowSizeValue(),
             :color => Graphics.COLOR_DK_BLUE
+        });
+
+        self._line = new RadialLine({
+            :size => 2,
+            :color => Graphics.COLOR_LT_GRAY
         });
     }
 
@@ -37,12 +43,14 @@ class WaypointArrows extends RelativeComponent {
         var returnWaypoint = self._waypoints.returnWaypoint();
         if (returnWaypoint != null && self._waypoints.shouldShowReturnWaypoint()) {
             self._returnArrow.setAngle(self._isAbsolute ? returnWaypoint.absoluteAngle() : returnWaypoint.angle());
+            self._line.setAngle(self._isAbsolute ? returnWaypoint.absoluteAngle() : returnWaypoint.angle());
         }
     }
 
     public function layout(dc as Dc) as Void {
         self._currentWaypoint.layout(dc);
         self._returnArrow.layout(dc);
+        self._line.layout(dc);
     }
 
     public function draw(dc as Dc) as Void {
@@ -52,6 +60,7 @@ class WaypointArrows extends RelativeComponent {
 
         if (self._waypoints.shouldShowReturnWaypoint()) {
             self._returnArrow.draw(dc);
+            self._line.draw(dc);
         }
     }
 }

@@ -1,7 +1,7 @@
 import Toybox.Lang;
 
 class SensorProviderInterface {
-    public function heading() as Float? {
+    public function heading() as Number? {
         throw new NotImplemented();
     }
 

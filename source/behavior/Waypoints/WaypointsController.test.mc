@@ -193,11 +193,11 @@ module WayfinderTests {
             Assert.isEqual(0, northWaypoint.absoluteAngle());
             Assert.isEqual(0, northWaypoint.angle());
 
-            sensor.setHeading(Math.PI / 2);
+            sensor.setHeading(180);
             controller.update();
 
             Assert.isEqual(0, northWaypoint.absoluteAngle());
-            Assert.isEqual(270, northWaypoint.angle());
+            Assert.isEqual(180, northWaypoint.angle());
 
             return true;
         }

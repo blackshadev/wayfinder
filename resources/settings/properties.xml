@@ -7,4 +7,6 @@
     <property id="arrowSize" type="number">0</property>
     <property id="distanceToWaypoint" type="number">25</property>
     <property id="returnWaypointVisibility" type="number">0</property>
+    <property id="windDirectionSetAt" type="number">0</property>
+    <property id="windDirection" type="number">0</property>
 </properties>

@@ -1,4 +1,3 @@
-
 <strings>
     <string id="AppName">Wayfinder</string>
     <string id="AppVersion">0.9.1</string>
@@ -118,4 +117,10 @@
     <string id="waypointsRetrieved">Retrieved</string>
     <string id="waypointsResume">Go back, to continue</string>
 
+    <string id="menuWindDirectionTitle">Wind Direction</string>
+    <string id="menuWindUnset">Unset</string>
+    <string id="menuWindForecast">Use forecast</string>
+    <string id="menuWindFlip">Flip</string>
+    <string id="menuWindSetCurrent">Set to current</string>
+    <string id="menuWindSetAway">Set away from current</string>
 </strings>

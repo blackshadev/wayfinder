@@ -2,25 +2,24 @@ import Toybox.Lang;
 import Toybox.WatchUi;
 import Toybox.Graphics;
 
-
 typedef ArrowOptions as {
     :size as Number,
     :color as ColorType
 };
 
-class Arrow extends Component {
-    private var _size as Number;
-    private var _color as ColorType;
+class AbstractArrow extends Component {
+    protected var _size as Number;
+    protected var _color as ColorType;
+    protected var _angle as Number? = null;
+    protected var _points as Array<Graphics.Point2D> = [[0.0, 0.0], [0.0, 0.0], [0.0, 0.0]];
 
     private var _radius as Number = 0;
-    private var _angle as Number? = null;
     private var _center as Graphics.Point2D = [0, 0];
     private var _basePoints as Array<Graphics.Point2D> = [[0.0, 0.0], [0.0, 0.0], [0.0, 0.0]];
 
     private var _halfHeight as Float;
     private var _halfSize as Float;
 
-    private var _points as Array<Graphics.Point2D> = [[0.0, 0.0], [0.0, 0.0], [0.0, 0.0]];
 
     function initialize(options as ArrowOptions) {
         Component.initialize();
@@ -47,15 +46,10 @@ class Arrow extends Component {
     }
 
     function draw(dc as Dc) as Void {
-        if (self._angle == null) {
-            return;
-        }
-
-        dc.setColor(self._color, Graphics.COLOR_TRANSPARENT);
-        dc.fillPolygon(self._points);
+        throw new NotImplemented();
     }
 
-    private function getPoints() as Array<Graphics.Point2D> {
+    protected function getPoints() as Array<Graphics.Point2D> {
         // Triangle's center point on the circular path
         var correctedAngleInRads = Math.toRadians(_angle - 90);
         var triangleCenter = [

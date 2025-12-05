@@ -7,9 +7,13 @@ class SensorProvider extends SensorProviderInterface {
         SensorProviderInterface.initialize();
     }
 
-    public function heading() as Float? {
+    public function heading() as Number? {
         var cur = Sensor.getInfo();
-        return cur.heading;
+        if (cur.heading == null) {
+            return null;
+        }
+
+        return (Math.toDegrees(cur.heading).toNumber() + 360) % 360;
     }
 
     public function speed() as Float? {
