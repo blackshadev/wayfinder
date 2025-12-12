@@ -13,5 +13,4 @@ class WaypointStorageInterface {
     public function clear() as Void {
         throw new NotImplemented();
     }
-    
 }

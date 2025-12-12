@@ -4,11 +4,12 @@ import Toybox.Time;
 
 class WindDirectionController extends WindDirectionControllerInterface {
     private var windDirection as Number?;
+
     private var weather as WeatherProviderInterface;
-    private var sensor as SensorProvider;
+    private var sensor as SensorProviderInterface;
 
     function initialize(
-        sensor as SensorProvider,
+        sensor as SensorProviderInterface,
         weather as WeatherProviderInterface
     ) {
         WindDirectionControllerInterface.initialize();
@@ -18,7 +19,11 @@ class WindDirectionController extends WindDirectionControllerInterface {
         self.setWindDirectionFromStorage();
     }
 
-    public function setWindDirectionFromStorage() as Void {
+    public function getWindDirection() as Number? {
+        return self.windDirection;
+    }
+
+    private function setWindDirectionFromStorage() as Void {
         var setAt = Application.Properties.getValue("windDirectionSetAt") as Number?;
         var value = Application.Properties.getValue("windDirection");
 
@@ -31,14 +36,20 @@ class WindDirectionController extends WindDirectionControllerInterface {
         self.windDirection = value as Number;
     }
 
+    public function shouldShow() as Boolean {
+        return self.windDirection != null;
+    }
 
     public function setForecastWindDirection() as Void {
         self.setWindDirection(self.weather.getWindDirection());
     }
 
     public function setWindDirection(dir as Number?) as Void {
+        var time = dir != null ? Time.now().value() : null;
+
         Application.Properties.setValue("windDirection", dir);
-        Application.Properties.setValue("windDirectionSetAt", Time.now().value());
+        Application.Properties.setValue("windDirectionSetAt", time);
+        
         self.windDirection = dir;
     }
 

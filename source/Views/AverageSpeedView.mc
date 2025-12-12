@@ -7,8 +7,9 @@ import Toybox.Timer;
 
 class AverageSpeedView extends WatchUi.View {
     private var activityInfo as ActivityInfoProvider;
-    private var averageSpeeds as AverageSpeedsProvider;
+    private var averageSpeeds as AverageSpeedsProviderInterface;
 
+    private var windDirectionArrow as WindDirectionArrow;
     private var arrows as WaypointArrows;
     private var time as Time;
     private var currentSpeed as CurrentSpeed;
@@ -22,15 +23,17 @@ class AverageSpeedView extends WatchUi.View {
     function initialize(
         waypoint as WaypointsController,
         activityInfo as ActivityInfoProvider,
-        averageSpeeds as AverageSpeedsProvider,
+        averageSpeeds as AverageSpeedsProviderInterface,
         unitConverter as SettingsBoundUnitConverter,
-        settings as SettingsController
+        settings as SettingsControllerInterface,
+        windDirection as WindDirectionControllerInterface
     ) {
         View.initialize();
 
         self.activityInfo = activityInfo;
         self.averageSpeeds = averageSpeeds;
 
+        self.windDirectionArrow = new WindDirectionArrow(settings, windDirection, false);
         self.arrows = new WaypointArrows(settings, waypoint, false);
         
         self.time = new Time(new TimeProvider(), [0, 0]);
@@ -49,6 +52,7 @@ class AverageSpeedView extends WatchUi.View {
     }
 
     function onLayout(dc as Dc) as Void {
+        self.windDirectionArrow.layout(dc);
         self.arrows.layout(dc);
         self.quarterLayout.layout(dc);
     }
@@ -60,6 +64,7 @@ class AverageSpeedView extends WatchUi.View {
     }
 
     function updateValues() as Void {
+        self.windDirectionArrow.update();
         self.arrows.update();
         self.currentSpeed.setValue(self.activityInfo.speed());
         self.avgSpeeds.setValue(self.averageSpeeds.value());
@@ -70,6 +75,7 @@ class AverageSpeedView extends WatchUi.View {
         dc.setColor(Utils.Colors.background, Utils.Colors.background);
         dc.clear();
 
+        self.windDirectionArrow.draw(dc);
         self.arrows.draw(dc);
         self.quarterLayout.draw(dc);
     }

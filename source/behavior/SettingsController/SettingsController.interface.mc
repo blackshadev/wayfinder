@@ -99,4 +99,8 @@ class SettingsControllerInterface {
     public function returnWaypointVisibility() as ReturnWaypointVisibility {
         throw new NotImplemented();
     }
+
+    public function arrowSizeValue() as Number {
+        throw new NotImplemented();
+    }
 }

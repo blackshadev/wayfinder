@@ -6,9 +6,10 @@ import Toybox.Position;
 
 class MapView extends WatchUi.MapTrackView {
     private var waypoint as WaypointsController;
-    private var settings as SettingsController;
+    private var settings as SettingsControllerInterface;
     
     private var noLocationText as Text;
+    private var windDirectionArrow as WindDirectionArrow;
     private var arrows as WaypointArrows;
 
     private var returnWaypoint as Waypoint? = null;
@@ -16,7 +17,8 @@ class MapView extends WatchUi.MapTrackView {
 
     function initialize(
         waypoint as WaypointsController,
-        settings as SettingsController
+        settings as SettingsControllerInterface,
+        windDirection as WindDirectionControllerInterface
     ) {
         MapTrackView.initialize();
 
@@ -31,6 +33,7 @@ class MapView extends WatchUi.MapTrackView {
             :text => Rez.Strings.mapNoLocation
         });
 
+        self.windDirectionArrow = new WindDirectionArrow(settings, windDirection, true);
         self.arrows = new WaypointArrows(settings, waypoint, true);
 
         self.setMapMode(WatchUi.MAP_MODE_PREVIEW);

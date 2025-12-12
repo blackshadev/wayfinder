@@ -8,6 +8,7 @@ import Toybox.Timer;
 class MainView extends WatchUi.View {
     private var activityInfo as ActivityInfoProvider;
 
+    private var windDirectionArrow as WindDirectionArrow;
     private var arrows as WaypointArrows;
 
     private var time as Time;
@@ -22,12 +23,14 @@ class MainView extends WatchUi.View {
         waypoint as WaypointsController,
         activityInfo as ActivityInfoProvider,
         unitConverter as SettingsBoundUnitConverter,
-        settings as SettingsController
+        settings as SettingsControllerInterface,
+        windDirection as WindDirectionControllerInterface
     ) {
         View.initialize();
 
         self.activityInfo = activityInfo;
 
+        self.windDirectionArrow = new WindDirectionArrow(settings, windDirection, false);
         self.arrows = new WaypointArrows(settings, waypoint, false);
 
         self.time = new Time(new TimeProvider(), [0, 0]);
@@ -47,10 +50,8 @@ class MainView extends WatchUi.View {
 
     function onLayout(dc as Dc) as Void {
         self.arrows.layout(dc);
+        self.windDirectionArrow.layout(dc);
         self.quarterLayout.layout(dc);
-    }
-
-    function updateArrow(angle as Number) as Void {
     }
 
     function forceUpdate() as Void {
@@ -60,6 +61,7 @@ class MainView extends WatchUi.View {
     }
 
     function updateValues() as Void {
+        self.windDirectionArrow.update();
         self.arrows.update();
         self.duration.setValue(self.activityInfo.duration());
         self.speed.setValue(self.activityInfo.speed());
@@ -71,6 +73,7 @@ class MainView extends WatchUi.View {
         dc.setColor(color, color);
         dc.clear();
 
+        self.windDirectionArrow.draw(dc);
         self.arrows.draw(dc);
         self.quarterLayout.draw(dc);
     }

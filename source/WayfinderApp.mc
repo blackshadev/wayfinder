@@ -73,7 +73,8 @@ class WayfinderApp extends Application.AppBase {
             self.averageSpeeds,
             self.maxAverageSpeeds, 
             self.unitConverter,
-            self.settings
+            self.settings,
+            self.windDirectionController
         );
 
         var delegate = new WayfinderDelegate(
