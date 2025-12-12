@@ -2,17 +2,26 @@ import Toybox.WatchUi;
 import Toybox.Lang;
 
 class WindDirectionMenuBuilder {
+    private var windController as WindDirectionControllerInterface;
+
+    function initialize(windController as WindDirectionControllerInterface) {
+        self.windController = windController;
+    }
+
     public function build() as WatchUi.Menu2 {
         var menu = new WatchUi.Menu2({ :title => Rez.Strings.menuWindDirectionTitle });
 
-        menu.addItem(
-            new MenuItem(
-                Rez.Strings.menuWindUnset,
-                null,
-                WindDirectionMenuDelegate.WIND_UNSET,
-                {}
-            )
-        );
+        if (self.windController != null && self.windController.shouldShow()) {
+            menu.addItem(
+                new MenuItem(
+                    Rez.Strings.menuWindUnset,
+                    null,
+                    WindDirectionMenuDelegate.WIND_UNSET,
+                    {}
+                )
+            );
+        }
+
         menu.addItem(
             new MenuItem(
                 Rez.Strings.menuWindForecast,
@@ -21,6 +30,7 @@ class WindDirectionMenuBuilder {
                 {}
             )
         );
+
         menu.addItem(
             new MenuItem(
                 Rez.Strings.menuWindFlip,
@@ -29,6 +39,7 @@ class WindDirectionMenuBuilder {
                 {}
             )
         );
+
         menu.addItem(
             new MenuItem(
                 Rez.Strings.menuWindSetCurrent,
@@ -37,6 +48,7 @@ class WindDirectionMenuBuilder {
                 {}
             )
         );
+
         menu.addItem(
             new MenuItem(
                 Rez.Strings.menuWindSetAway,
@@ -45,6 +57,7 @@ class WindDirectionMenuBuilder {
                 {}
             )
         );
+
         return menu;
     }
 }

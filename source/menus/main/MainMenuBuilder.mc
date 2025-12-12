@@ -29,7 +29,7 @@ class MainMenuBuilder {
 
         menu.addItem(
             new MenuItem(
-                WatchUi.loadResource(Rez.Strings.menuWindDirectionTitle),
+                WatchUi.loadResource(Rez.Strings.menuOpenWindDirection),
                 null,
                 MainMenuDelegate.WINDDIRECTION_OPEN_ID,
                 {}

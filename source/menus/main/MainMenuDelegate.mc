@@ -47,8 +47,7 @@ class MainMenuDelegate extends WatchUi.Menu2InputDelegate {
     }
 
     private function openWindDirectionMenu() as Void {
-        var menuBuilder = new WindDirectionMenuBuilder();
-        
+        var menuBuilder = new WindDirectionMenuBuilder(self.windDirectionController);
         WatchUi.pushView(
             menuBuilder.build(),
             new WindDirectionMenuDelegate(self.windDirectionController),

@@ -5,7 +5,7 @@ class WindDirectionArrow extends RelativeComponent {
     private var _windDirection as WindDirectionControllerInterface;
 
     private var _line as RadialLine;
-    private var _head as FilledArrow;
+    private var _head as HollowArrow;
     private var _isAbsolute as Boolean;
 
     function initialize(
@@ -18,22 +18,23 @@ class WindDirectionArrow extends RelativeComponent {
         self._windDirection = windDirection;
         self._isAbsolute = isAbsolute == true;
 
-        self._head = new FilledArrow({
+        self._head = new HollowArrow({
             :size => settings.arrowSizeValue(),
-            :color => Graphics.COLOR_LT_GRAY
+            :color => Graphics.COLOR_DK_GRAY,
+            :stroke => 2,
         });
 
         self._line = new RadialLine({
-            :size => 2,
-            :color => Graphics.COLOR_LT_GRAY
+            :stroke => 2,
+            :offset => settings.arrowSizeValue() + settings.arrowSizeValue() / 2,
+            :color => Graphics.COLOR_DK_GRAY
         });
     }
 
     public function update() as Void {
-        var direction = self._windDirection.getWindDirection();
+        var direction = self._isAbsolute ? self._windDirection.getWindDirection() : self._windDirection.getRelativeWindDirection();
 
         if (direction != null) {
-            // TODO: something with _isAbsolute
             self._head.setAngle(direction);
             self._line.setAngle(direction);
         }

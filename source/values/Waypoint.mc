@@ -71,9 +71,9 @@ class Waypoint {
         return (Math.toDegrees(absoluteAngleInRads).toNumber() + 360) % 360;
     }
 
-    private function calculateRelativeWaypointAngle(currentLocation as Position.Location, currentHeading as Number) as Number? {
+    private function calculateRelativeWaypointAngle(currentLocation as Position.Location, currentHeading as Number) as Number {
         var absoluteWaypointAngle = self.calculateAbsoluteWaypointAngle(currentLocation);
 
-        return (absoluteWaypointAngle - currentHeading + 360) % 360;
+        return Utils.Angles.subtract(absoluteWaypointAngle, currentHeading);
     }
 }

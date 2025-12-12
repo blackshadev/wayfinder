@@ -7,6 +7,7 @@ import Toybox.Time;
 (:debug)
 module WayfinderTests {
     class WindDirectionControllerTest {
+        
         (:test)
         public function testInitialValueSetFromStorage(logger as Logger) as Boolean {
             var sensor = new WayfinderTests.StubSensorProvider();
@@ -117,6 +118,59 @@ module WayfinderTests {
             Assert.isTrue(controller.shouldShow());
             Assert.isEqual(280, controller.getWindDirection());
             
+            return true;
+        }
+
+        (:test)
+        public function testGetRelativeWindDirectionNullWhenUnset(logger as Logger) as Boolean {
+            Application.Properties.setValue("windDirection", null);
+            Application.Properties.setValue("windDirectionSetAt", null);
+            
+            var sensor = new WayfinderTests.StubSensorProvider();
+            var weather = new WayfinderTests.StubWeatherProvider();
+            var controller = new WindDirectionController(sensor, weather);
+            
+            Assert.isNull(controller.getRelativeWindDirection());
+            
+            return true;
+        }
+
+        (:test)
+        public function testGetRelativeWindDirectionSimple(logger as Logger) as Boolean {
+            var sensor = new WayfinderTests.StubSensorProvider();
+            sensor.setHeading(30);
+            var weather = new WayfinderTests.StubWeatherProvider();
+            var controller = new WindDirectionController(sensor, weather);
+            controller.setWindDirection(100);
+
+            Assert.isEqual(70, controller.getRelativeWindDirection());
+
+            return true;
+        }
+
+        (:test)
+        public function testGetRelativeWindDirectionNegative(logger as Logger) as Boolean {
+            var sensor = new WayfinderTests.StubSensorProvider();
+            sensor.setHeading(120);
+            var weather = new WayfinderTests.StubWeatherProvider();
+            var controller = new WindDirectionController(sensor, weather);
+            controller.setWindDirection(60); 
+
+            Assert.isEqual(300, controller.getRelativeWindDirection());
+
+            return true;
+        }
+
+        (:test)
+        public function testGetRelativeWindDirectionWraps(logger as Logger) as Boolean {
+            var sensor = new WayfinderTests.StubSensorProvider();
+            sensor.setHeading(350);
+            var weather = new WayfinderTests.StubWeatherProvider();
+            var controller = new WindDirectionController(sensor, weather);
+            controller.setWindDirection(10);
+            
+            Assert.isEqual(20, controller.getRelativeWindDirection());
+
             return true;
         }
     }

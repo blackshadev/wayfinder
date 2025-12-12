@@ -23,6 +23,14 @@ class WindDirectionController extends WindDirectionControllerInterface {
         return self.windDirection;
     }
 
+    public function getRelativeWindDirection() as Number? {
+        if (self.windDirection == null) {
+            return null;
+        }
+        
+        return Utils.Angles.subtract(self.windDirection, self.sensor.heading());
+    }
+
     private function setWindDirectionFromStorage() as Void {
         var setAt = Application.Properties.getValue("windDirectionSetAt") as Number?;
         var value = Application.Properties.getValue("windDirection");

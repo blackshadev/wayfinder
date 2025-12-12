@@ -4,6 +4,10 @@ class WindDirectionControllerInterface {
     public function getWindDirection() as Number? {
         throw new NotImplemented();
     }
+    
+    public function getRelativeWindDirection() as Number? {
+        throw new NotImplemented();
+    }
 
     public function setWindDirection(dir as Number?) as Void {
         throw new NotImplemented();

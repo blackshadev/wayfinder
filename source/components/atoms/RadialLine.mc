@@ -3,13 +3,15 @@ import Toybox.WatchUi;
 import Toybox.Graphics;
 
 typedef RadialLineOptions as {
-    :size as Number,
-    :color as ColorType
+    :stroke as Number,
+    :color as ColorType,
+    :offset as Number?
 };
 
 class RadialLine extends Component {
-    protected var _size as Number;
+    protected var _strokeWidth as Number;
     protected var _color as ColorType;
+    protected var _offset as Number;
     protected var _angle as Number? = null;
     protected var _points as Array<Graphics.Point2D> = [[0.0, 0.0], [0.0, 0.0], [0.0, 0.0]];
 
@@ -19,9 +21,9 @@ class RadialLine extends Component {
     function initialize(options as RadialLineOptions) {
         Component.initialize();
 
-        self._size = options[:size];
+        self._strokeWidth = options[:stroke];
         self._color = options[:color];
-
+        self._offset = options[:offset] != null ? options[:offset] : 0;
     }
 
     function layout(dc as Dc) as Void {
@@ -29,14 +31,13 @@ class RadialLine extends Component {
         var h = dc.getHeight();
 
         self._center = [w / 2, h / 2];
-        self._radius = Utils.Math.max(w / 2, h / 2);
+        self._radius = Utils.Math.max(w / 2, h / 2) - self._offset;
     }
 
     function draw(dc as Dc) as Void {
-        dc.setPenWidth(self._size);
+        dc.setPenWidth(self._strokeWidth);
         dc.setColor(self._color, Graphics.COLOR_TRANSPARENT);
     
-        
         dc.drawLine(
             self._points[0][0],
             self._points[0][1],
