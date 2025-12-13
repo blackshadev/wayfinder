@@ -12,7 +12,6 @@ class ActivityController {
     private var maxAverageSpeeds as MaxAverageSpeedsProvider;
     private var activityFieldFactories as Array<ActivityFieldFactory>;
     private var activityFields as Array<ActivityField> = [];
-    private var weatherProvider as WeatherProviderInterface;
 
     private var session as ActivityRecording.Session? = null;
 
@@ -21,23 +20,19 @@ class ActivityController {
         sampleTimer as AppTimer,
         averageSpeeds as AverageSpeedsProvider, 
         mavAverageSpeeds as MaxAverageSpeedsProvider, 
-        activityFieldFactories as Array<ActivityFieldFactory>,
-        weatherProvider as WeatherProviderInterface
+        activityFieldFactories as Array<ActivityFieldFactory>
     ) {
         self.settings = settings;
         self.sampleTimer = sampleTimer;
         self.averageSpeeds = averageSpeeds;
         self.maxAverageSpeeds = mavAverageSpeeds;
         self.activityFieldFactories = activityFieldFactories;
-        self.weatherProvider = weatherProvider;
     }
 
     public function start() as Void {
         if (self.session != null) {
             throw new ActivityAlreadyStarted();
         }
-
-        System.println(self.weatherProvider.getWindDirection());
 
         var opts = self.getActivitySettings();
         self.session = ActivityRecording.createSession(opts);

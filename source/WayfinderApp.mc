@@ -61,8 +61,7 @@ class WayfinderApp extends Application.AppBase {
                 new GpsInformationFieldFactory(self.location),
                 new AverageSpeedActivityFieldFactory(self.averageSpeeds),
                 new MaxAverageSpeedActivityFieldFactory(self.maxAverageSpeeds),
-            ],
-            self.weatherProvider
+            ]
         );
         self.activityInfo = new ActivityInfoProvider(self.activity);
         
