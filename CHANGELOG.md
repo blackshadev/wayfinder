@@ -1,6 +1,7 @@
 ## v0.10.0
 
 - Add wind direction
+- Change max speeds to be a record instead of a session metric
 
 ## v0.9.1
 
