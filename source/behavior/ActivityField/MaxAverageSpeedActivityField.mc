@@ -28,7 +28,7 @@ class MaxAverageSpeedActivityField extends ActivityField {
         self.updateTimer = AppTimer.onUpdate();
 
         var fieldConfig = { 
-            :mesgType => FitContributor.MESG_TYPE_SESSION, 
+            :mesgType => FitContributor.MESG_TYPE_RECORD, 
             :units => WatchUi.loadResource(Rez.Strings.settingsUnitsSpeedknots)
         };
 

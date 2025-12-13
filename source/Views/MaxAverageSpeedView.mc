@@ -8,8 +8,8 @@ import Toybox.Timer;
 class MaxAverageSpeedView extends WatchUi.View {
     private var activityInfo as ActivityInfoProvider;
     private var maxAvgSpeed as MaxAverageSpeedsProvider;
-    private var waypoint as WaypointsController;
 
+    private var windDirectionArrow as WindDirectionArrow;
     private var arrows as WaypointArrows;
     private var time as Time;
     private var maxSpeed as MaxSpeed;
@@ -25,14 +25,15 @@ class MaxAverageSpeedView extends WatchUi.View {
         activityInfo as ActivityInfoProvider,
         maxAvgSpeed as MaxAverageSpeedsProvider,
         unitConverter as SettingsBoundUnitConverter,
-        settings as SettingsController
+        settings as SettingsControllerInterface,
+        windDirection as WindDirectionControllerInterface
     ) {
         View.initialize();
 
         self.activityInfo = activityInfo;
         self.maxAvgSpeed = maxAvgSpeed;
-        self.waypoint = waypoint;
 
+        self.windDirectionArrow = new WindDirectionArrow(settings, windDirection, false);
         self.arrows = new WaypointArrows(settings, waypoint, false);
         self.time = new Time(new TimeProvider(), [0, 0]);
         self.maxSpeed = new MaxSpeed(unitConverter, [0, 0]);
@@ -50,6 +51,7 @@ class MaxAverageSpeedView extends WatchUi.View {
     }
 
     function onLayout(dc as Dc) as Void {
+        self.windDirectionArrow.layout(dc);
         self.arrows.layout(dc);
         self.quarterLayout.layout(dc);
     }
@@ -61,6 +63,7 @@ class MaxAverageSpeedView extends WatchUi.View {
     }
 
     function updateValues() as Void {
+        self.windDirectionArrow.update();
         self.arrows.update();
         self.maxSpeed.setValue(self.activityInfo.speed());
         self.maxSpeeds.setMaxAvgSpeeds(self.maxAvgSpeed.value());
@@ -71,6 +74,7 @@ class MaxAverageSpeedView extends WatchUi.View {
         dc.setColor(Utils.Colors.background, Utils.Colors.background);
         dc.clear();
 
+        self.windDirectionArrow.draw(dc);
         self.arrows.draw(dc);
         self.quarterLayout.draw(dc);
     }

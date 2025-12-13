@@ -27,6 +27,7 @@ class Line extends Component {
 
     function draw(dc as Dc) as Void {
         dc.setColor(Utils.Colors.greyBackground, Graphics.COLOR_DK_GRAY);
+        dc.setPenWidth(1.0);
         dc.drawLine(self.points[0], self.points[1], self.points[2], self.points[3]);
     }
 }

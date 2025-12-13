@@ -23,4 +23,10 @@ module Utils {
             return value;
         }
     }
+
+    module Angles {
+        public function subtract(a as Number, b as Number) as Number {
+            return (a - b + 360) % 360;
+        }
+    }
 }

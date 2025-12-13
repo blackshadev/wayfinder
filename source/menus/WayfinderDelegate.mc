@@ -8,13 +8,15 @@ class WayfinderDelegate extends WatchUi.BehaviorDelegate {
     private var settings as SettingsController;
     private var waypointRetriever as WaypointServerRetriever;
     private var viewController as ViewController;
+    private var windDirectionController as WindDirectionControllerInterface;
 
     function initialize(
         viewController as ViewController,
         waypoint as WaypointsController,
         activity as ActivityController,
         settings as SettingsController,
-        waypointRetriever as WaypointServerRetriever
+        waypointRetriever as WaypointServerRetriever,
+        windDirectionController as WindDirectionControllerInterface
     ) {
         BehaviorDelegate.initialize();
 
@@ -23,6 +25,7 @@ class WayfinderDelegate extends WatchUi.BehaviorDelegate {
         self.activity = activity;
         self.settings = settings;
         self.waypointRetriever = waypointRetriever;
+        self.windDirectionController = windDirectionController;
     }
 
     function onKey(keyEvent) {
@@ -38,7 +41,7 @@ class WayfinderDelegate extends WatchUi.BehaviorDelegate {
 
         WatchUi.pushView(
             menuBuilder.build(),
-            new MainMenuDelegate(self.waypoint, self.settings, self.waypointRetriever),
+            new MainMenuDelegate(self.waypoint, self.settings, self.waypointRetriever, self.windDirectionController),
             WatchUi.SLIDE_LEFT
         );
 

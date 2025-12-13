@@ -1,7 +1,6 @@
-
 <strings>
     <string id="AppName">Wayfinder</string>
-    <string id="AppVersion">0.9.1</string>
+    <string id="AppVersion">0.10.0</string>
 
     <string id="fieldTitleMaxAvgSpeed2s">Max. Avg. speed (2s)</string>
     <string id="fieldTitleMaxAvgSpeed10s">Max. Avg. speed (10s)</string>
@@ -118,4 +117,11 @@
     <string id="waypointsRetrieved">Retrieved</string>
     <string id="waypointsResume">Go back, to continue</string>
 
+    <string id="menuOpenWindDirection">Wind...</string>
+    <string id="menuWindDirectionTitle">Wind Direction</string>
+    <string id="menuWindUnset">Unset</string>
+    <string id="menuWindForecast">Use forecast</string>
+    <string id="menuWindSetCurrent">Set</string>
+    <string id="menuWindSetAway">Set away</string>
+    <string id="menuWindFlip">Flip</string>
 </strings>

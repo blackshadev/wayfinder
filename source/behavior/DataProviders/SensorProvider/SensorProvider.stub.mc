@@ -4,18 +4,18 @@ import Toybox.Lang;
 (:debug)
 module WayfinderTests {
     class StubSensorProvider extends SensorProviderInterface {
-        private var _heading as Float = 0.0;
+        private var _heading as Number = 0;
         private var _speed as Float = 0.0;
 
         function initialize() {
             SensorProviderInterface.initialize();
         }
 
-        public function setHeading(heading as Float) as Void {
+        public function setHeading(heading as Number) as Void {
             self._heading = heading;
         }
 
-        public function heading() as Float? {
+        public function heading() as Number? {
             return self._heading;
         }
 

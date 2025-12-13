@@ -4,12 +4,12 @@ import Toybox.Lang;
 class WaypointArrows extends RelativeComponent {
     private var _waypoints as WaypointsController;
 
-    private var _currentWaypoint as Arrow;
-    private var _returnArrow as Arrow;
+    private var _currentWaypoint as FilledArrow;
+    private var _returnArrow as FilledArrow;
     private var _isAbsolute as Boolean;
 
     function initialize(
-        settings as SettingsController,
+        settings as SettingsControllerInterface,
         waypoints as WaypointsController,
         isAbsolute as Boolean
     ) {
@@ -18,11 +18,11 @@ class WaypointArrows extends RelativeComponent {
         self._waypoints = waypoints;
         self._isAbsolute = isAbsolute == true;
 
-        self._currentWaypoint = new Arrow({
+        self._currentWaypoint = new FilledArrow({
             :size => settings.arrowSizeValue(),
             :color => Graphics.COLOR_GREEN
         });
-        self._returnArrow = new Arrow({
+        self._returnArrow = new FilledArrow({
             :size => settings.arrowSizeValue(),
             :color => Graphics.COLOR_DK_BLUE
         });

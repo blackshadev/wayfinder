@@ -5,6 +5,11 @@
 # =========================================================
 
 DIR=$(dirname "$0")
+CONNECTIQ_HOME="$HOME/Library/Application Support/Garmin/ConnectIQ"
+LATEST_SDK_VERSION=$(ls "$CONNECTIQ_HOME/Sdks" | sort -V | tail -n 1)	
+CONNECTIQ_SDK_HOME="$CONNECTIQ_HOME/Sdks/$LATEST_SDK_VERSION"
+
+PATH="$CONNECTIQ_SDK_HOME/bin:$PATH"
 
 function banner {
 	echo -e "${BLUE}\n"\
@@ -54,6 +59,18 @@ function task:restart { ## Restart the local project
 	proxy:start
 	docker:start
 	proxy:connect
+}
+
+GARMIN_DEVICE="fr165"
+function task:garmin:build {
+	title "Building Wayfinder app"
+	monkeyc -o bin/debug_wayfinder.prg -f $DIR/monkey.jungle -y $DIR/../developer_key -d $GARMIN_DEVICE -w -t
+}
+
+function task:garmin:test {
+	title "Running Wayfinder app tests"
+	monkeyc -o bin/test_wayfinder.prg -f $DIR/monkey.jungle -y $DIR/../developer_key -d $GARMIN_DEVICE -t --unit-test
+	monkeydo bin/test_wayfinder.prg $GARMIN_DEVICE -t
 }
 
 function task:ngrok { ## Start ngrok proxy because Garmin doesn't do local DNS resolution

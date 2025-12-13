@@ -44,7 +44,7 @@ class Waypoint {
         return self._distance;
     }
 
-    public function update(currentLocation as Position.Location, currentHeading as Float?) as Void {
+    public function update(currentLocation as Position.Location, currentHeading as Number?) as Void {
         self._distance = Utils.Distance.betweenApprox(currentLocation, self._location);
         self._absoluteAngle = self.calculateAbsoluteWaypointAngle(currentLocation);
         
@@ -71,10 +71,9 @@ class Waypoint {
         return (Math.toDegrees(absoluteAngleInRads).toNumber() + 360) % 360;
     }
 
-    private function calculateRelativeWaypointAngle(currentLocation as Position.Location, currentHeading as Float) as Number? {
+    private function calculateRelativeWaypointAngle(currentLocation as Position.Location, currentHeading as Number) as Number {
         var absoluteWaypointAngle = self.calculateAbsoluteWaypointAngle(currentLocation);
-        var headingAngle =  (Math.toDegrees(currentHeading).toNumber() + 360) % 360;
 
-        return (absoluteWaypointAngle - headingAngle + 360) % 360;
+        return Utils.Angles.subtract(absoluteWaypointAngle, currentHeading);
     }
 }

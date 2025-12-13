@@ -1,3 +1,7 @@
+## v0.10.0
+
+- Add wind direction
+
 ## v0.9.1
 
 - Fix default arrow size being the normal size, instead of none

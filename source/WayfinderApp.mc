@@ -18,6 +18,8 @@ class WayfinderApp extends Application.AppBase {
     private var updateTimer as AppTimer;
     private var sampleTimer as AppTimer;
     private var waypointRetriever as WaypointServerRetriever;
+    private var weatherProvider as WeatherProviderInterface;
+    private var windDirectionController as WindDirectionControllerInterface;
 
     function initialize() {
         AppBase.initialize();
@@ -31,6 +33,9 @@ class WayfinderApp extends Application.AppBase {
         self.unitConverter = new SettingsBoundUnitConverter(self.settings);
 
         self.sensor = new SensorProvider();
+        self.weatherProvider = new GarminWeatherProvider();
+        self.windDirectionController = new WindDirectionController(self.sensor, self.weatherProvider);
+
         self.averageSpeeds = new AverageSpeedsProvider(self.sensor, new Timer.Timer());
         self.maxAverageSpeeds = new MaxAverageSpeedsProvider(self.averageSpeeds);
         self.location = new LocationProvider();
@@ -41,10 +46,12 @@ class WayfinderApp extends Application.AppBase {
             self.settings,
             self.unitConverter
         );
+        
         self.waypointRetriever = new WaypointServerRetriever(
             new WaypointServerClient(),
             self.waypoint
         );
+
         self.activity = new ActivityController(
             self.settings,
             self.sampleTimer,
@@ -65,7 +72,8 @@ class WayfinderApp extends Application.AppBase {
             self.averageSpeeds,
             self.maxAverageSpeeds, 
             self.unitConverter,
-            self.settings
+            self.settings,
+            self.windDirectionController
         );
 
         var delegate = new WayfinderDelegate(
@@ -73,10 +81,12 @@ class WayfinderApp extends Application.AppBase {
             self.waypoint,
             self.activity,
             self.settings,
-            self.waypointRetriever
+            self.waypointRetriever,
+            self.windDirectionController
         );
 
         self.viewController.setDelegate(delegate);
+
     }
 
     function onSettingsChanged() as Void {
