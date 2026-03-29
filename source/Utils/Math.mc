@@ -25,8 +25,12 @@ module Utils {
     }
 
     module Angles {
+        public function normalize(angle as Number) as Number {
+            return (angle + 360) % 360;
+        }
+
         public function subtract(a as Number, b as Number) as Number {
-            return (a - b + 360) % 360;
+            return Utils.Angles.normalize(a - b);
         }
     }
 }

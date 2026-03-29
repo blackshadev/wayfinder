@@ -66,8 +66,8 @@ module WayfinderTests {
             controller.unsetWindDirection();
             
             Assert.isNull(controller.getWindDirection());
-            Assert.isNull(Application.Properties.getValue("windDirectionSetAt"));
-            Assert.isNull(Application.Properties.getValue("windDirection"));
+            Assert.isEqual(0, Application.Properties.getValue("windDirectionSetAt"));
+            Assert.isEqual(0, Application.Properties.getValue("windDirection"));
             Assert.isFalse(controller.shouldShow());
 
             return true;
@@ -123,8 +123,9 @@ module WayfinderTests {
 
         (:test)
         public function testGetRelativeWindDirectionNullWhenUnset(logger as Logger) as Boolean {
-            Application.Properties.setValue("windDirection", null);
-            Application.Properties.setValue("windDirectionSetAt", null);
+            
+            Application.Properties.setValue("windDirection", 0);
+            Application.Properties.setValue("windDirectionSetAt", 0);
             
             var sensor = new WayfinderTests.StubSensorProvider();
             var weather = new WayfinderTests.StubWeatherProvider();

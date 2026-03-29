@@ -32,15 +32,16 @@ class WindDirectionController extends WindDirectionControllerInterface {
     }
 
     private function setWindDirectionFromStorage() as Void {
-        var setAt = Application.Properties.getValue("windDirectionSetAt") as Number?;
+        var setAt = Application.Properties.getValue("windDirectionSetAt");
         var value = Application.Properties.getValue("windDirection");
 
         var twoHours = new Time.Duration(2 * 60 * 60);
         var twoHoursAgo = Time.now().subtract(twoHours);
-        if (value == null || setAt == null || twoHoursAgo.value() > setAt) {
+        if (value == null || setAt == null || twoHoursAgo.value() > setAt || setAt == 0) {
             self.windDirection = self.weather.getWindDirection();
             return;
         }
+        
         self.windDirection = value as Number;
     }
 
@@ -53,9 +54,9 @@ class WindDirectionController extends WindDirectionControllerInterface {
     }
 
     public function setWindDirection(dir as Number?) as Void {
-        var time = dir != null ? Time.now().value() : null;
+        var time = dir != null ? Time.now().value() : 0;
 
-        Application.Properties.setValue("windDirection", dir);
+        Application.Properties.setValue("windDirection", dir != null ? dir : 0);
         Application.Properties.setValue("windDirectionSetAt", time);
         
         self.windDirection = dir;
